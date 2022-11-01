@@ -1,0 +1,80 @@
+{% extends "./base.html" %}
+{% block title %}
+    Login
+{% endblock title %}
+{% block content %}
+<!-- BACKGROUND-IMAGE -->
+<div class="login-img">
+
+    <!-- PAGE -->
+    <div class="page">
+        <div class="">
+
+            <!-- CONTAINER OPEN -->
+            <div class="col col-login mx-auto mt-7">
+                <div class="text-center">
+                    <img src="/static/assets/images/brand/logo-white.png" class="header-brand-img" alt="">
+                </div>
+            </div>
+            <div class="container-login100">
+                <div class="wrap-login100 p-6">
+                    <form class="login100-form validate-form" action="{% url 'accounts:login' %}" method="post">
+                        {% csrf_token %}
+                        <span class="login100-form-title pb-5">
+                            Login
+                        </span>
+                        <div class="panel panel-primary">
+                            <div class="tab-menu-heading">
+                                {% if form.errors %}
+                                {% for field in form %}
+                                {% for error in field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                                {% endfor %}
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="panel-body tabs-menu-body p-0 pt-5">
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab5">
+                                        <div class="wrap-input100 validate-input input-group"
+                                            data-bs-validate="Valid email is required: ex@abc.xyz">
+                                            <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                                                <i class="zmdi zmdi-email text-muted" aria-hidden="true"></i>
+                                            </a>
+                                            <!-- <input class="input100 border-start-0 form-control ms-0" type="email"
+                                                placeholder="Email"> -->
+                                            {{ form.email }}
+                                        </div>
+                                        <div class="wrap-input100 validate-input input-group" id="Password-toggle">
+                                            <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                                                <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                                            </a>
+                                            <!-- <input class="input100 border-start-0 form-control ms-0" type="password"
+                                                placeholder="Password"> -->
+                                            {{ form.password }}
+                                        </div>
+                                        <div class="text-end pt-4">
+                                            <p class="mb-0"><a href="/accounts/recover"	
+                                                    class="text-primary ms-1">Forgot Password?</a></p>
+                                        </div>
+                                        <div class="container-login100-form-btn">
+                                            <input type="submit" class="login100-form-btn btn-primary" value="Login" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- CONTAINER CLOSED -->
+        </div>
+    </div>
+    <!-- End PAGE -->
+
+</div>
+<!-- BACKGROUND-IMAGE CLOSED -->
+
+{% endblock content %}

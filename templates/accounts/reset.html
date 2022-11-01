@@ -1,0 +1,73 @@
+{% extends "base.html"%}
+
+{% block title %}New password set{% endblock title %}
+
+{% block navbar %}
+{% endblock navbar %}
+
+{% block content %}
+<main class="main-content  mt-0">
+        <section>
+            <div class="page-header min-vh-75">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+                            <div class="card card-plain mt-8">
+                                <div class="tab-menu-heading">
+                                    {% if form.errors %}
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                            <div class="alert alert-danger" role="alert">
+                                                <strong>{{ error|escape }}</strong>
+                                            </div>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% block error_messages %}
+                                            {% if messages %}
+                                                {% for message in messages %}
+                                                    <div class="alert alert-{{ message.tags }}" role="alert">
+                                                        <p>{{ message }}</p>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endblock error_messages %}
+                                    {% endif %}
+                                </div>
+                                <div class="card-header pb-0 text-left bg-transparent">
+                                    <h3 class="font-weight-bolder text-info text-gradient">Recover Password</h3>
+                                    <p class="mb-0">Please set new password</p>
+                                </div>
+                                <div class="card-body">
+                                    <form role="form" action="#" method="post">
+                                        {% csrf_token %}
+                                        <label>Password</label>
+                                        <div class="mb-3">
+                                            {{ form.password1 }}
+                                        </div>
+                                        <label>Confirm Password</label>
+                                        <div class="mb-3">
+                                            {{ form.password2 }}
+                                        </div>
+                                        <div class="text-center">
+                                            <input type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0" value="Reset" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+                                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
+                                    style="background-image:url('/static/assets/img/curved-images/curved6.jpg')"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}

@@ -1,0 +1,14 @@
+{% extends "./base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Password recovery sent" %}{% endblock %}
+
+{% block content %}
+	<p>{% blocktrans with ago=timestamp|timesince %}An email was sent to <strong>{{ email }}</strong> {{ ago }} ago. Use the link in it to set a new password.{% endblocktrans %}</p>
+
+	 <script>
+         setTimeout(function(){
+            window.location.href = "{% url 'accounts:login' %}";
+         }, 10000);
+      </script>
+{% endblock %}

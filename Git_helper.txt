@@ -1,0 +1,25 @@
+https://stackoverflow.com/a/70836070
+
+
+for committing code
+---------------------------------
+git status - for check changes
+git add . - file collect
+git commit -m "Git init" - for commit
+git push -u origin viral-dev - push code to git
+
+git remote - remote name
+gite remote - v - for permisson
+
+git checkout main - branch change
+
+git fetch || git fetch --all - fetch latest commit
+
+git merge main - merge data in your currenct branch
+
+git pull - pull data
+
+For updating email and name
+-----------------------------------
+git config --global user.email ""
+git config --global user.name ""

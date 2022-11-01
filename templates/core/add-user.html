@@ -1,0 +1,93 @@
+{% extends "./base.html" %}
+
+{% block title %}
+    All Users
+{% endblock title %}
+
+{% block page-content %}
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            {% block error_messages %}
+                {% if messages %}
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            <p>{{ message }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endblock error_messages %}
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <h1 class="page-title">Add New User</h1>
+                <div>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Add New User</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- PAGE-HEADER END -->
+
+            <!-- ROW-1 OPEN -->
+            <div class="row">
+                <form class="login100-form validate-form" action="#" method="post">
+                {% csrf_token %}
+                {{ form.type }} 
+                <div class="offset-2 col-xl-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Add New User</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputname">User Name</label>
+                                        {{form.username}}
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputname2">Password</label>
+                                        {{form.password1}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputname3">Confirm Password</label>
+                                        {{form.password2}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-footer text-end">
+                            <input type="submit" value = "Save" class="btn btn-success my-1">
+                            <a href="/" class="btn btn-danger my-1">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <!-- ROW-1 CLOSED -->
+        </div>
+        <!--CONTAINER CLOSED -->
+
+    </div>
+</div>
+<!--app-content open-->
+{% endblock page-content %}
