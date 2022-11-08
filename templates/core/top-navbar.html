@@ -65,7 +65,7 @@
                 {% if request.user.is_authenticated %}
                 <div class="dropdown mt-3">
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{request.user.email}}
+                        {{request.user.username}}
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Edit Profile</a></li>
