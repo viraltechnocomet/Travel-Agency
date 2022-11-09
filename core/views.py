@@ -33,6 +33,10 @@ from templates import *
 from django.contrib import messages
 from accounts.models import USER_TYPES
 
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 TEMP_PROFILE_IMAGE_NAME = "temp_profile_image.png"
 
 class DashboardView(View):
@@ -96,6 +100,48 @@ class AddUserView(TemplateView):
         }
         return render(request, "core/add-user.html",context)
 
+class ListAllAdminView(TemplateView):
+    def get(self,request):
+        if request.user.is_superuser:
+            users = User.objects.filter(type="ADMIN")
+        else:
+            users = User.objects.filter(type="ADMIN").filter(created_by=request.user)
+            
+        context={
+            "users" : users
+        }
+        return render(request, "core/list-all-admins.html",context)
 
+    def post(self,request):
+        action = request.POST.get("action")
+        user_id = request.POST.get("user_id")
+        user = User.objects.filter(id=user_id)[0]
+        print("action",action,
+        "user_id",user_id,
+        )
+        if action == "active":
+            messages.success(request, f"{user} activated succssfully")
+            user.is_active = True
+        elif action == "active":
+            messages.success(request, f"{user} De-activated succssfully")
+            user.is_active = False
+        elif action == "edit":
+            form = SignUpForm(instance = user)
+            context={
+                'form': form
+            }
+            redirect_str = f"/edit-admin/{user_id}"
+            return redirect(redirect_str)
+        if action == "delete":
+            user.delete()
+            messages.success(request, f"{user} deleted succssfully")
+        if request.user.is_superuser:
+            users = User.objects.filter(type="ADMIN")
+        else:
+            users = User.objects.filter(type="ADMIN").filter(created_by=request.user)
+        context={
+            "users" : users
+        }
+        return render(request, "core/list-all-admins.html",context)
 
 

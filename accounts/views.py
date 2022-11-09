@@ -146,7 +146,7 @@ class RegisterView(View):
                 msg     = messages.add_message(request, messages.SUCCESS,'User created Successfully, Please Login!')
                 success = True
                 
-                return redirect("/core/dashboard/")
+                return redirect("accounts:login")
 
             else:
                 msg = ('Form is not valid',)

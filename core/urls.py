@@ -13,6 +13,8 @@ urlpatterns = [
     path('dashboard/', views.DashboardView.as_view(),name='dashboard'),
     path('add-admin/', views.AddAdminView.as_view(), name='add-admin'),
     path('add-user/',views.AddUserView.as_view(), name='add-user'),
+    path('list-all-admin/',views.ListAllAdminView.as_view(), name='list-all-admin'),
+    
     
     
     # path('add-manager/', views.AddManager,name='add-manager'),
