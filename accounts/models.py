@@ -11,9 +11,8 @@ from .managers import CustomUserManager
 
 USER_TYPES=[
     ('ADMIN', 'admin'),
-    ('MANAGER', 'manager'),
-    ('AGENT', 'agent'),
-    ('CLIENT', 'client'),
+    ('USER', 'user'),
+    
 ]
 class CustomUser(AbstractUser):
     username = models.CharField(max_length=50,null=True,blank=True)

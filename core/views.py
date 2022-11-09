@@ -22,6 +22,8 @@ from accounts.models import CustomUser
 from django.conf import settings
 from core.forms import AddManagerForm,AddAgentForm
 import os
+from accounts.forms import SignUpForm
+
 
 from django.core import files
 from django.core.files.storage import default_storage
@@ -43,95 +45,57 @@ class DashboardView(View):
     def post(self, request, *args, **kwargs):
         ...
         
-# def AddManager(request):
-#     context={}
-#     context['form'] = AddManagerForm
-#     return render(request,'core/add-manager.html',context)
-
-def AddAgent(request):
-    context={}
-    context['form'] = AddAgentForm
-    return render(request,'core/add-agent.html',context)
 
 
-
-class AddManagerView(View):
-
+class AddAdminView(TemplateView):
     def get(self,request):
-        form = AddManagerForm(request.POST or None)
-        return render(request, "core/add-manager.html", {"form": form })
+        user = request.user
+        init_data = {"type" : "ADMIN","created_by":user}
+        form = SignUpForm(initial=init_data)
+        
+        context={
+            'form': form
+        }
+        return render(request, "core/add-admin.html",context)
 
-    def post(self, request):
-        msg     = None
-        success = False
-
-        if request.method == "POST":
-            print(request.POST)
-            form = AddManagerForm(request.POST)
-            print(form.errors)
-            # print(form)
-            if form.is_valid():
-                # print("It's okkkkkkk......")
-                form.save()
-                # group = Group.objects.get(name='client')
-                fname=form.cleaned_data.get("first_name")
-                lname=form.cleaned_data.get("last_name")
-                uname = form.cleaned_data.get("username")
-                em = form.cleaned_data.get("email")
-                raw_password = form.cleaned_data.get("password")
-                # user = authenticate(username=uname, password=raw_password)
-                # user.groups.add(group)
-
-                msg     = messages.add_message(request, messages.SUCCESS,'User created Successfully!')
-                success = True
-                
-                return redirect("/core/add-manager/")
-
-            else:
-                msg = ('Form is not valid',)
-                form.add_error(None,'Form is not valid')
+    def post(self,request):
+        form = SignUpForm(data = request.POST)
+        if form.is_valid():
+            form.save()
+            # return redirect(request, "app/dashboard.html")
+            return redirect('core:add-admin')
         else:
-            form = AddManagerForm()
+            messages.error(request, form.errors)
 
-        return render(request, "core/add-manager.html", {"form": form, "msg" : msg, "success" : success })
+        context={
+            'form': form
+        }
+        return render(request, "core/add-admin.html",context)
 
-# class AddManagerView(View):            
-#     if request.method == 'POST':
-#         form = AddManagerForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             fname = form.cleaned_data.get('first_name')
-#             lname = form.cleaned_data.get('last_name')
-#             uname = form.cleaned_data.get('username')
-#             em = form.cleaned_data.get('email')
-#             pw = form.cleaned_data.get('password')
-#             user = authenticate(username=uname, password=pw)
-#             login(request, user)
-#             return redirect('/core/add-manager/')
-#     else:
-#         form = AddManagerForm()
-#     return render(request, 'add-manager.html', {'form': form})
+class AddUserView(TemplateView):
+    def get(self,request):
+        user = request.user
+        init_data = {"type" : "USER","created_by":user}
+        form = SignUpForm(initial=init_data)
+        context={
+            'form': form
+        }
+        return render(request, "core/add-user.html", context)
 
-# class AddManagerView(View): 
-#     def addmanager(request):   
-#         if request.method == 'POST':
-#             form = UserCreationForm(request.POST)
-#             if form.is_valid():
-#                 form.save()
-#                 fname = form.cleaned_data.get('first_name')
-#                 lname = form.cleaned_data.get('last_name')
-#                 uname = form.cleaned_data.get('username')
-#                 em = form.cleaned_data.get('email')
-#                 pw = form.cleaned_data.get('password')
-#                 user = authenticate(username=uname, password=pw)
-#                 login(request, user)
-#                 return HttpResponse("User created successfully!")
-#                 return render(request, 'core/add-manager.html', {'form': form})
-#         else:
-#             form = AddManagerForm()()
-#             return render(request, 'core/add-manager.html', {'form': form})
+    def post(self,request):
+        form = SignUpForm(data = request.POST)
+        if form.is_valid():
+            form.save()
+            # return redirect(request, "app/dashboard.html")
+            return redirect('core:add-user')
+        else:
+            messages.error(request, form.errors)
+
+        context={
+            'form': form
+        }
+        return render(request, "core/add-user.html",context)
 
 
 
-    # {% csrf_token %}
-    # {{ form }}
+

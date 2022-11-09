@@ -28,6 +28,8 @@ from django.views.decorators.debug import sensitive_post_parameters
 import datetime
 from .forms import PasswordRecoveryForm, PasswordResetForm
 from .signals import user_recovers_password
+from .models import CustomUser
+import uuid
 
 
 User = get_user_model()
@@ -153,6 +155,7 @@ class RegisterView(View):
             form = SignUpForm()
 
         return render(request, "accounts/register.html", {"form": form, "msg" : msg, "success" : success })
+    
 
 class LogoutView(View):
     def get(self, request):

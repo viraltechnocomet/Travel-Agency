@@ -16,7 +16,7 @@ class CreateUserCustomForm(ModelForm):
         fields = "__all__"
 
         widgets = {
-            # 'type':forms.HiddenInput(),
+            'type':forms.HiddenInput(),
             'username':forms.TextInput(
                 attrs={
                     'required' : True,
@@ -33,7 +33,7 @@ class CreateUserCustomForm(ModelForm):
                     'type':"text",
                 }
             ),
-            'password':forms.PasswordInput(
+            'password1':forms.PasswordInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
@@ -42,14 +42,14 @@ class CreateUserCustomForm(ModelForm):
                 }
             ),
             
-            # 'password2':forms.PasswordInput(
-            #     attrs={
-            #         'required' : True,
-            #         'class':'form-control',
-            #         'placeholder':"Confirm Password",
-            #         'type':"text",
-            #     }
-            # ),
+            'password2':forms.PasswordInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Confirm Password",
+                    'type':"text",
+                }
+            ),
         }
                
 class AddManagerForm(ModelForm):
