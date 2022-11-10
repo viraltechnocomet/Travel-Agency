@@ -144,4 +144,38 @@ class ListAllAdminView(TemplateView):
         }
         return render(request, "core/list-all-admins.html",context)
 
+class ListAllUsersView(TemplateView):
+    def get(self,request):
+        if request.user.is_superuser:
+            users = User.objects.filter(type="USER")
+        else:
+            users = User.objects.filter(type="USER").filter(created_by=request.user)
+        context={
+            "users" : users
+        }
+        return render(request, "core/list-all-users.html",context)
 
+    def post(self,request):
+        action = request.POST.get("action")
+        user_id = request.POST.get("user_id")
+        user = User.objects.filter(id=user_id)[0]
+
+        if action == "active":
+            messages.success(request, f"{user} activated succssfully")
+            user.is_active = True
+
+        if action == "edit":
+            form = SignUpForm(instance = user)
+            context={
+                'form': form
+            }
+            redirect_str = f"/edit-user/{user_id}"
+            return redirect(redirect_str)
+        if action == "delete":
+            user.delete()
+            messages.success(request, f"{user} deleted succssfully")
+        users = User.objects.filter(type="USER")
+        context={
+            "users" : users
+        }
+        return render(request, "core/list-all-users.html",{context})

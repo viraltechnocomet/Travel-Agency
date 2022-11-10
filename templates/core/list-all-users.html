@@ -4,7 +4,7 @@
     All Users
 {% endblock title %}
 
-{% block page-content %}
+{% block content %}
 <!--app-content open-->
 <div class="main-content app-content mt-0">
     <div class="side-app">
@@ -45,7 +45,7 @@
                         </div>
                         <div class="card-body">
 
-                            <a href="/add-user/" id="table2-new-row-button" class="btn btn-danger mb-4"> Add New
+                            <a href="{% url 'core:add-user' %}" id="table2-new-row-button" class="btn btn-danger mb-4"> Add New
                                 User</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered border text-nowrap mb-0" id="new-edi">
@@ -82,18 +82,18 @@
 
                                                     <button type="submit" name="action" value="edit" class="btn btn-sm btn-info"
                                                         title="Manage User">
-                                                        <span class="fe fe-edit"> </span>
+                                                        <span class="fe fe-edit">Edit</span>
                                                     </button>
                                                     <button type="submit" name="action" value="delete" class="btn  btn-sm btn-danger"
                                                         title="Delete User" onclick="return confirm('Are you sure you want to delete user?');">
-                                                        <span class="fe fe-trash-2"> </span>
+                                                        <span class="fe fe-trash-2">Delete</span>
                                                     </button>
-                                                    <a class="btn  btn-sm btn-purple" data-bs-placement="bottom" data-bs-toggle="tooltip" title="User Masters" href="/list-all-masters/?user={{user.id}}">
+                                                    {% comment %} <a class="btn  btn-sm btn-purple" data-bs-placement="bottom" data-bs-toggle="tooltip" title="User Masters" href="/list-all-masters/?user={{user.id}}">
                                                                 <span class="fe fe-user" > </span>
                                                     </a>
                                                     <a class="btn  btn-sm btn-purple" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Order Clients" href="/list-all-clients/?user={{user.id}}">
                                                                 <span class="fe fe-settings" > </span>
-                                                    </a>
+                                                    </a> {% endcomment %}
                                                 </div>
                                             </form>
                                             </td>
@@ -116,4 +116,4 @@
     </div>
 </div>
 <!--app-content closed-->
-{% endblock page-content %}
+{% endblock content %}
