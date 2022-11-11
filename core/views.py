@@ -17,12 +17,11 @@ from django.shortcuts import (
     render,redirect
 )
 
-from core.forms import CreateUserCustomForm, AddManagerForm
 from accounts.models import CustomUser
 from django.conf import settings
-from core.forms import AddManagerForm,AddAgentForm
 import os
 from accounts.forms import SignUpForm
+from core.forms import ItinararyForm
 
 
 from django.core import files
@@ -179,3 +178,13 @@ class ListAllUsersView(TemplateView):
             "users" : users
         }
         return render(request, "core/list-all-users.html",{context})
+    
+
+def ItinararyView(request):
+    context = {}
+    # if request.method == 'POST':
+    #     form = ItinararyForm(request.POST)
+    #     if form.is_valid:
+    #         form.save
+    context['itinarary'] = ItinararyForm
+    return render(request,'core/add-agent.html', context)

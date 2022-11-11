@@ -32,6 +32,8 @@ class Itinerary(models.Model):
     link=models.CharField(max_length=500)
     gps_cordinate=models.CharField(max_length=500)
     spend_time=models.DateTimeField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    update_at=models.DateTimeField(auto_now=True)
     
 class Package(models.Model):
     package_name=models.CharField(max_length=250,unique=True)
