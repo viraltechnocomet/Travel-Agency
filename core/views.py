@@ -21,7 +21,7 @@ from accounts.models import CustomUser
 from django.conf import settings
 import os
 from accounts.forms import SignUpForm
-from core.forms import ItinararyForm
+from core.forms import *
 
 
 from django.core import files
@@ -180,11 +180,22 @@ class ListAllUsersView(TemplateView):
         return render(request, "core/list-all-users.html",{context})
     
 
-def ItinararyView(request):
+def ItineraryView(request):
     context = {}
-    # if request.method == 'POST':
-    #     form = ItinararyForm(request.POST)
-    #     if form.is_valid:
-    #         form.save
-    context['itinarary'] = ItinararyForm
+    if request.method == 'POST':
+        courntryForm = CourntryForm(request.POST)
+        categoryForm = CategoryForm(request.POST)
+        activityForm = ActivityForm(request.POST)
+        imageForm = ImageForm(request.POST)
+        itineraryform = ItineraryForm(request.POST)
+        packageForm = PackageForm(request.POST)
+        selected_Package = Selected_Package(request.POST)
+        
+        
+    context['itinerary'] = ItineraryForm
+    context['itinerary'] = ItineraryForm
+    context['itinerary'] = ItineraryForm
+    context['itinerary'] = ItineraryForm
+    context['itinerary'] = ItineraryForm
+    context['itinerary'] = ItineraryForm
     return render(request,'core/add-agent.html', context)

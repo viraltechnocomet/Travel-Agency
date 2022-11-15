@@ -55,20 +55,12 @@ class CreateUserCustomForm(ModelForm):
         }
                
 
-class ItinararyForm(forms.ModelForm):
+class CourntryForm(forms.ModelForm):
     class Meta:
-        model = Itinerary,Activity,Images,Category
+        model = Country
         fields = "__all__"
         
         widgets = {
-            'data_image':forms.TextInput(
-                attrs={
-                    'required' : True,
-                    'class':'form-control',
-                    'placeholder':"image",
-                    'type':"img",
-                }
-            ),
             'country':forms.TextInput(
                 attrs={
                     'required' : True,
@@ -85,16 +77,257 @@ class ItinararyForm(forms.ModelForm):
                     'type':"text",
                 }
             ),
-            
-            'image_name':forms.PasswordInput(
+        }
+        
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = "__all__"
+        
+        widgets = {
+            'category_name':forms.TextInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Place Name",
+                    'placeholder':"Country",
                     'type':"text",
                 }
             ),
         }
+        
+class ActivityForm(forms.ModelForm):
+    class Meta:
+        model = Activity
+        fields = "__all__"
+        
+        widgets = {
+            'Activity_name':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+        }
+        
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Activity
+        fields = "__all__"
+        
+        widgets = {
+            'image_name':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'data_image':forms.FileInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"img",
+                }
+            ),
+        }
+        
+class ItineraryForm(forms.ModelForm):
+    class Meta:
+        model = Itinerary
+        fields = "__all__"
+        
+        widgets = {
+            'image_id':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'description':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'budget':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'befor_you_go':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'nature':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'season':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'website':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'link':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'gps_cordinate':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'spend_time':forms.DateTimeBaseInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"date",
+                }
+            ),
+            'created_at':forms.DateTimeBaseInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"date",
+                }
+            ),
+            'update_at':forms.DateTimeBaseInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"date",
+                }
+            ),
+        }
+        
+class PackageForm(forms.ModelForm):
+    class Meta:
+        model = Itinerary
+        fields = "__all__"
+        
+        widgets = {
+            'package_name':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'package_name':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'itinerary_id':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'activity_id':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+        }
+        
+class Selected_Package(forms.ModelForm):
+    class Meta:
+        model = Itinerary
+        fields = "__all__"
+        
+        widgets = {
+            'use_id':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'package_id':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'person':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'costing':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"text",
+                }
+            ),
+            'arriaval_time':forms.DateTimeBaseInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Country",
+                    'type':"date",
+                }
+            ),
+        }
+        
+
 
     
     

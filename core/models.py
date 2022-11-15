@@ -12,7 +12,7 @@ class Country(models.Model):
     city = models.CharField(max_length=60, unique=True)
     
 class Category(models.Model):
-    c_name = models.CharField(max_length=255, unique=True)
+    category_name = models.CharField(max_length=255, unique=True)
     
 class Activity(models.Model):
     activity_name = models.CharField(max_length=160, unique=True)
