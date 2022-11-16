@@ -180,22 +180,40 @@ class ListAllUsersView(TemplateView):
         return render(request, "core/list-all-users.html",{context})
     
 
-def ItineraryView(request):
+
+def ItineraryView( request):
+    
     context = {}
-    if request.method == 'POST':
-        courntryForm = CourntryForm(request.POST)
-        categoryForm = CategoryForm(request.POST)
-        activityForm = ActivityForm(request.POST)
-        imageForm = ImageForm(request.POST)
-        itineraryform = ItineraryForm(request.POST)
-        packageForm = PackageForm(request.POST)
-        selected_Package = Selected_Package(request.POST)
-        
-        
-    context['itinerary'] = ItineraryForm
-    context['itinerary'] = ItineraryForm
-    context['itinerary'] = ItineraryForm
-    context['itinerary'] = ItineraryForm
-    context['itinerary'] = ItineraryForm
-    context['itinerary'] = ItineraryForm
-    return render(request,'core/add-agent.html', context)
+    courntryForm = CourntryForm(request.POST)
+    categoryForm = CategoryForm(request.POST)
+    activityForm = ActivityForm(request.POST)
+    imageForm = ImageForm(request.POST)
+    itineraryForm = ItineraryForm(request.POST)
+    packageForm = PackageForm(request.POST)
+    selected_PackageForm = Selected_PackageForm(request.POST)
+
+    if request.method=='POST':
+        if courntryForm.is_valid():
+            courntryForm.save()
+        if categoryForm.is_valid():
+            categoryForm.save()
+        if activityForm.is_valid():
+            activityForm.save()
+        if imageForm.is_valid():
+            imageForm.save()
+        if itineraryForm.is_valid():
+            itineraryForm.save()
+        if packageForm.is_valid():
+            packageForm.save()
+        if selected_PackageForm.is_valid():
+            selected_PackageForm.save()
+
+    context['courntryForm'] = CourntryForm
+    context['categoryForm'] = CategoryForm
+    context['activityForm'] = ActivityForm
+    context['imageForm'] = ImageForm
+    context['itineraryForm'] = ItineraryForm
+    context['packageForm'] = PackageForm
+    context['selected_PackageForm'] = Selected_PackageForm
+
+    return render(request,'core/add-itinerary.html', context)

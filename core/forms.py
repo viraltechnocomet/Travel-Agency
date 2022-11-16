@@ -89,7 +89,7 @@ class CategoryForm(forms.ModelForm):
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
+                    'placeholder':"Category",
                     'type':"text",
                 }
             ),
@@ -101,11 +101,11 @@ class ActivityForm(forms.ModelForm):
         fields = "__all__"
         
         widgets = {
-            'Activity_name':forms.TextInput(
+            'activity_name':forms.TextInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
+                    'placeholder':"Activity",
                     'type':"text",
                 }
             ),
@@ -113,7 +113,7 @@ class ActivityForm(forms.ModelForm):
         
 class ImageForm(forms.ModelForm):
     class Meta:
-        model = Activity
+        model = Images
         fields = "__all__"
         
         widgets = {
@@ -121,7 +121,7 @@ class ImageForm(forms.ModelForm):
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
+                    'placeholder':"Place Name",
                     'type':"text",
                 }
             ),
@@ -129,8 +129,8 @@ class ImageForm(forms.ModelForm):
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
-                    'type':"img",
+                    
+                    'type':"file",
                 }
             ),
         }
@@ -149,12 +149,14 @@ class ItineraryForm(forms.ModelForm):
                     'type':"text",
                 }
             ),
-            'description':forms.TextInput(
+            'description':forms.Textarea(
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
-                    'type':"text",
+                    'placeholder':"discription......",
+                    'type':"textarea",
+                    'rows':"3", 
+                    'cols':"5",
                 }
             ),
             'budget':forms.TextInput(
@@ -165,19 +167,29 @@ class ItineraryForm(forms.ModelForm):
                     'type':"text",
                 }
             ),
-            'befor_you_go':forms.TextInput(
+            'age':forms.TextInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
+                    'placeholder':"Age",
                     'type':"text",
+                }
+            ),
+            'befor_you_go':forms.Textarea(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Befor_you_go......",
+                    'type':"textare",
+                    'rows':"3",
+                    'cols':"5",
                 }
             ),
             'nature':forms.TextInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
+                    'placeholder':"nature",
                     'type':"text",
                 }
             ),
@@ -185,7 +197,7 @@ class ItineraryForm(forms.ModelForm):
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
+                    'placeholder':"season",
                     'type':"text",
                 }
             ),
@@ -193,7 +205,7 @@ class ItineraryForm(forms.ModelForm):
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
+                    'placeholder':"website",
                     'type':"text",
                 }
             ),
@@ -201,7 +213,7 @@ class ItineraryForm(forms.ModelForm):
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
+                    'placeholder':"link...",
                     'type':"text",
                 }
             ),
@@ -209,11 +221,11 @@ class ItineraryForm(forms.ModelForm):
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"Country",
+                    'placeholder':"GPS-Coordinate...",
                     'type':"text",
                 }
             ),
-            'spend_time':forms.DateTimeBaseInput(
+            'spend_time':forms.DateTimeInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
@@ -221,7 +233,7 @@ class ItineraryForm(forms.ModelForm):
                     'type':"date",
                 }
             ),
-            'created_at':forms.DateTimeBaseInput(
+            'created_at':forms.DateTimeInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
@@ -229,7 +241,7 @@ class ItineraryForm(forms.ModelForm):
                     'type':"date",
                 }
             ),
-            'update_at':forms.DateTimeBaseInput(
+            'update_at':forms.DateTimeInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
@@ -241,7 +253,7 @@ class ItineraryForm(forms.ModelForm):
         
 class PackageForm(forms.ModelForm):
     class Meta:
-        model = Itinerary
+        model = Package
         fields = "__all__"
         
         widgets = {
@@ -279,9 +291,9 @@ class PackageForm(forms.ModelForm):
             ),
         }
         
-class Selected_Package(forms.ModelForm):
+class Selected_PackageForm(forms.ModelForm):
     class Meta:
-        model = Itinerary
+        model = Selected_Package
         fields = "__all__"
         
         widgets = {
@@ -317,7 +329,7 @@ class Selected_Package(forms.ModelForm):
                     'type':"text",
                 }
             ),
-            'arriaval_time':forms.DateTimeBaseInput(
+            'arriaval_time':forms.DateTimeInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',

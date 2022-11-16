@@ -25,6 +25,7 @@ class Itinerary(models.Model):
     image_id=models.ForeignKey(Images,on_delete=models.CASCADE)
     description=models.TextField()
     budget=models.FloatField()
+    age=models.CharField(max_length=255)
     befor_you_go=models.CharField(max_length=500)
     nature=models.CharField(max_length=250)
     season=models.CharField(max_length=250)

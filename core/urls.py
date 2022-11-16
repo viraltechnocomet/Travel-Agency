@@ -15,6 +15,7 @@ urlpatterns = [
     path('add-user/',views.AddUserView.as_view(), name='add-user'),
     path('list-all-admin/',views.ListAllAdminView.as_view(), name='list-all-admin'),
     path('list-all-users/',views.ListAllUsersView.as_view(), name='list-all-users'),
+    path('add-itinerary/',views.ItineraryView, name='add-itinerary'),
     # path('add-agent/',views.ItinararyView.as_view(), name='add-agent'),
     
     
