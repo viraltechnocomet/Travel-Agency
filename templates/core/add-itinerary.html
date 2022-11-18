@@ -30,7 +30,7 @@ Add-Itinerary
                             </div>
                             
                             <div class="tab-menu-heading">
-                                {% if form.errors %}
+                                {% if itinerary.errors %}
                                 {% for field in form %}
                                 {% for error in field.errors %}
                                 <div class="alert alert-danger" role="alert">
@@ -57,59 +57,59 @@ Add-Itinerary
 
                                     <label>Image</label>
                                     <div class="mb-3">
-                                        {{ imageForm.data_image }}
+                                        {{ itinerary.data_image }}
                                     </div>
                                     <label>Destination Name</label>
                                     <div class="mb-3">
-                                        {{ imageForm.image_name }}
+                                        {{ itinerary.image_name }}
                                     </div>
                                     <label>Country</label>
                                     <div class="mb-3">
-                                        {{ courntryForm.country }}
+                                        {{ itinerary.country }}
                                     </div>
                                     <label>City</label>
                                     <div class="mb-3">
-                                        {{ courntryForm.city }}
+                                        {{ itinerary.city }}
                                     </div>
                                     <label>Category</label>
                                     <div class="mb-3">
-                                        {{ categoryForm.category_name }}
+                                        {{ itinerary.category_name }}
                                     </div>
                                     <label>Activity</label>
                                     <div class="mb-3">
-                                        {{ activityForm.activity_name }}
+                                        {{ itinerary.activity_name }}
                                     </div>
                                     <label>Age</label>
                                     <div class="mb-3">
-                                        {{ itineraryForm.age }}
+                                        {{ itinerary.age }}
                                     </div>
                                     <label>Discription</label>
                                     <div class="mb-3">
-                                        {{ itineraryForm.description }}
+                                        {{ itinerary.description }}
                                     </div>
                                     <label>Befor_You_Go</label>
                                     <div class="mb-3">
-                                        {{ itineraryForm.befor_you_go }}
+                                        {{ itinerary.befor_you_go }}
                                     </div>
                                     <label>Nature</label>
                                     <div class="mb-3">
-                                        {{ itineraryForm.nature }}
+                                        {{ itinerary.nature }}
                                     </div>
                                     <label>Season</label>
                                     <div class="mb-3">
-                                        {{ itineraryForm.season }}
+                                        {{ itinerary.season }}
                                     </div>
                                     <label>Website</label>
                                     <div class="mb-3">
-                                        {{ itineraryForm.website }}
+                                        {{ itinerary.website }}
                                     </div>
                                     <label>Link</label>
                                     <div class="mb-3">
-                                        {{ itineraryForm.link }}
+                                        {{ itinerary.link }}
                                     </div>
                                     <label>GPS Coordinate</label>
                                     <div class="mb-3">
-                                        {{ itineraryForm.gps_cordinate }}
+                                        {{ itinerary.gps_cordinate }}
                                     </div>
                                     
 
@@ -121,7 +121,7 @@ Add-Itinerary
                                    
                                     <div class="text-center">
                                         <input type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0"
-                                            value="Add Manager" />
+                                            value="Add Itinerary" />
                                     </div>
                                     
                                 </form>

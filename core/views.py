@@ -80,6 +80,7 @@ class AddUserView(TemplateView):
         user = request.user
         init_data = {"type" : "USER","created_by":user}
         form = SignUpForm(initial=init_data)
+        print(form)
         context={
             'form': form
         }
@@ -87,6 +88,7 @@ class AddUserView(TemplateView):
 
     def post(self,request):
         form = SignUpForm(data = request.POST)
+        print(form)
         if form.is_valid():
             form.save()
             # return redirect(request, "app/dashboard.html")
@@ -181,39 +183,23 @@ class ListAllUsersView(TemplateView):
     
 
 
-def ItineraryView( request):
+def ItineraryView(request):
     
     context = {}
-    courntryForm = CourntryForm(request.POST)
-    categoryForm = CategoryForm(request.POST)
-    activityForm = ActivityForm(request.POST)
-    imageForm = ImageForm(request.POST)
-    itineraryForm = ItineraryForm(request.POST)
-    packageForm = PackageForm(request.POST)
-    selected_PackageForm = Selected_PackageForm(request.POST)
-
     if request.method=='POST':
-        if courntryForm.is_valid():
-            courntryForm.save()
-        if categoryForm.is_valid():
-            categoryForm.save()
-        if activityForm.is_valid():
-            activityForm.save()
-        if imageForm.is_valid():
-            imageForm.save()
-        if itineraryForm.is_valid():
-            itineraryForm.save()
-        if packageForm.is_valid():
-            packageForm.save()
-        if selected_PackageForm.is_valid():
-            selected_PackageForm.save()
+        
+        itinerary = ItineraryForms(request.POST)
+        print(itinerary)
+        if itinerary.is_valid():
+            try:
+                itinerary.save()
+                messages.success(request, "Your data is successfully save......")
+                print('Done.........')
+            except ValueError:
+                messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+                print("Oppsssssss")
+        # else:
+        #     print(itinerary.errors)
 
-    context['courntryForm'] = CourntryForm
-    context['categoryForm'] = CategoryForm
-    context['activityForm'] = ActivityForm
-    context['imageForm'] = ImageForm
-    context['itineraryForm'] = ItineraryForm
-    context['packageForm'] = PackageForm
-    context['selected_PackageForm'] = Selected_PackageForm
-
+    context['itinerary'] = ItineraryForms
     return render(request,'core/add-itinerary.html', context)
