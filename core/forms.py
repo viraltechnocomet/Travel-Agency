@@ -54,13 +54,32 @@ class CreateUserCustomForm(ModelForm):
             ),
         }
         
+class AddCountryForm(ModelForm):
+    class Meta:
+        model = Country
+        fields = '__all__'
+    country = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control','placeholder': 'Country...', 'type':"text",})))
+    
+class AddCityForm(ModelForm):
+    class Meta:
+        model = City
+        fields = '__all__'
+    city = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control','placeholder': 'City...', 'type':"text",})))
+    
+class AddCategoryForm(ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
+    category_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control','placeholder': 'Category...', 'type':"text",})))
+        
 class ItineraryForms(forms.Form):
     # data_image = forms.FileField(upload_to='media', height_field=None, width_field=None, max_length=100)
     data_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'form-control', 'type': 'file',})))
     image_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Destination Name', 'type':"text",})))
-    country = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Country Name', 'type':"text",})))
-    city = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'City Name', 'type':"text",})))
-    category_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Category', 'type':"text",})))
+    country=forms.ModelChoiceField(queryset=Country.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    city=forms.ModelChoiceField(queryset=City.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    
+    category_name = forms.ModelChoiceField(queryset=Category.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
     activity_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Activity Name', 'type':"text",})))
     age=forms.IntegerField(widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Age', 'type':"text",})))
     description = forms.CharField(widget=forms.Textarea(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Destination Name', 'type':"text", 'rows': 3, 'cols': 2}))

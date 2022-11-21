@@ -51,72 +51,14 @@ Add-Itinerary
                                 {% endif %}
                             </div>
                             <div class="card-body">
-                                <form role="form text-left" action="{% url 'core:add-itinerary' %}" method="post">
+                                <form role="form text-left" method="post">
                                     {% csrf_token %}
                                     
-
-                                    <label>Image</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.data_image }}
-                                    </div>
-                                    <label>Destination Name</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.image_name }}
-                                    </div>
-                                    <label>Country</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.country }}
-                                        <a href="{% url 'core:add-country' %}"  class="btn"><i class="fa fa-plus"></i></a>
-                                    </div>
-                                    <label>City</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.city }}
-                                        <a href="{% url 'core:add-city' %}"  class="btn"><i class="fa fa-plus"></i></a>
-                                    </div>
                                     <label>Category</label>
                                     <div class="mb-3">
-                                        {{ itinerary.category_name }}
-                                        <a href="{% url 'core:add-category' %}"  class="btn"><i class="fa fa-plus"></i></a>
-
+                                        {{ addcategory.category_name }}
+                                        
                                     </div>
-                                    <label>Activity</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.activity_name }}
-                                    </div>
-                                    <label>Age</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.age }}
-                                    </div>
-                                    <label>Discription</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.description }}
-                                    </div>
-                                    <label>Befor_You_Go</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.befor_you_go }}
-                                    </div>
-                                    <label>Nature</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.nature }}
-                                    </div>
-                                    <label>Season</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.season }}
-                                    </div>
-                                    <label>Website</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.website }}
-                                    </div>
-                                    <label>Link</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.link }}
-                                    </div>
-                                    <label>GPS Coordinate</label>
-                                    <div class="mb-3">
-                                        {{ itinerary.gps_cordinate }}
-                                    </div>
-                                    
-
                                     {% comment %} <div>
                                     <label>User Type</label>
                                     <div class="mb-3">
@@ -125,7 +67,7 @@ Add-Itinerary
                                    
                                     <div class="text-center">
                                         <input type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0"
-                                            value="Add Itinerary" />
+                                            value="Add Category" />
                                     </div>
                                     
                                 </form>

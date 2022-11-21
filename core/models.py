@@ -9,10 +9,22 @@ User = get_user_model()
 
 class Country(models.Model):
     country = models.CharField(max_length=60, unique=True)
+    
+    def __str__(self):
+        return self.country
+    
+    
+class City(models.Model):
     city = models.CharField(max_length=60, unique=True)
+    
+    def __str__(self):
+        return self.city
     
 class Category(models.Model):
     category_name = models.CharField(max_length=255, unique=True)
+    
+    def __str__(self):
+        return self.category_name
     
 class Activity(models.Model):
     activity_name = models.CharField(max_length=160, unique=True)

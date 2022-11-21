@@ -191,7 +191,20 @@ def ItineraryView(request):
         itinerary = ItineraryForms(request.POST)
         print(itinerary)
         if itinerary.is_valid():
+            countryid=request.POST.get('country')
+            country=Country.objects.get(country=countryid)
+            
+            cityid=request.POST.get('city')
+            city=City.objects.get(city=cityid)
+            
+            categoryid=request.POST.get('category_name')
+            category=City.objects.get(category_name=categoryid)
             try:
+                itinerary.country=country
+                itinerary.city=city
+                itinerary.category_name=category
+                
+                
                 itinerary.save()
                 messages.success(request, "Your data is successfully save......")
                 print('Done.........')
@@ -202,4 +215,47 @@ def ItineraryView(request):
         #     print(itinerary.errors)
 
     context['itinerary'] = ItineraryForms
+    
     return render(request,'core/add-itinerary.html', context)
+
+def AddCountryView(request):
+    context = {}
+
+    if request.method == 'POST':
+        form = AddCountryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add-country')
+    else:
+        print("opps......")
+            
+    context['addcountry'] = AddCountryForm
+    return render(request, 'core/add-country.html', context)
+
+def AddCityView(request):
+    context = {}
+
+    if request.method == 'POST':
+        form = AddCityForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('core:add-city')
+    else:
+        print("opps......")
+            
+    context['addcity'] = AddCityForm
+    return render(request, 'core/add-city.html', context)
+
+def AddCategoryView(request):
+    context = {}
+
+    if request.method == 'POST':
+        form = AddCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('core:add-category')
+    else:
+        print("opps......")
+            
+    context['addcategory'] = AddCategoryForm
+    return render(request, 'core/add-category.html', context)
