@@ -19,6 +19,10 @@ urlpatterns = [
     path('add-country/',views.AddCountryView, name='add-country'),
     path('add-city/',views.AddCityView, name='add-city'),
     path('add-category/',views.AddCategoryView, name='add-category'),
+    path('add-age/',views.AddAgeView, name='add-age'),
+    path('add-season/',views.AddSeasonView, name='add-season'),
+    
+    
     
     
     # path('add-agent/',views.ItinararyView.as_view(), name='add-agent'),

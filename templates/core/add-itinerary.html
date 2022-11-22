@@ -86,6 +86,7 @@ Add-Itinerary
                                     <label>Age</label>
                                     <div class="mb-3">
                                         {{ itinerary.age }}
+                                        <a href="{% url 'core:add-age' %}"  class="btn"><i class="fa fa-plus"></i></a>
                                     </div>
                                     <label>Discription</label>
                                     <div class="mb-3">
@@ -102,6 +103,7 @@ Add-Itinerary
                                     <label>Season</label>
                                     <div class="mb-3">
                                         {{ itinerary.season }}
+                                        <a href="{% url 'core:add-season' %}"  class="btn"><i class="fa fa-plus"></i></a>
                                     </div>
                                     <label>Website</label>
                                     <div class="mb-3">

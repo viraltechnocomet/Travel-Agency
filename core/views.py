@@ -199,10 +199,19 @@ def ItineraryView(request):
             
             categoryid=request.POST.get('category_name')
             category=City.objects.get(category_name=categoryid)
+            
+            ageid=request.POST.get('age')
+            age=Age.objects.get(age=ageid)
+            
+            seasonid=request.POST.get('season')
+            season=Season.objects.get(season=seasonid)
+            
             try:
                 itinerary.country=country
                 itinerary.city=city
                 itinerary.category_name=category
+                itinerary.age=age
+                itinerary.season=season
                 
                 
                 itinerary.save()
@@ -225,7 +234,7 @@ def AddCountryView(request):
         form = AddCountryForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('add-country')
+            return redirect('core:add-country')
     else:
         print("opps......")
             
@@ -259,3 +268,31 @@ def AddCategoryView(request):
             
     context['addcategory'] = AddCategoryForm
     return render(request, 'core/add-category.html', context)
+
+def AddAgeView(request):
+    context = {}
+
+    if request.method == 'POST':
+        form = AddAgeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('core:add-age')
+    else:
+        print("opps......")
+            
+    context['addage'] = AddAgeForm
+    return render(request, 'core/add-age.html', context)
+
+def AddSeasonView(request):
+    context = {}
+
+    if request.method == 'POST':
+        form = AddSeasonForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('core:add-season')
+    else:
+        print("opps......")
+            
+    context['addseason'] = AddSeasonForm
+    return render(request, 'core/add-season.html', context)

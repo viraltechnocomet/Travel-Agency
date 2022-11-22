@@ -28,6 +28,19 @@ class Category(models.Model):
     
 class Activity(models.Model):
     activity_name = models.CharField(max_length=160, unique=True)
+    
+class Age(models.Model):
+    age = models.CharField(max_length=160, unique=True)
+    
+    def __str__(self):
+        return self.age
+    
+class Season(models.Model):
+    season=models.CharField(max_length=250, unique=True)
+    
+    def __str__(self):
+        return self.season
+    
 
 class Images(models.Model):
     image_name=models.CharField(max_length=550, unique=True)
@@ -37,16 +50,16 @@ class Itinerary(models.Model):
     image_id=models.ForeignKey(Images,on_delete=models.CASCADE)
     description=models.TextField()
     budget=models.FloatField()
-    age=models.IntegerField()
     befor_you_go=models.TextField()
     nature=models.CharField(max_length=250)
-    season=models.CharField(max_length=250)
     website=models.CharField(max_length = 500)
     link=models.CharField(max_length=500)
     gps_cordinate=models.CharField(max_length=500)
     spend_time=models.DateTimeField()
     created_at=models.DateTimeField(auto_now_add=True)
     update_at=models.DateTimeField(auto_now=True)
+    
+    
     
 class Package(models.Model):
     package_name=models.CharField(max_length=250,unique=True)
