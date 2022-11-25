@@ -21,6 +21,8 @@ urlpatterns = [
     path('add-category/',views.AddCategoryView, name='add-category'),
     path('add-age/',views.AddAgeView, name='add-age'),
     path('add-season/',views.AddSeasonView, name='add-season'),
+    path('add-activity/',views.AddActivityView, name='add-activity'),
+    
     
     
     

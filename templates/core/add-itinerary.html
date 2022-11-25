@@ -30,7 +30,7 @@ Add-Itinerary
                             </div>
                             
                             <div class="tab-menu-heading">
-                                {% if itinerary.errors %}
+                                {% if form.errors %}
                                 {% for field in form %}
                                 {% for error in field.errors %}
                                 <div class="alert alert-danger" role="alert">
@@ -51,17 +51,17 @@ Add-Itinerary
                                 {% endif %}
                             </div>
                             <div class="card-body">
-                                <form role="form text-left" action="{% url 'core:add-itinerary' %}" method="post">
+                                <form role="form text-left" enctype="multipart/form-data" action="{% url 'core:add-itinerary' %}" method="post">
                                     {% csrf_token %}
+                                    {{itinerary.as_p}}
                                     
-
-                                    <label>Image</label>
+                                    {% comment %} <label>Image</label>
                                     <div class="mb-3">
                                         {{ itinerary.data_image }}
                                     </div>
                                     <label>Destination Name</label>
                                     <div class="mb-3">
-                                        {{ itinerary.image_name }}
+                                        {{ itinerary.destination }}
                                     </div>
                                     <label>Country</label>
                                     <div class="mb-3">
@@ -82,6 +82,7 @@ Add-Itinerary
                                     <label>Activity</label>
                                     <div class="mb-3">
                                         {{ itinerary.activity_name }}
+                                        <a href="{% url 'core:add-activity' %}"  class="btn"><i class="fa fa-plus"></i></a>
                                     </div>
                                     <label>Age</label>
                                     <div class="mb-3">
@@ -116,7 +117,7 @@ Add-Itinerary
                                     <label>GPS Coordinate</label>
                                     <div class="mb-3">
                                         {{ itinerary.gps_cordinate }}
-                                    </div>
+                                    </div> {% endcomment %}
                                     
 
                                     {% comment %} <div>
@@ -138,6 +139,7 @@ Add-Itinerary
             </div>
         </section>
     </main>
+    
 </body>
 
 {% endblock content %}

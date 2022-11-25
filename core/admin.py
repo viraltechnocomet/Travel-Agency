@@ -4,3 +4,4 @@ from .models import *
 User = get_user_model()
 
 admin.site.register(Itinerary)
+admin.site.register(Images)

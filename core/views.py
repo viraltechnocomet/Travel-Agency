@@ -22,6 +22,8 @@ from django.conf import settings
 import os
 from accounts.forms import SignUpForm
 from core.forms import *
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 from django.core import files
@@ -38,19 +40,21 @@ User = get_user_model()
 
 TEMP_PROFILE_IMAGE_NAME = "temp_profile_image.png"
 
+
 class DashboardView(View):
     template_name = './core/dashboard.html'
-
+    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         context = {"demo":"value"}
         return render(request, self.template_name,context=context)
-
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         ...
         
 
 
 class AddAdminView(TemplateView):
+    @method_decorator(login_required)
     def get(self,request):
         user = request.user
         init_data = {"type" : "ADMIN","created_by":user}
@@ -60,7 +64,7 @@ class AddAdminView(TemplateView):
             'form': form
         }
         return render(request, "core/add-admin.html",context)
-
+    @method_decorator(login_required)
     def post(self,request):
         form = SignUpForm(data = request.POST)
         if form.is_valid():
@@ -75,7 +79,9 @@ class AddAdminView(TemplateView):
         }
         return render(request, "core/add-admin.html",context)
 
+
 class AddUserView(TemplateView):
+    @method_decorator(login_required)
     def get(self,request):
         user = request.user
         init_data = {"type" : "USER","created_by":user}
@@ -86,6 +92,7 @@ class AddUserView(TemplateView):
         }
         return render(request, "core/add-user.html", context)
 
+    @method_decorator(login_required)
     def post(self,request):
         form = SignUpForm(data = request.POST)
         print(form)
@@ -101,7 +108,9 @@ class AddUserView(TemplateView):
         }
         return render(request, "core/add-user.html",context)
 
+
 class ListAllAdminView(TemplateView):
+    @method_decorator(login_required)
     def get(self,request):
         if request.user.is_superuser:
             users = User.objects.filter(type="ADMIN")
@@ -113,6 +122,7 @@ class ListAllAdminView(TemplateView):
         }
         return render(request, "core/list-all-admins.html",context)
 
+    @method_decorator(login_required)
     def post(self,request):
         action = request.POST.get("action")
         user_id = request.POST.get("user_id")
@@ -145,7 +155,9 @@ class ListAllAdminView(TemplateView):
         }
         return render(request, "core/list-all-admins.html",context)
 
+
 class ListAllUsersView(TemplateView):
+    @method_decorator(login_required)
     def get(self,request):
         if request.user.is_superuser:
             users = User.objects.filter(type="USER")
@@ -156,6 +168,7 @@ class ListAllUsersView(TemplateView):
         }
         return render(request, "core/list-all-users.html",context)
 
+    @method_decorator(login_required)
     def post(self,request):
         action = request.POST.get("action")
         user_id = request.POST.get("user_id")
@@ -182,51 +195,58 @@ class ListAllUsersView(TemplateView):
         return render(request, "core/list-all-users.html",{context})
     
 
-
+@login_required(login_url='/')
 def ItineraryView(request):
     
     context = {}
     if request.method=='POST':
         
+        
         itinerary = ItineraryForms(request.POST)
-        print(itinerary)
+        print(request.FILES)
+        img = Images()
+        img.data_image = request.FILES['data_image']
+        img.save()
+        
+        itinerary.data_image=img
         if itinerary.is_valid():
-            countryid=request.POST.get('country')
-            country=Country.objects.get(country=countryid)
+            print("hello...")
             
-            cityid=request.POST.get('city')
-            city=City.objects.get(city=cityid)
-            
-            categoryid=request.POST.get('category_name')
-            category=City.objects.get(category_name=categoryid)
-            
-            ageid=request.POST.get('age')
-            age=Age.objects.get(age=ageid)
-            
-            seasonid=request.POST.get('season')
-            season=Season.objects.get(season=seasonid)
-            
-            try:
-                itinerary.country=country
-                itinerary.city=city
-                itinerary.category_name=category
-                itinerary.age=age
-                itinerary.season=season
+            try: 
+                cd = itinerary.cleaned_data
+                print(cd)
+
+                pc = Itinerary(
+                    # country = cd['country'],
+                    # city = cd['city'],
+                    # category_name = cd['category_name'],
+                    # activity_name = cd['activity_name'],
+                    data_image = img.id,
+                    destination = cd['destination'],
+                    description = cd['description'],
+                    befor_you_go = cd['befor_you_go'],
+                    nature = cd['nature'],
+                    # season = cd['season'],
+                    website = cd['website'],
+                    link = cd['link'],
+                    gps_cordinate = cd['gps_cordinate']
+                )
                 
-                
-                itinerary.save()
+                pc.save()
+            
                 messages.success(request, "Your data is successfully save......")
                 print('Done.........')
             except ValueError:
                 messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
                 print("Oppsssssss")
-        # else:
-        #     print(itinerary.errors)
+        else:
+            print(itinerary.errors)
 
     context['itinerary'] = ItineraryForms
     
     return render(request,'core/add-itinerary.html', context)
 
+@login_required(login_url='/')           
 def AddCountryView(request):
     context = {}
 
@@ -234,13 +254,17 @@ def AddCountryView(request):
         form = AddCountryForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Your data is successfully save......")
             return redirect('core:add-country')
+        else:
+            print("opps......")
     else:
-        print("opps......")
-            
+        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+                
     context['addcountry'] = AddCountryForm
     return render(request, 'core/add-country.html', context)
 
+@login_required(login_url='/')
 def AddCityView(request):
     context = {}
 
@@ -248,13 +272,17 @@ def AddCityView(request):
         form = AddCityForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Your data is successfully save......")
             return redirect('core:add-city')
+        else:
+            print("opps......")
     else:
-        print("opps......")
-            
+        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+                
     context['addcity'] = AddCityForm
     return render(request, 'core/add-city.html', context)
 
+@login_required(login_url='/')
 def AddCategoryView(request):
     context = {}
 
@@ -262,13 +290,17 @@ def AddCategoryView(request):
         form = AddCategoryForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Your data is successfully save......")
             return redirect('core:add-category')
+        else:
+            print("opps......")
     else:
-        print("opps......")
+        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
             
     context['addcategory'] = AddCategoryForm
     return render(request, 'core/add-category.html', context)
 
+@login_required(login_url='/')
 def AddAgeView(request):
     context = {}
 
@@ -276,13 +308,17 @@ def AddAgeView(request):
         form = AddAgeForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Your data is successfully save......")
             return redirect('core:add-age')
+        else:
+            print("opps......")
     else:
-        print("opps......")
+        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
             
     context['addage'] = AddAgeForm
     return render(request, 'core/add-age.html', context)
 
+@login_required(login_url='/')
 def AddSeasonView(request):
     context = {}
 
@@ -290,9 +326,33 @@ def AddSeasonView(request):
         form = AddSeasonForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Your data is successfully save......")
             return redirect('core:add-season')
+        else:
+            print("opps......")
     else:
-        print("opps......")
+        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
             
     context['addseason'] = AddSeasonForm
     return render(request, 'core/add-season.html', context)
+
+@login_required(login_url='/')
+def AddActivityView(request):
+    context = {}
+
+    if request.method == 'POST':
+        form = AddActivityForm(request.POST)
+        if form.is_valid():
+            print("Done...")
+            form.save()
+            messages.success(request, "Your data is successfully save......")
+            return redirect('core:add-activity')
+        else:
+            form = AddActivityForm(request.POST)
+            print(form.errors)
+            print("I'm So sorry......")
+    else:
+        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+            
+    context['addactivity'] = AddActivityForm
+    return render(request, 'core/add-activity.html', context)
