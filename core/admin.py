@@ -5,3 +5,4 @@ User = get_user_model()
 
 admin.site.register(Itinerary)
 admin.site.register(Images)
+admin.site.register(Country)

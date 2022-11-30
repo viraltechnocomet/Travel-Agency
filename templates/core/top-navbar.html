@@ -63,14 +63,16 @@
                     </div>
                 </div> {% endcomment %}
                 {% if request.user.is_authenticated %}
-                <div class="dropdown mt-3">
-                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{request.user.username}}
-                    </button>
-                    <ul class="dropdown-menu">
+                <div class="mt-2">
+                    <h5><strong>{{request.user.username}}</strong>&nbsp;<span> </span></h5>
+                </div>
+                <div class="dropdown mt-1 dropdown-center">
+                    <img class="account-image rounded-circle m-auto d-block dropdown-toggle" src="\static\assets\img\marie.jpg" width="40" height="40" data-bs-toggle="dropdown" aria-expanded="false" id="id_profile_links">
+                        {% comment %} {{request.user.username}} {% endcomment %}
+                    <div class="dropdown-menu" aria-labelledby="id_profile_links">
                         <li><a class="dropdown-item" href="#">Edit Profile</a></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
-                    </ul>
+                    </div>
                 </div>
                 {% endif %}
                 

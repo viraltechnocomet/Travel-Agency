@@ -52,7 +52,6 @@ class DashboardView(View):
         ...
         
 
-
 class AddAdminView(TemplateView):
     @method_decorator(login_required)
     def get(self,request):
@@ -202,26 +201,29 @@ def ItineraryView(request):
     if request.method=='POST':
         
         
-        itinerary = ItineraryForms(request.POST)
-        print(request.FILES)
-        img = Images()
-        img.data_image = request.FILES['data_image']
-        img.save()
+        itinerary = ItineraryForms(request.POST,request.FILES)
+        # img = ItineraryForms(request.POST, request.FILES)
+        # img.data_image = request.FILES['data_image']
         
-        itinerary.data_image=img
+        # itinerary.data_image=img
         if itinerary.is_valid():
-            print("hello...")
+            itinerary.save()
+            
+            # print("hello...")
+            # print(request.FILES)
             
             try: 
                 cd = itinerary.cleaned_data
-                print(cd)
+                img = Images(data_image=request.FILES['data_image'])
+                img.save()
+                
 
                 pc = Itinerary(
                     # country = cd['country'],
                     # city = cd['city'],
                     # category_name = cd['category_name'],
                     # activity_name = cd['activity_name'],
-                    data_image = img.id,
+                    image_id = img,
                     destination = cd['destination'],
                     description = cd['description'],
                     befor_you_go = cd['befor_you_go'],
@@ -258,10 +260,11 @@ def AddCountryView(request):
             return redirect('core:add-country')
         else:
             print("opps......")
-    else:
-        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+    # else:
+    #     form = AddCountryForm(request.POST)
+    #     # messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
                 
-    context['addcountry'] = AddCountryForm
+    context['addcountry'] = AddCountryForm()
     return render(request, 'core/add-country.html', context)
 
 @login_required(login_url='/')
@@ -276,8 +279,8 @@ def AddCityView(request):
             return redirect('core:add-city')
         else:
             print("opps......")
-    else:
-        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+    # else:
+    #     messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
                 
     context['addcity'] = AddCityForm
     return render(request, 'core/add-city.html', context)
@@ -294,8 +297,8 @@ def AddCategoryView(request):
             return redirect('core:add-category')
         else:
             print("opps......")
-    else:
-        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+    # else:
+    #     messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
             
     context['addcategory'] = AddCategoryForm
     return render(request, 'core/add-category.html', context)
@@ -312,8 +315,8 @@ def AddAgeView(request):
             return redirect('core:add-age')
         else:
             print("opps......")
-    else:
-        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+    # else:
+    #     messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
             
     context['addage'] = AddAgeForm
     return render(request, 'core/add-age.html', context)
@@ -330,8 +333,8 @@ def AddSeasonView(request):
             return redirect('core:add-season')
         else:
             print("opps......")
-    else:
-        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+    # else:
+    #     messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
             
     context['addseason'] = AddSeasonForm
     return render(request, 'core/add-season.html', context)
@@ -351,8 +354,8 @@ def AddActivityView(request):
             form = AddActivityForm(request.POST)
             print(form.errors)
             print("I'm So sorry......")
-    else:
-        messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+    # else:
+    #     messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
             
     context['addactivity'] = AddActivityForm
     return render(request, 'core/add-activity.html', context)
