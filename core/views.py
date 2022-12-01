@@ -359,3 +359,25 @@ def AddActivityView(request):
             
     context['addactivity'] = AddActivityForm
     return render(request, 'core/add-activity.html', context)
+
+@login_required(login_url='/')
+def itineraryRead(request):
+    context = {}
+    
+    itinerary = Itinerary.objects.all()
+    image = Images.objects.all()
+    season = Season.objects.all()
+    country = Country.objects.all()
+    city = City.objects.all()
+    activity = Activity.objects.all()
+    age = Age.objects.all()
+    
+    context['itinerary'] = itinerary
+    context['image'] = image
+    context['season'] = season
+    context['country'] = country
+    context['city'] = city
+    context['activity'] = activity
+    context['age'] = age
+    
+    return render(request, 'core/itinerary.html', context)

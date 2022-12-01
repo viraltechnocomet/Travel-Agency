@@ -52,6 +52,14 @@ class Images(models.Model):
 class Itinerary(models.Model):
     image_id=models.ForeignKey(Images,on_delete=models.CASCADE)
     destination = models.CharField(max_length=255, unique=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    category_name = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+    activity_name = models.ForeignKey(Activity, on_delete=models.CASCADE, blank=True, null=True)
+    age = models.ForeignKey(Age, on_delete=models.CASCADE, blank=True, null=True)
+    season = models.ForeignKey(Season, on_delete=models.CASCADE, blank=True, null=True)
+    
+    
     description=models.TextField()
     # budget=models.FloatField()
     befor_you_go=models.TextField()

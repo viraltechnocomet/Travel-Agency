@@ -22,6 +22,7 @@ urlpatterns = [
     path('add-age/',views.AddAgeView, name='add-age'),
     path('add-season/',views.AddSeasonView, name='add-season'),
     path('add-activity/',views.AddActivityView, name='add-activity'),
+    path('itinerary', views.itineraryRead, name='itinerary'),
     
     
     
