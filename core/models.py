@@ -46,11 +46,11 @@ class Season(models.Model):
     
 
 class Images(models.Model):
-    data_image=models.ImageField(upload_to='media/')
+    pass
     # image_name=models.CharField(max_length=550, unique=True)
     
 class Itinerary(models.Model):
-    image_id=models.ForeignKey(Images,on_delete=models.CASCADE)
+    data_image=models.ImageField(upload_to='media/', null=True, blank=True)
     destination = models.CharField(max_length=255, unique=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)

@@ -68,6 +68,7 @@ class AddAdminView(TemplateView):
         form = SignUpForm(data = request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Admin Added Successfully...")
             # return redirect(request, "app/dashboard.html")
             return redirect('core:add-admin')
         else:
@@ -98,8 +99,10 @@ class AddUserView(TemplateView):
         if form.is_valid():
             form.save()
             # return redirect(request, "app/dashboard.html")
+            messages.success(request, "User Added Successfully...")
             return redirect('core:add-user')
         else:
+            
             messages.error(request, form.errors)
 
         context={
@@ -191,7 +194,7 @@ class ListAllUsersView(TemplateView):
         context={
             "users" : users
         }
-        return render(request, "core/list-all-users.html",{context})
+        return render(request, "core/list-all-users.html",context)
     
 
 @login_required(login_url='/')
@@ -214,16 +217,14 @@ def ItineraryView(request):
             
             try: 
                 cd = itinerary.cleaned_data
-                img = Images(data_image=request.FILES['data_image'])
-                img.save()
-                
+            
 
                 pc = Itinerary(
                     # country = cd['country'],
                     # city = cd['city'],
                     # category_name = cd['category_name'],
                     # activity_name = cd['activity_name'],
-                    image_id = img,
+                    data_image = request.FILES['data_image'],
                     destination = cd['destination'],
                     description = cd['description'],
                     befor_you_go = cd['befor_you_go'],
@@ -363,17 +364,25 @@ def AddActivityView(request):
 @login_required(login_url='/')
 def itineraryRead(request):
     context = {}
-    
     itinerary = Itinerary.objects.all()
-    image = Images.objects.all()
     season = Season.objects.all()
     country = Country.objects.all()
     city = City.objects.all()
     activity = Activity.objects.all()
     age = Age.objects.all()
     
+    # iti = Itinerary.objects.all().values()
+    # limit = 3
+    # total_recoreds = Itinerary.objects.all().count()
+    # print(total_recoreds)
+    # if total_recoreds%limit == 0:
+    #     total_record = total_recoreds//limit
+    #     print(total_record)
+    # else:
+    #     total_record = total_recoreds//limit
+    #     print(total_record)
+    
     context['itinerary'] = itinerary
-    context['image'] = image
     context['season'] = season
     context['country'] = country
     context['city'] = city
@@ -381,3 +390,4 @@ def itineraryRead(request):
     context['age'] = age
     
     return render(request, 'core/itinerary.html', context)
+
