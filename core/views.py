@@ -370,17 +370,7 @@ def itineraryRead(request):
     city = City.objects.all()
     activity = Activity.objects.all()
     age = Age.objects.all()
-    
-    # iti = Itinerary.objects.all().values()
-    # limit = 3
-    # total_recoreds = Itinerary.objects.all().count()
-    # print(total_recoreds)
-    # if total_recoreds%limit == 0:
-    #     total_record = total_recoreds//limit
-    #     print(total_record)
-    # else:
-    #     total_record = total_recoreds//limit
-    #     print(total_record)
+
     
     context['itinerary'] = itinerary
     context['season'] = season
@@ -390,4 +380,32 @@ def itineraryRead(request):
     context['age'] = age
     
     return render(request, 'core/itinerary.html', context)
+
+@login_required(login_url='/')
+def itinerary_details(request, id):
+    if request.method == "GET":
+        context = {}
+        itinerary_data = Itinerary.objects.get(pk=id)
+        season_data = Season.objects.all()
+        country_data = Country.objects.all()
+        city_data = City.objects.all()
+        activity_data = Activity.objects.all()
+        age_data = Age.objects.all()
+        # itinerary_data = Itinerary.objects.get(pk=id)
+        # season_data = Season.objects.get(pk=id)
+        # country_data = Country.objects.get(pk=id)
+        # city_data = City.objects.get(pk=id)
+        # activity_data = Activity.objects.get(pk=id)
+        # age_data = Age.objects.get(pk=id)
+        
+        context['itinerary_data'] = itinerary_data
+        context['season_data'] = season_data
+        context['country_data'] = country_data
+        context['city_data'] = city_data
+        context['activity_data'] = activity_data
+        context['age_data'] = age_data
+    
+        return render(request, 'core/itinerary-details.html', context)
+    else:
+        return HttpResponse("Page not supported")
 

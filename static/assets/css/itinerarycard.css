@@ -7,7 +7,7 @@ figure {
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
-    margin: 20px 0 80px;
+    /* margin: 20px 0 80px; */
 }
 
 .itinerary-card {
@@ -175,7 +175,7 @@ figure {
 .news .article {
     /* overflow: hidden; */
     position: relative;
-    width: 350px;
+    width: 240px;
     height: 235px;
     margin: 20px;
 }

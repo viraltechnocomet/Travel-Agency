@@ -1,0 +1,120 @@
+{% extends "./base.html" %}
+
+{% block title %}
+Admin Users
+{% endblock title %}
+
+
+
+
+
+{% block content %}
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            {% block error_messages %}
+            {% if messages %}
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        <p>{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endblock error_messages %}
+
+            <!-- PAGE-HEADER -->
+            {% comment %} <div class="page-header">
+
+                <div>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">List Admin</li>
+                    </ol>
+                </div>
+            </div> {% endcomment %}
+            <!-- PAGE-HEADER END -->
+
+
+            <!-- Row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">All ITINERARY</h3>
+                        </div>
+                        <div class="itinerary-container p-l-23">
+                            
+                            <!-- <div class="row mt-4"> -->
+                                <!-- <div class="col-lg-7 mb-lg-0 mb-4"> -->
+                                    <!-- <div class="card"> -->
+                                        <!-- <div class="card-body p-3"> -->
+                                            <div class="row">
+
+                                                <div class="col-lg-5 text-center mt-5 mt-lg-0">
+                                                    {% comment %} <div class="border-radius-lg h-100"> {% endcomment %}
+                                                        
+                                                        <img class="rounded-3 justify-content-center h-100 w-100 position-relative z-index-2" src="{{ itinerary_data.data_image.url }}" alt="rocket">
+                                                        
+                                                    {% comment %} </div> {% endcomment %}
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="d-flex flex-column h-100">
+                                                        <h5 class="font-weight-bolder">{{itinerary_data.destination}}</h5>
+                                                        <span class="text-bold">Country: &nbsp;{{itinerary_data.country}}</span>
+                                                        <span class="text-bold">City: &nbsp;{{itinerary_data.city}}</span>
+                                                        <span class="text-bold">Category: &nbsp;{{itinerary_data.category_name}}</span>
+                                                        <span class="text-bold">Activity: &nbsp;{{itinerary_data.activity_name}}</span>
+                                                        
+                                                        <p class="mb-5">From colors, cards, typography to complex elements, you will
+                                                            find the full documentation.</p>
+                                                        <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
+                                                            href="javascript:;">
+                                                            Read More
+                                                            <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="m-t-10 col-lg-6">
+                                                    <div class="d-flex flex-column h-100">
+                                                        <span class=" text-bold">{{itinerary_data.description}}</span>
+                                                    </div>
+                                                                                                  
+                                                </div>
+                                                <div class="text-center">
+                                                    <button class="btn btn-sm btn-info" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User"
+                                                        type="submit" name="action">
+                                                        <span class="fe fe-edit"> Edit</span>
+                                                    </button>
+                                                
+                                                    <button class="btn  btn-sm btn-danger" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Delete User"
+                                                        type="submit" name="action" value="delete" onclick="return confirm('Are you sure you want to delete user?');">
+                                                        <span class="fe fe-trash-2">Delete </span>
+                                                    </button>
+                                                </div>
+                                                
+                                            </div>
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                                
+                            <!-- </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Row -->
+    </div>
+
+</div>
+{% endblock content %}

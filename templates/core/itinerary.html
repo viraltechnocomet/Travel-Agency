@@ -63,83 +63,45 @@ Admin Users
                                     <!-- <div class="itinerary-card mb-4 my-2 mx-2" style="width: 18rem;"> -->
                                     <div class="news">
                                         <div class="article">
+
                                             <img style="width: 250px; height: 150px;" src="{{ i.data_image.url }}">
 
                                             <figcaption>
 
-                                                <h3 class="mx-3 " style="color: #fff; opacity: 70%;">{{ i.destination }}</h3>
+                                                <h3 class="mx-3 " style="color: #fff; opacity: 70%;">{{ i.destination }}
+                                                </h3>
 
-                                                <div class="btn m-t-135 m-l-145 btn-outline-light"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                <a class="btn m-t-135 m-l-145 btn-outline-light"
+                                                    href='{% url "core:itinerary-details" i.id %}'
                                                     style="position: absolute; opacity: 60%; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; ">
                                                     Read More
-                                                </div>
+                                                </a>
 
                                             </figcaption>
                                         </div>
-                                        
+
                                     </div>
                                     <!-- </div> -->
                                 </figure>
                                 {% endfor %}
                             </div>
 
-                            {% comment %} <table>
-
-                                <tr>
-                                    {% for itinerarys in itinerary %}
-                                    <td>
-
-                                        <div class="itinerary-container">
-                                            <div class="news">
-
-                                                <figure class="article">
-
-                                                    <img src="{{ itinerarys.data_image.url }}" />
-
-                                                    <figcaption>
-
-                                                        <h3 class="mx-3 " style="color: #fff; opacity: 70%;">{{
-                                                            itinerarys.destination }}</h3>
-
-                                                        <div class="btn m-t-140 m-l-240 btn-outline-light"
-                                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                            style="position: absolute; opacity: 60%; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; ">
-                                                            Read More
-                                                        </div>
 
 
-
-
-                                                    </figcaption>
-
-                                                </figure>
-
-                                            </div>
-                                        </div>
-
-
-
-
-                                    </td>
-                                    {% endfor %}
-                                </tr>
-
-                            </table> {% endcomment %}
-                            
                             <!-- Modal -->
-                            {% for itinerarys in itinerary %}
+                            {% for i in itinerary %}
                             <div class="modal fade-in" id="exampleModal" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">{{ itinerarys.destination }}</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">{{ i.destination }}</h1>
                                             <button type="btn" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            ...
+                                            <img src="{{ itinerary.data_image.url }}"
+                                                style="width: 250px; height: 150px;" alt="">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
@@ -149,7 +111,8 @@ Admin Users
                                     </div>
                                 </div>
                             </div>
-                            {% endfor %}
+                            {% endfor%}
+
 
                         </div>
                     </div>

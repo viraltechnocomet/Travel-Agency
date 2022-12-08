@@ -23,13 +23,6 @@ urlpatterns = [
     path('add-season/',views.AddSeasonView, name='add-season'),
     path('add-activity/',views.AddActivityView, name='add-activity'),
     path('itinerary', views.itineraryRead, name='itinerary'),
-    
-    
-    
-    
-    
-    # path('add-agent/',views.ItinararyView.as_view(), name='add-agent'),
-    
-    
-    
+    path('itinerary-details/<int:id>/', views.itinerary_details, name='itinerary-details'),
+ 
 ]
