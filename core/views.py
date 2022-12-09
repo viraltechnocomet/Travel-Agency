@@ -409,3 +409,37 @@ def itinerary_details(request, id):
     else:
         return HttpResponse("Page not supported")
 
+@login_required
+def ItineraryDelete(request, id):
+    itinerary_data = Itinerary.objects.get(pk=id)
+    if itinerary_data.delete():
+        messages.success(request, 'Itineray SuccessFully Delete')
+        return redirect('core:itinerary')
+    else:
+        messages.error(request, "Something wen't to delete Itinerary" )
+    
+    return render(request, 'core/itinerary.html', {'itinerary_data': itinerary_data})
+
+@login_required
+def ItineraryUpdate(request, id):
+    
+    context = {}
+    
+    if request.method == 'POST':
+        itinerary_data = Itinerary.objects.get(pk=id)
+        form = ItineraryForms(request.POST, instance=itinerary_data)
+        if form.is_valid():
+            print("Done...")
+            form.save()
+            messages.success(request, "Itinerary SuccuessFully Updated")
+            return redirect('core:itinerary')
+        context['form'] = form
+        context['itinerary_data'] = itinerary_data
+    else:
+        itinerary_data = Itinerary.objects.get(pk=id)
+        form = ItineraryForms(instance=itinerary_data)
+        
+        context['form'] = form
+        context['itinerary_data'] = itinerary_data
+    
+    return render(request, 'core/itinerary-update.html', context)

@@ -67,37 +67,34 @@ Admin Users
 
                                                 <div class="col-lg-6">
                                                     <div class="d-flex flex-column h-100">
-                                                        <h5 class="font-weight-bolder">{{itinerary_data.destination}}</h5>
-                                                        <span class="text-bold">Country: &nbsp;{{itinerary_data.country}}</span>
-                                                        <span class="text-bold">City: &nbsp;{{itinerary_data.city}}</span>
-                                                        <span class="text-bold">Category: &nbsp;{{itinerary_data.category_name}}</span>
-                                                        <span class="text-bold">Activity: &nbsp;{{itinerary_data.activity_name}}</span>
+                                                        <span class="" style="font-size: 300%; font-weight: 900; color: #344767;">{{itinerary_data.destination}}</span>
+                                                        <span class="text-bold p-t-9" style="font-size: 125%; font-weight: 900; color: #46494d;">Country: &nbsp;{{itinerary_data.country}}</span>
+                                                        <span class="text-bold p-t-9" style="font-size: 125%; font-weight: 900; color: #46494d;">City: &nbsp;{{itinerary_data.city}}</span>
+                                                        <span class="text-bold p-t-9" style="font-size: 125%; font-weight: 900; color: #46494d;">Category: &nbsp;{{itinerary_data.category_name}}</span>
+                                                        <span class="text-bold p-t-9" style="font-size: 125%; font-weight: 900; color: #46494d;">Activity: &nbsp;{{itinerary_data.activity_name}}</span>
+                                                        <span class="text-bold p-t-9" style="font-size: 125%; font-weight: 900; color: #46494d;">Nature: &nbsp;{{itinerary_data.nature}}</span>
+                                                        <!-- <span class="p-t-8 text-bold">Discription: &nbsp;{{itinerary_data.description}}</span>
+                                                        <span class="p-t-8 text-bold">Befor You Go: &nbsp;{{itinerary_data.befor_you_go}}</span> -->
                                                         
-                                                        <p class="mb-5">From colors, cards, typography to complex elements, you will
-                                                            find the full documentation.</p>
-                                                        <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
-                                                            href="javascript:;">
-                                                            Read More
-                                                            <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                                                        </a>
                                                     </div>
                                                 </div>
 
                                                 <div class="m-t-10 col-lg-6">
                                                     <div class="d-flex flex-column h-100">
-                                                        <span class=" text-bold">{{itinerary_data.description}}</span>
+                                                        <span class=" text-bold">Discription: &nbsp;{{itinerary_data.description}}</span>
+                                                        <span class=" text-bold">Befor You Go: &nbsp;{{itinerary_data.befor_you_go}}</span>
                                                     </div>
                                                                                                   
                                                 </div>
                                                 <div class="text-center">
                                                     <button class="btn btn-sm btn-info" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User"
                                                         type="submit" name="action">
-                                                        <span class="fe fe-edit"> Edit</span>
+                                                        <a class="fe fe-edit" style="color: #fff;" href="/core/itinerary-update/{{itinerary_data.id}}"> Edit</a>
                                                     </button>
                                                 
                                                     <button class="btn  btn-sm btn-danger" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Delete User"
-                                                        type="submit" name="action" value="delete" onclick="return confirm('Are you sure you want to delete user?');">
-                                                        <span class="fe fe-trash-2">Delete </span>
+                                                        type="submit" name="action" >
+                                                        <a class="fe fe-trash-2" style="color: #fff" href="{% url 'core:itinerary-delete' itinerary_data.id %}" >Delete </a>
                                                     </button>
                                                 </div>
                                                 

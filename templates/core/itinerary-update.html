@@ -1,0 +1,275 @@
+{% extends "./base.html" %}
+{% block title %}
+Add-Itinerary
+{% endblock title %}
+
+{% block content %}
+
+
+<body class="">
+
+    <div class="main-content app-content mt-0">
+        <div class="side-app">
+
+            <!-- CONTAINER -->
+            <div class="main-container container-fluid">
+
+                <!-- PAGE-HEADER -->
+
+                <!-- PAGE-HEADER END -->
+
+                <!-- ROW-1 OPEN -->
+                <div class="row">
+                    {% if form.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% else %}
+                    {% block error_messages %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        <p>{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endblock error_messages %}
+                    {% endif %}
+                    <form class="login100-form validate-form" action="#" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.type }}
+                        <div class="offset-2 col-xl-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">ITINERARY</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        {% comment %} <div class="col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname">Image</label>
+                                                {{ itinerary.data_image }}
+                                            </div>
+                                        </div> {% endcomment %}
+                                        <div>
+                                            <div class="d-flex justify-content-center mb-2">
+                                                <img src="\static\assets\img\Itinerary_logo.png" class="rounded-circle"
+                                                    alt="example placeholder" style="width: 170px;" />
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="btn btn-primary btn-rounded"
+                                                    style="background-color: black;">
+                                                    {% comment %} <label class="form-label text-white m-1"
+                                                        for="customFile2">Choose Image</label> {% endcomment %}
+                                                    {% comment %} <input type="file" class="form-control d-none"
+                                                        id="customFile2" /> {% endcomment %}
+                                                    {{ itinerary_data.data_image }}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Destination</label>
+                                                {{ itinerary_data.destination }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Country</label>
+                                                <div class="input-group mb-3">
+                                                    {{ itinerary_data.country }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2"></label>
+                                                <div class="input-group-append">
+                                                    <a href="{% url 'core:add-country' %}"
+                                                        class="input-group-text btn shadow-none border border-dark mt-1"
+                                                        style="height: 40px;"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">city</label>
+                                                <div class="input-group mb-3">
+                                                    {{ itinerary_data.city }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2"></label>
+                                                <div class="input-group-append">
+                                                    <a href="{% url 'core:add-city' %}"
+                                                        class="input-group-text btn shadow-none border border-dark mt-1"
+                                                        style="height: 40px;"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-5 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Category</label>
+                                                <div class="input-group mb-3">
+                                                    {{ itinerary_data.category_name }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2"></label>
+                                                <div class="input-group-append">
+                                                    <a href="{% url 'core:add-category' %}"
+                                                        class="input-group-text btn shadow-none border border-dark mt-1"
+                                                        style="height: 40px;"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Activity</label>
+                                                <div class="input-group mb-3">
+                                                    {{ itinerary_data.activity_name }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2"></label>
+                                                <div class="input-group-append">
+                                                    <a href="{% url 'core:add-activity' %}"
+                                                        class="input-group-text btn shadow-none border border-dark mt-1"
+                                                        style="height: 40px;"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-5 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Age</label>
+                                                <div class="input-group mb-3">
+                                                    {{ itinerary_data.age }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2"></label>
+                                                <div class="input-group-append">
+                                                    <a href="{% url 'core:add-age' %}"
+                                                        class="input-group-text btn shadow-none border border-dark mt-1"
+                                                        style="height: 40px;"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Description</label>
+                                                {{ itinerary_data.description }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Be For You Go</label>
+                                                <div class="input-group mb-3">
+                                                    {{ itinerary_data.befor_you_go }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Nature</label>
+                                                {{ itinerary_data.nature }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Season</label>
+                                                <div class="input-group mb-3">
+                                                    {{ itinerary_data.season }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2"></label>
+                                                <div class="input-group-append">
+                                                    <a href="{% url 'core:add-season' %}"
+                                                        class="input-group-text btn shadow-none border border-dark mt-1"
+                                                        style="height: 40px;"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-7 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Website</label>
+                                                {{ itinerary_data.website }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">GPS Coordinate</label>
+                                                <div class="input-group mb-3">
+                                                    {{ itinerary_data.gps_cordinate }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname">Link</label>
+                                                {{ itinerary_data.link }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer text-end">
+                                        <div class="text-center">
+                                            <input type="submit" class="btn bg-gradient-info w-50 mt-4 mb-0"
+                                                value="Add Itinerary" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+            <!-- ROW-1 CLOSED -->
+        </div>
+        <!--CONTAINER CLOSED -->
+
+    </div>
+    </div>
+
+</body>
+
+{% endblock content %}

@@ -24,5 +24,7 @@ urlpatterns = [
     path('add-activity/',views.AddActivityView, name='add-activity'),
     path('itinerary', views.itineraryRead, name='itinerary'),
     path('itinerary-details/<int:id>/', views.itinerary_details, name='itinerary-details'),
+    path('itinerary-delete/<int:id>/', views.ItineraryDelete, name='itinerary-delete'),
+    path('itinerary-update/<int:id>/', views.ItineraryUpdate, name='itinerary-update'),
  
 ]
