@@ -391,12 +391,6 @@ def itinerary_details(request, id):
         city_data = City.objects.all()
         activity_data = Activity.objects.all()
         age_data = Age.objects.all()
-        # itinerary_data = Itinerary.objects.get(pk=id)
-        # season_data = Season.objects.get(pk=id)
-        # country_data = Country.objects.get(pk=id)
-        # city_data = City.objects.get(pk=id)
-        # activity_data = Activity.objects.get(pk=id)
-        # age_data = Age.objects.get(pk=id)
         
         context['itinerary_data'] = itinerary_data
         context['season_data'] = season_data
@@ -426,20 +420,21 @@ def ItineraryUpdate(request, id):
     context = {}
     
     if request.method == 'POST':
-        itinerary_data = Itinerary.objects.get(pk=id)
-        form = ItineraryForms(request.POST, instance=itinerary_data)
+        itinerary_datas = Itinerary.objects.get(pk=id)
+        form = ItineraryUpdateForms(request.POST, request.FILES, instance=itinerary_datas)
         if form.is_valid():
             print("Done...")
             form.save()
             messages.success(request, "Itinerary SuccuessFully Updated")
             return redirect('core:itinerary')
-        context['form'] = form
-        context['itinerary_data'] = itinerary_data
+        context['forms'] = form
+        context['itinerary_datas'] = itinerary_datas
     else:
-        itinerary_data = Itinerary.objects.get(pk=id)
-        form = ItineraryForms(instance=itinerary_data)
+        itinerary_datas = Itinerary.objects.get(pk=id)
         
-        context['form'] = form
-        context['itinerary_data'] = itinerary_data
+        form = ItineraryUpdateForms(instance=itinerary_datas)
+        
+        context['forms'] = form
+        context['itinerary_datas'] = itinerary_datas
     
     return render(request, 'core/itinerary-update.html', context)

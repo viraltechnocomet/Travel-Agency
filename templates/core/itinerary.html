@@ -56,35 +56,43 @@ Admin Users
                                 </a>
                             </div>
 
-                            <div class="row p-l-130 pt-2 mr-2 ml-2">
-                                {% for i in itinerary %}
-
-                                <figure class="article itinerary-card mb-4 my-2 mx-2">
-                                    <!-- <div class="itinerary-card mb-4 my-2 mx-2" style="width: 18rem;"> -->
-                                    <div class="news">
-                                        <div class="article">
-
-                                            <img style="width: 250px; height: 150px;" src="{{ i.data_image.url }}">
-
-                                            <figcaption>
-
-                                                <h3 class="mx-3 " style="color: #fff; opacity: 70%;">{{ i.destination }}
-                                                </h3>
-
-                                                <a class="btn m-t-135 m-l-145 btn-outline-light"
-                                                    href='{% url "core:itinerary-details" i.id %}'
-                                                    style="position: absolute; opacity: 60%; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; ">
-                                                    Read More
-                                                </a>
-
-                                            </figcaption>
+                            <!-- grid -->
+                            <div class="container">
+                                <div class="row row-cols-3">
+                                    {% for i in itinerary %}
+                                    <div class="col">
+                                    <figure>
+                                        <!-- <div class="itinerary-card mb-4 my-2 mx-2" style="width: 18rem;"> -->
+                                        <div class="news">
+                                            <div class="article">
+    
+                                                <img style="height: 250px; border-radius: 10%;" src="{{ i.data_image.url }}">
+    
+                                                <figcaption>
+    
+                                                    <h3 class="mx-3" style="color: #fff; opacity: 70%;">{{ i.destination }}
+                                                    </h3>
+                                                    <div>
+                                                    <a class="btn btn-outline-light"
+                                                        href='{% url "core:itinerary-details" i.id %}' style="position: absolute; opacity: 60%; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-left: 65%; margin-top: 49%;">
+                                                        Read More
+                                                    </a>
+                                                </div>
+    
+                                                </figcaption>
+                                            </div>
+    
                                         </div>
-
+                                        <!-- </div> -->
+                                    </figure>
                                     </div>
-                                    <!-- </div> -->
-                                </figure>
-                                {% endfor %}
-                            </div>
+                                    {% endfor %}
+                                </div>
+                              </div>
+
+
+
+                           
 
 
 

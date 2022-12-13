@@ -57,8 +57,7 @@ Add-Itinerary
                                         </div> {% endcomment %}
                                         <div>
                                             <div class="d-flex justify-content-center mb-2">
-                                                <img src="\static\assets\img\Itinerary_logo.png" class="rounded-circle"
-                                                    alt="example placeholder" style="width: 170px;" />
+                                                <img class="rounded-3 justify-content-center position-relative z-index-2" style="height: 200px; width: 300px;" src="{{ itinerary_datas.data_image.url }}" alt="rocket">
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <div class="btn btn-primary btn-rounded"
@@ -67,7 +66,7 @@ Add-Itinerary
                                                         for="customFile2">Choose Image</label> {% endcomment %}
                                                     {% comment %} <input type="file" class="form-control d-none"
                                                         id="customFile2" /> {% endcomment %}
-                                                    {{ itinerary_data.data_image }}
+                                                    {{ forms.data_image }}
 
                                                 </div>
                                             </div>
@@ -78,14 +77,14 @@ Add-Itinerary
                                         <div class="col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname2">Destination</label>
-                                                {{ itinerary_data.destination }}
+                                                {{ forms.destination }}
                                             </div>
                                         </div>
                                         <div class="col-lg-5 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname2">Country</label>
                                                 <div class="input-group mb-3">
-                                                    {{ itinerary_data.country }}
+                                                    {{ forms.country }}
                                                 </div>
                                             </div>
                                         </div>
@@ -106,7 +105,7 @@ Add-Itinerary
                                             <div class="form-group">
                                                 <label for="exampleInputname2">city</label>
                                                 <div class="input-group mb-3">
-                                                    {{ itinerary_data.city }}
+                                                    {{ forms.city }}
                                                 </div>
                                             </div>
                                         </div>
@@ -125,7 +124,7 @@ Add-Itinerary
                                             <div class="form-group">
                                                 <label for="exampleInputname2">Category</label>
                                                 <div class="input-group mb-3">
-                                                    {{ itinerary_data.category_name }}
+                                                    {{ forms.category_name }}
                                                 </div>
                                             </div>
                                         </div>
@@ -146,7 +145,7 @@ Add-Itinerary
                                             <div class="form-group">
                                                 <label for="exampleInputname2">Activity</label>
                                                 <div class="input-group mb-3">
-                                                    {{ itinerary_data.activity_name }}
+                                                    {{ forms.activity_name }}
                                                 </div>
                                             </div>
                                         </div>
@@ -165,7 +164,7 @@ Add-Itinerary
                                             <div class="form-group">
                                                 <label for="exampleInputname2">Age</label>
                                                 <div class="input-group mb-3">
-                                                    {{ itinerary_data.age }}
+                                                    {{ forms.age }}
                                                 </div>
                                             </div>
                                         </div>
@@ -185,14 +184,14 @@ Add-Itinerary
                                         <div class="col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname2">Description</label>
-                                                {{ itinerary_data.description }}
+                                                {{ forms.description }}
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname2">Be For You Go</label>
                                                 <div class="input-group mb-3">
-                                                    {{ itinerary_data.befor_you_go }}
+                                                    {{ forms.befor_you_go }}
                                                 </div>
                                             </div>
                                         </div>
@@ -203,14 +202,14 @@ Add-Itinerary
                                         <div class="col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname2">Nature</label>
-                                                {{ itinerary_data.nature }}
+                                                {{ forms.nature }}
                                             </div>
                                         </div>
                                         <div class="col-lg-5 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname2">Season</label>
                                                 <div class="input-group mb-3">
-                                                    {{ itinerary_data.season }}
+                                                    {{ forms.season }}
                                                 </div>
                                             </div>
                                         </div>
@@ -230,14 +229,14 @@ Add-Itinerary
                                         <div class="col-lg-7 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname2">Website</label>
-                                                {{ itinerary_data.website }}
+                                                {{ forms.website }}
                                             </div>
                                         </div>
                                         <div class="col-lg-5 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname2">GPS Coordinate</label>
                                                 <div class="input-group mb-3">
-                                                    {{ itinerary_data.gps_cordinate }}
+                                                    {{ forms.gps_cordinate }}
                                                 </div>
                                             </div>
                                         </div>
@@ -247,7 +246,7 @@ Add-Itinerary
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname">Link</label>
-                                                {{ itinerary_data.link }}
+                                                {{ forms.link }}
                                             </div>
                                         </div>
                                     </div>

@@ -11,7 +11,7 @@ figure {
 }
 
 .itinerary-card {
-    width: 300px;
+    /* width: 300px; */
     margin: 10px;
     background-color: white;
     /* box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5); */
@@ -175,7 +175,7 @@ figure {
 .news .article {
     /* overflow: hidden; */
     position: relative;
-    width: 240px;
+    /* width: 240px; */
     height: 235px;
     margin: 20px;
 }
@@ -188,7 +188,7 @@ figure {
 
 .news .article figcaption {
     position: absolute;
-    width: 250px;
+    width: 300px;
     font-size: 14px;
     text-shadow: 0 1px 0 rgba(51, 51, 51, 0.3);
     color: #fff;

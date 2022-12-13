@@ -71,14 +71,20 @@ class Itinerary(models.Model):
     # created_at=models.DateTimeField(auto_now_add=True)
     # update_at=models.DateTimeField(auto_now=True)
     
+    def __str__(self):
+        return self.destination
     
     
 class Package(models.Model):
     package_name=models.CharField(max_length=250,unique=True)
-    country_id=models.ForeignKey(Country,on_delete=models.CASCADE)
-    itinerary_id=models.ForeignKey(Itinerary,on_delete=models.CASCADE)
-    activity_id=models.ForeignKey(Activity,on_delete=models.CASCADE)
+    itinerary_details=models.ManyToManyField(Itinerary, blank=True)
+    from_date=models.DateTimeField(blank=True,null=True)
+    to_date=models.DateTimeField(blank=True,null=True)
+    price=models.IntegerField(null=True)
     
+    def __str__(self):
+        return self.package_name   
+
 class Selected_Package(models.Model):
     use_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     package_id=models.ForeignKey(Package,on_delete=models.CASCADE)
