@@ -68,8 +68,8 @@ class Itinerary(models.Model):
     link=models.CharField(max_length=500)
     gps_cordinate=models.CharField(max_length=500)
     # spend_time=models.DateTimeField()
-    # created_at=models.DateTimeField(auto_now_add=True)
-    # update_at=models.DateTimeField(auto_now=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.destination
@@ -80,7 +80,9 @@ class Package(models.Model):
     itinerary_details=models.ManyToManyField(Itinerary, blank=True)
     from_date=models.DateTimeField(blank=True,null=True)
     to_date=models.DateTimeField(blank=True,null=True)
-    price=models.IntegerField(null=True)
+    price=models.CharField(max_length=250, null=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.package_name   

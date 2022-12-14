@@ -139,3 +139,14 @@ class ItineraryUpdateForms(ModelForm):
     #     ...
         
 
+class ItineraryPackageForms(forms.Form):
+    
+    
+    package_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Package Name', 'type':"text",})))
+    itinerary_details=forms.ModelChoiceField(queryset=Itinerary.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    from_date=forms.DateTimeField(widget=(forms.DateTimeInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
+    to_date=forms.DateTimeField(widget=(forms.DateTimeInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
+    price=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Price', 'type':"text",})))
+    
+    def save(self, commit=True):
+        ...

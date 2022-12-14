@@ -438,3 +438,43 @@ def ItineraryUpdate(request, id):
         context['itinerary_datas'] = itinerary_datas
     
     return render(request, 'core/itinerary-update.html', context)
+
+
+@login_required(login_url='/')
+def ItineraryPackageView(request):
+    
+    context = {}
+    if request.method=='POST':
+        
+        
+        package = ItineraryPackageForms(request.POST)
+       
+        if package.is_valid():
+            package.save()
+            
+            try: 
+                cd = package.cleaned_data
+            
+
+                pc = Package(
+                    
+                    
+                    package_name = cd['package_name'],
+                    from_date = cd['from_date'],
+                    to_date = cd['to_date'],
+                    price = cd['price'],
+                )
+                
+                pc.save()
+            
+                messages.success(request, "Your data is successfully save......")
+                print('Done.........')
+            except ValueError:
+                messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+                print("Oppsssssss")
+        else:
+            print(package.errors)
+
+    context['package'] = ItineraryPackageForms
+    
+    return render(request,'core/itinerary-package.html', context)
