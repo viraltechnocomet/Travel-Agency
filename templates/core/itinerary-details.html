@@ -49,62 +49,45 @@ Admin Users
                         <div class="card-header m-l-5">
                             <h2 class="card-title">All ITINERARY</h2>
                         </div>
-                        <div class="itinerary-container p-l-23">
-                            
-                            <!-- <div class="row mt-4"> -->
-                                <!-- <div class="col-lg-7 mb-lg-0 mb-4"> -->
-                                    <!-- <div class="card"> -->
-                                        <!-- <div class="card-body p-3"> -->
-                                            <div class="row">
 
-                                                <div class="col-lg-5 text-center mt-5 mt-lg-0">
-                                                    {% comment %} <div class="border-radius-lg h-100"> {% endcomment %}
-                                                        
-                                                        <img class="rounded-3 position-relative z-index-2" style="height: 350px; width: 450px;" src="{{ itinerary_data.data_image.url }}" alt="rocket">
-                                                        
-                                                    {% comment %} </div> {% endcomment %}
-                                                </div>
 
-                                                <div class="col-lg-6">
-                                                    <div class="d-flex flex-column h-100">
-                                                        <span class="" style="font-size: 300%; font-weight: 900; color: #344767;">{{itinerary_data.destination}}</span>
-                                                        <span class="text-bold p-t-9" style="font-size: 125%; font-weight: 900; color: #46494d;">Country: &nbsp;{{itinerary_data.country}}</span>
-                                                        <span class="text-bold p-t-9" style="font-size: 125%; font-weight: 900; color: #46494d;">City: &nbsp;{{itinerary_data.city}}</span>
-                                                        <span class="text-bold p-t-9" style="font-size: 125%; font-weight: 900; color: #46494d;">Category: &nbsp;{{itinerary_data.category_name}}</span>
-                                                        <span class="text-bold p-t-9" style="font-size: 125%; font-weight: 900; color: #46494d;">Activity: &nbsp;{{itinerary_data.activity_name}}</span>
-                                                        <span class="text-bold p-t-9" style="font-size: 125%; font-weight: 900; color: #46494d;">Nature: &nbsp;{{itinerary_data.nature}}</span>
-                                                        <!-- <span class="p-t-8 text-bold">Discription: &nbsp;{{itinerary_data.description}}</span>
-                                                        <span class="p-t-8 text-bold">Befor You Go: &nbsp;{{itinerary_data.befor_you_go}}</span> -->
-                                                        
-                                                    </div>
-                                                </div>
+                        <div class="container pb-3">
+                            <div class="row">
+                              <div class="col-4">
+                                <img class="rounded-3 position-relative z-index-2" style="height: 280px; width: 360px;" src="{{ itinerary_data.data_image.url }}" alt="rocket">
+                              </div>
+                              <div class="col-3">
+                                <div class="d-flex flex-column h-100">
+                                    <span class="" style="font-size: 300%; font-weight: 900; line-height: 0.5; color: #344767;">{{itinerary_data.destination}}</span>
+                                    <span class="text-bold pt-4" style="font-size: 125%; font-weight: 900; color: #46494d;">Country: &nbsp;{{itinerary_data.country}}</span>
+                                    <span class="text-bold pt-2" style="font-size: 125%; font-weight: 900; color: #46494d;">City: &nbsp;{{itinerary_data.city}}</span>
+                                    <span class="text-bold pt-2" style="font-size: 125%; font-weight: 900; color: #46494d;">Category: &nbsp;{{itinerary_data.category_name}}</span>
+                                    <span class="text-bold pt-2" style="font-size: 125%; font-weight: 900; color: #46494d;">Activity: &nbsp;{{itinerary_data.activity_name}}</span>
+                                    <span class="text-bold pt-2" style="font-size: 125%; font-weight: 900; color: #46494d;">Nature: &nbsp;{{itinerary_data.nature}}</span>
+                                </div>
+                              </div>
+                              <div class="col-5">
+                                <div class="d-flex flex-column h-100">
+                                    <span class="text-bold">Discription: &nbsp;{{itinerary_data.description}}</span>
+                                    <span class="text-bold pt-2">Befor You Go: &nbsp;{{itinerary_data.befor_you_go}}</span>
+                                    
+                                    <div class="text-center position-absolute bottom-0 end-10">
+                                        <a class="btn btn-sm btn-info" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User" href="/core/itinerary-update/{{itinerary_data.id}}" type="submit" name="action">Edit
+                                            <a class="fe fe-edit" style="color: #fff;" > </a>
+                                    </a>
 
-                                                <div class="m-t-13 m-l-5 col-lg-6">
-                                                    <div class="d-flex flex-column h-100">
-                                                        <span class="text-bold">Discription: &nbsp;{{itinerary_data.description}}</span>
-                                                        <span class="text-bold">Befor You Go: &nbsp;{{itinerary_data.befor_you_go}}</span>
-                                                    </div>
-                                                                                                  
-                                                </div>
-                                                <div class="text-center">
-                                                    <a class="btn btn-sm btn-info" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User" href="/core/itinerary-update/{{itinerary_data.id}}" type="submit" name="action">Edit
-                                                        <a class="fe fe-edit" style="color: #fff;" > </a>
-                                                </a>
-                                                
-                                                    <button class="btn  btn-sm btn-danger" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Delete User"
-                                                        type="submit" name="action" >
-                                                        <a class="fe fe-trash-2" style="color: #fff" href="{% url 'core:itinerary-delete' itinerary_data.id %}" >Delete </a>
-                                                    </button>
-                                                </div>
-                                                
-                                            </div>
-                                        <!-- </div> -->
-                                    <!-- </div> -->
-                                <!-- </div> -->
-                                
-                            <!-- </div> -->
-
+                                        <button class="btn  btn-sm btn-danger" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Delete User"
+                                            type="submit" name="action" >
+                                            <a class="fe fe-trash-2" style="color: #fff" href="{% url 'core:itinerary-delete' itinerary_data.id %}" >Delete </a>
+                                        </button>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
                         </div>
+
+
+                        
                     </div>
                 </div>
             </div>

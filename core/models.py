@@ -58,10 +58,7 @@ class Itinerary(models.Model):
     activity_name = models.ForeignKey(Activity, on_delete=models.CASCADE, blank=True, null=True)
     age = models.ForeignKey(Age, on_delete=models.CASCADE, blank=True, null=True)
     season = models.ForeignKey(Season, on_delete=models.CASCADE, blank=True, null=True)
-    
-    
     description=models.TextField()
-    # budget=models.FloatField()
     befor_you_go=models.TextField()
     nature=models.CharField(max_length=250)
     website=models.CharField(max_length = 500)
@@ -81,9 +78,11 @@ class Package(models.Model):
     from_date=models.DateTimeField(blank=True,null=True)
     to_date=models.DateTimeField(blank=True,null=True)
     price=models.CharField(max_length=250, null=True)
+    days=models.CharField(max_length=250, null=True)
+    nights=models.CharField(max_length=250, null=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
-    
+    # mobile_number=models.BigIntegerField()
     def __str__(self):
         return self.package_name   
 

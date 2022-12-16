@@ -36,11 +36,11 @@ All Users
                         {% endblock error_messages %}
                         <div class="card-body">
 
-                            <a href="{% url 'core:add-user' %}" id="table2-new-row-button" class="btn btn-danger mb-4">
+                            <a href="{% url 'core:add-user' %}" id="table2-new-row-button" class="btn btn-primary mb-4">
                                 Add New
                                 User</a>
                             <div class="table-responsive">
-                                <table class="table table-bordered border text-nowrap mb-0" id="new-edi">
+                                <table class="table table-bordered border text-nowrap mb-0 text-center" id="new-edi">
                                     <thead>
                                         <tr>
                                             <th>User Name</th>
@@ -70,7 +70,6 @@ All Users
                                                             value="active">
                                                             <span class="fe fe-check"> </span>
                                                         </button>
-
                                                         <button class="btn  btn-sm btn-danger"
                                                             data-bs-placement="bottom" data-bs-toggle="tooltip"
                                                             title="Deactive User" type="submit" name="action"

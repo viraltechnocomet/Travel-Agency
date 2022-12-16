@@ -10,6 +10,8 @@ from core.models import *
 from django.db.models import Q
 
 
+
+
 User = get_user_model()
 
 
@@ -119,7 +121,6 @@ class ItineraryUpdateForms(ModelForm):
         model= Itinerary
         fields = '__all__'
     
-    # data_image = forms.FileField(upload_to='media', height_field=None, width_field=None, max_length=100)
     data_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
     destination = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Destination Name', 'type':"text",})))
     country=forms.ModelChoiceField(queryset=Country.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
@@ -135,15 +136,26 @@ class ItineraryUpdateForms(ModelForm):
     link=forms.CharField(max_length=500, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Link', 'type':"text",})))
     gps_cordinate=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'GPS Cordinate', 'type':"text",})))
     
-    # def save(self, commit=True):
-    #     ...
         
 
 class ItineraryPackageForms(forms.Form):
-    
-    
+
+    choices_list=list(Itinerary.objects.all().values('id','destination'))
+    print(type(choices_list))
+    res = [(val["id"],val["destination"]) for key,val in enumerate(choices_list)]
+    print("choice from db=",choices_list)
+    print("converted = ",res)
+    # choices_list=[
+    #     {"abcd",1},
+    #     {"bddd",2}
+    # ]
+    # print(type(choices_list))
+    # print("choice from var=",choices_list)
     package_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Package Name', 'type':"text",})))
-    itinerary_details=forms.ModelChoiceField(queryset=Itinerary.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    days = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Days', 'type':"text",})))
+    nights = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Nights', 'type':"text",})))
+    itinerary_details=forms.MultipleChoiceField(choices=res, widget=(forms.SelectMultiple(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    # itinerary_details=forms.ModelChoiceField(queryset=Itinerary.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
     from_date=forms.DateTimeField(widget=(forms.DateTimeInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
     to_date=forms.DateTimeField(widget=(forms.DateTimeInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
     price=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Price', 'type':"text",})))

@@ -38,6 +38,7 @@ DEFAULT_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_select2',
 ]
 
 CUSTOM_APPS = [

@@ -218,18 +218,12 @@ def ItineraryView(request):
             try: 
                 cd = itinerary.cleaned_data
             
-
                 pc = Itinerary(
-                    # country = cd['country'],
-                    # city = cd['city'],
-                    # category_name = cd['category_name'],
-                    # activity_name = cd['activity_name'],
                     data_image = request.FILES['data_image'],
                     destination = cd['destination'],
                     description = cd['description'],
                     befor_you_go = cd['befor_you_go'],
                     nature = cd['nature'],
-                    # season = cd['season'],
                     website = cd['website'],
                     link = cd['link'],
                     gps_cordinate = cd['gps_cordinate']
@@ -446,7 +440,6 @@ def ItineraryPackageView(request):
     context = {}
     if request.method=='POST':
         
-        
         package = ItineraryPackageForms(request.POST)
        
         if package.is_valid():
@@ -462,6 +455,8 @@ def ItineraryPackageView(request):
                     package_name = cd['package_name'],
                     from_date = cd['from_date'],
                     to_date = cd['to_date'],
+                    days = cd['days'],
+                    nights = cd['nights'],
                     price = cd['price'],
                 )
                 
