@@ -64,6 +64,7 @@ class Itinerary(models.Model):
     website=models.CharField(max_length = 500)
     link=models.CharField(max_length=500)
     gps_cordinate=models.CharField(max_length=500)
+    phone_no=models.CharField(max_length=20, null=True)
     # spend_time=models.DateTimeField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
@@ -82,7 +83,6 @@ class Package(models.Model):
     nights=models.CharField(max_length=250, null=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
-    # mobile_number=models.BigIntegerField()
     def __str__(self):
         return self.package_name   
 

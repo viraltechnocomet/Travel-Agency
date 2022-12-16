@@ -226,7 +226,8 @@ def ItineraryView(request):
                     nature = cd['nature'],
                     website = cd['website'],
                     link = cd['link'],
-                    gps_cordinate = cd['gps_cordinate']
+                    gps_cordinate = cd['gps_cordinate'],
+                    phone_no = cd['phone_no']
                 )
                 
                 pc.save()
