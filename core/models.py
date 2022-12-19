@@ -74,6 +74,7 @@ class Itinerary(models.Model):
     
     
 class Package(models.Model):
+    package_image=models.ImageField(upload_to='media/', null=True, blank=True)
     package_name=models.CharField(max_length=250,unique=True)
     itinerary_details=models.ManyToManyField(Itinerary, blank=True)
     from_date=models.DateTimeField(blank=True,null=True)
@@ -83,6 +84,7 @@ class Package(models.Model):
     nights=models.CharField(max_length=250, null=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+    
     def __str__(self):
         return self.package_name   
 

@@ -142,16 +142,17 @@ class ItineraryUpdateForms(ModelForm):
 class ItineraryPackageForms(forms.Form):
 
     choices_list=list(Itinerary.objects.all().values('id','destination'))
-    print(type(choices_list))
+    # print(type(choices_list))
     res = [(val["id"],val["destination"]) for key,val in enumerate(choices_list)]
-    print("choice from db=",choices_list)
-    print("converted = ",res)
+    # print("choice from db=",choices_list)
+    # print("converted = ",res)
     # choices_list=[
     #     {"abcd",1},
     #     {"bddd",2}
     # ]
     # print(type(choices_list))
     # print("choice from var=",choices_list)
+    package_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
     package_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Package Name', 'type':"text",})))
     days = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Days', 'type':"text",})))
     nights = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Nights', 'type':"text",})))

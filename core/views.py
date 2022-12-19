@@ -205,21 +205,23 @@ def ItineraryView(request):
         
         
         itinerary = ItineraryForms(request.POST,request.FILES)
-        # img = ItineraryForms(request.POST, request.FILES)
-        # img.data_image = request.FILES['data_image']
         
-        # itinerary.data_image=img
         if itinerary.is_valid():
             itinerary.save()
             
-            # print("hello...")
-            # print(request.FILES)
+        
             
             try: 
                 cd = itinerary.cleaned_data
             
                 pc = Itinerary(
                     data_image = request.FILES['data_image'],
+                    country = cd['country'],
+                    city = cd['city'],
+                    category_name = cd['category_name'],
+                    activity_name = cd['activity_name'],
+                    age = cd['age'],
+                    season = cd['season'],
                     destination = cd['destination'],
                     description = cd['description'],
                     befor_you_go = cd['befor_you_go'],
@@ -441,19 +443,22 @@ def ItineraryPackageView(request):
     context = {}
     if request.method=='POST':
         
-        package = ItineraryPackageForms(request.POST)
+        package = ItineraryPackageForms(request.POST,request.FILES)
+        
        
         if package.is_valid():
+           
+            
             package.save()
             
             try: 
                 cd = package.cleaned_data
             
-
                 pc = Package(
                     
-                    
+                    package_image = request.FILES['package_image'],
                     package_name = cd['package_name'],
+                    # itinerary_detail = cd['itinerary_detail'],
                     from_date = cd['from_date'],
                     to_date = cd['to_date'],
                     days = cd['days'],
@@ -462,7 +467,7 @@ def ItineraryPackageView(request):
                 )
                 
                 pc.save()
-            
+                
                 messages.success(request, "Your data is successfully save......")
                 print('Done.........')
             except ValueError:
