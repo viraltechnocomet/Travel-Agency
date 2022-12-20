@@ -27,6 +27,8 @@ urlpatterns = [
     path('itinerary-delete/<int:id>/', views.ItineraryDelete, name='itinerary-delete'),
     path('itinerary-update/<int:id>/', views.ItineraryUpdate, name='itinerary-update'),
     path('itinerary-package/', views.ItineraryPackageView, name='itinerary-package'),
+    path('package/', views.PackageRead, name='package'),
+    path('package-details/<int:id>', views.PackageDetails, name='package-details'),
     
  
 ]

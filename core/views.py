@@ -442,13 +442,15 @@ def ItineraryPackageView(request):
     
     context = {}
     if request.method=='POST':
+        itineraries = request.POST.getlist("itinerary_details")
+        print(type(itineraries)," " ,itineraries)
+        print(request.POST)
+        obj_itineraries = list(Itinerary.objects.filter(pk__in = itineraries))
+        print(obj_itineraries)
         
         package = ItineraryPackageForms(request.POST,request.FILES)
         
-       
         if package.is_valid():
-           
-            
             package.save()
             
             try: 
@@ -458,19 +460,20 @@ def ItineraryPackageView(request):
                     
                     package_image = request.FILES['package_image'],
                     package_name = cd['package_name'],
-                    # itinerary_detail = cd['itinerary_detail'],
                     from_date = cd['from_date'],
                     to_date = cd['to_date'],
                     days = cd['days'],
                     nights = cd['nights'],
                     price = cd['price'],
                 )
-                
                 pc.save()
+                pc.itinerary_details.set(obj_itineraries)
+                # print(pc.pk)
                 
                 messages.success(request, "Your data is successfully save......")
                 print('Done.........')
             except ValueError:
+                
                 messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
                 print("Oppsssssss")
         else:
@@ -479,3 +482,39 @@ def ItineraryPackageView(request):
     context['package'] = ItineraryPackageForms
     
     return render(request,'core/itinerary-package.html', context)
+
+@login_required(login_url='/')
+def PackageRead(request):
+    context = {}
+    package = Package.objects.all()
+    
+    context['packages'] = package
+    
+    return render(request, 'core/package.html', context)
+
+@login_required(login_url='/')
+def PackageDetails(request, id):
+    if request.method == "GET":
+        context = {}
+        # itinerary_data = Itinerary.objects.get(pk=id)
+        # season_data = Season.objects.all()
+        # country_data = Country.objects.all()
+        # city_data = City.objects.all()
+        # activity_data = Activity.objects.all()
+        # age_data = Age.objects.all()
+        package_datas = Package.objects.get(pk=id)
+        itinerary_datas= Itinerary.objects.all()
+        
+        
+        # context['itinerary_data'] = itinerary_data
+        # context['season_data'] = season_data
+        # context['country_data'] = country_data
+        # context['city_data'] = city_data
+        # context['activity_data'] = activity_data
+        # context['age_data'] = age_data
+        context['package_datas'] = package_datas
+        context['itinerary_datas'] = itinerary_datas
+    
+        return render(request, 'core/package-details.html', context)
+    else:
+        return HttpResponse("Page not supported")

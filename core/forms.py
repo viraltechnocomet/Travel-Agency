@@ -156,7 +156,7 @@ class ItineraryPackageForms(forms.Form):
     package_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Package Name', 'type':"text",})))
     days = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Days', 'type':"text",})))
     nights = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Nights', 'type':"text",})))
-    itinerary_details=forms.MultipleChoiceField(choices=res, widget=(forms.SelectMultiple(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    itinerary_details=forms.MultipleChoiceField(choices=res, widget=(forms.SelectMultiple(attrs={'required' : True, 'class':'form-control', 'type':"select",'name':"itinarary_choices"})))
     # itinerary_details=forms.ModelChoiceField(queryset=Itinerary.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
     from_date=forms.DateTimeField(widget=(forms.DateTimeInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
     to_date=forms.DateTimeField(widget=(forms.DateTimeInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
