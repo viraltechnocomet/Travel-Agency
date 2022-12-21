@@ -481,7 +481,7 @@ def ItineraryPackageView(request):
 
     context['package'] = ItineraryPackageForms
     
-    return render(request,'core/itinerary-package.html', context)
+    return render(request,'core/add-itinerary-package.html', context)
 
 @login_required(login_url='/')
 def PackageRead(request):

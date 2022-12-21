@@ -4,6 +4,9 @@ from .models import *
 User = get_user_model()
 
 admin.site.register(Itinerary)
-admin.site.register(Images)
 admin.site.register(Country)
+admin.site.register(City)
+admin.site.register(Category)
+admin.site.register(Age)
+admin.site.register(Season)
 admin.site.register(Package)

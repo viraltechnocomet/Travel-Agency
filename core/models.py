@@ -43,12 +43,7 @@ class Season(models.Model):
     
     def __str__(self):
         return self.season
-    
-
-class Images(models.Model):
-    pass
-    # image_name=models.CharField(max_length=550, unique=True)
-    
+     
 class Itinerary(models.Model):
     data_image=models.ImageField(upload_to='media/', null=True, blank=True)
     destination = models.CharField(max_length=255, unique=True)
