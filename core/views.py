@@ -503,8 +503,8 @@ def PackageDetails(request, id):
         # activity_data = Activity.objects.all()
         # age_data = Age.objects.all()
         package_datas = Package.objects.get(pk=id)
-        itinerary_datas= Itinerary.objects.all()
-        
+        package_itinerary_datas= package_datas.itinerary_details.all()
+        print(package_itinerary_datas)
         
         # context['itinerary_data'] = itinerary_data
         # context['season_data'] = season_data
@@ -513,7 +513,7 @@ def PackageDetails(request, id):
         # context['activity_data'] = activity_data
         # context['age_data'] = age_data
         context['package_datas'] = package_datas
-        context['itinerary_datas'] = itinerary_datas
+        context['package_itinerary_datas'] = package_itinerary_datas
     
         return render(request, 'core/package-details.html', context)
     else:
