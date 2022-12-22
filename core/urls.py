@@ -29,6 +29,7 @@ urlpatterns = [
     path('add-itinerary-package/', views.ItineraryPackageView, name='add-itinerary-package'),
     path('package/', views.PackageRead, name='package'),
     path('package-details/<int:id>', views.PackageDetails, name='package-details'),
+    path('package-delete/<int:id>/', views.PackageDelete, name='package-delete'),
+    path('package-update/<int:id>/', views.PackageUpdate, name='package-update'),
     
- 
 ]

@@ -400,7 +400,7 @@ def itinerary_details(request, id):
     else:
         return HttpResponse("Page not supported")
 
-@login_required
+@login_required(login_url='/')
 def ItineraryDelete(request, id):
     itinerary_data = Itinerary.objects.get(pk=id)
     if itinerary_data.delete():
@@ -411,7 +411,7 @@ def ItineraryDelete(request, id):
     
     return render(request, 'core/itinerary.html', {'itinerary_data': itinerary_data})
 
-@login_required
+@login_required(login_url='/')
 def ItineraryUpdate(request, id):
     
     context = {}
@@ -424,14 +424,14 @@ def ItineraryUpdate(request, id):
             form.save()
             messages.success(request, "Itinerary SuccuessFully Updated")
             return redirect('core:itinerary')
-        context['forms'] = form
+        context['forms_data'] = form
         context['itinerary_datas'] = itinerary_datas
     else:
         itinerary_datas = Itinerary.objects.get(pk=id)
         
         form = ItineraryUpdateForms(instance=itinerary_datas)
         
-        context['forms'] = form
+        context['forms_data'] = form
         context['itinerary_datas'] = itinerary_datas
     
     return render(request, 'core/itinerary-update.html', context)
@@ -496,25 +496,52 @@ def PackageRead(request):
 def PackageDetails(request, id):
     if request.method == "GET":
         context = {}
-        # itinerary_data = Itinerary.objects.get(pk=id)
-        # season_data = Season.objects.all()
-        # country_data = Country.objects.all()
-        # city_data = City.objects.all()
-        # activity_data = Activity.objects.all()
-        # age_data = Age.objects.all()
+        
         package_datas = Package.objects.get(pk=id)
         package_itinerary_datas= package_datas.itinerary_details.all()
         print(package_itinerary_datas)
         
-        # context['itinerary_data'] = itinerary_data
-        # context['season_data'] = season_data
-        # context['country_data'] = country_data
-        # context['city_data'] = city_data
-        # context['activity_data'] = activity_data
-        # context['age_data'] = age_data
         context['package_datas'] = package_datas
         context['package_itinerary_datas'] = package_itinerary_datas
     
         return render(request, 'core/package-details.html', context)
     else:
         return HttpResponse("Page not supported")
+
+@login_required(login_url='/')
+def PackageDelete(request, id):
+    package_datas = Package.objects.get(pk=id)
+    if package_datas.delete():
+        messages.success(request, 'Package SuccessFully Delete')
+        return redirect('core:package')
+    else:
+        messages.error(request, "Something wen't to delete Itinerary" )
+    
+    return render(request, 'core/package.html', {'package_datas': package_datas})
+
+@login_required(login_url='/')
+def PackageUpdate(request, id):
+    
+    context = {}
+    
+    if request.method == 'POST':
+        package_datas = Package.objects.get(pk=id)
+        form = PackageUpadateForms(request.POST, request.FILES, instance=package_datas)
+        if form.is_valid():
+            
+            # if Package.package_image!=None and Package.package_image!='':
+            #     package_datas.package_image=Package.package_image
+            form.save()
+            messages.success(request, "Package SuccuessFully Updated")
+            return redirect('core:package')
+        context['forms'] = form
+        context['package_datas'] = package_datas
+    else:
+        package_datas = Package.objects.get(pk=id)
+        
+        form = PackageUpadateForms(instance=package_datas)
+        
+        context['forms'] = form
+        context['package_datas'] = package_datas
+    
+    return render(request, 'core/package-update.html', context)
