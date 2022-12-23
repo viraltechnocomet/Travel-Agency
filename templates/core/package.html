@@ -51,11 +51,13 @@ Package
                         {% endif %}
                         {% endblock error_messages %}
                         <div class="itinerary-container">
+                            {% if user.user_type == 'ADMIN' %}
                             <div class="gride">
                                 <a href="{% url 'core:add-itinerary-package' %}" id="table2-new-row-button"
                                     class="btn btn-primary mb-3"> Add Package
                                 </a>
                             </div>
+                            {% endif %}
 
                             <!-- grid -->
                             <div class="container">

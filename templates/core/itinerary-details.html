@@ -51,7 +51,7 @@ Itinerary Details
                                         
                                         <div class="col-12 col-md-6 col-xl-3 mt-md-0 mt-4 text-left">
                                             <ul class="list-group">
-                                                <li class="list-group-item border-0 ps-0 pt-0 pb-3" style="font-size: 160%; font-weight: 700; line-height: 1;">
+                                                <li class="list-group-item border-0 ps-0 pt-0 pb-3" style="font-size: 135%; font-weight: 600; line-height: 1;">
                                                     <strong class="text-dark">Name:</strong> &nbsp; {{itinerary_data.destination}}
                                                 </li>
                                                 <li class="list-group-item border-0 ps-0 text-sm">
@@ -86,17 +86,18 @@ Itinerary Details
                                                 <li class="list-group-item border-0 ps-0 text-sm">
                                                     <strong class="text-dark">Phone No:</strong> &nbsp; {{ itinerary_data.phone_no }}
                                                 </li>
+
+                                                {% if user.user_type == 'ADMIN' %}
                                                 <div class="text-center position-absolute bottom-0 end-10">
                                                     <a class="btn btn-sm btn-info" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User" href="/core/itinerary-update/{{itinerary_data.id}}" type="submit" name="action">Edit
                                                         <a class="fe fe-edit" style="color: #fff;" > </a>
                                                 </a>
-            
                                                     <button class="btn  btn-sm btn-danger" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Delete User"
                                                         type="submit" name="action" onclick="return confirm('Are you sure you want to delete user?');">
                                                         <a class="fe fe-trash-2" style="color: #fff" href="{% url 'core:itinerary-delete' itinerary_data.id %}" >Delete </a>
                                                     </button>
                                                 </div>
-
+                                                {% endif %}
                                             </ul>
                                         </div>
                                     </div>

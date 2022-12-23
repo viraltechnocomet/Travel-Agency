@@ -11,12 +11,12 @@ Itinerary
 {% block content %}
 <!--app-content open-->
 <div class="main-content app-content mt-0">
+    
     <div class="side-app">
 
         <!-- CONTAINER -->
         <div class="main-container container-fluid">
-            
-
+           
             <!-- PAGE-HEADER -->
             {% comment %} <div class="page-header">
 
@@ -51,11 +51,13 @@ Itinerary
                         {% endif %}
                         {% endblock error_messages %}
                         <div class="itinerary-container">
+                            {% if user.user_type == 'ADMIN' %}
                             <div class="gride">
                                 <a href="{% url 'core:add-itinerary' %}" id="table2-new-row-button"
                                     class="btn btn-primary mb-3"> Add Itinerary
                                 </a>
                             </div>
+                            {% endif %}
 
                             <!-- grid -->
                             <div class="container">

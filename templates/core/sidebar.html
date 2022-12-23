@@ -19,7 +19,7 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-
+            {% if user.user_type == 'ADMIN' %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'core:list-all-admin' %}">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -36,6 +36,7 @@
                     <span class="nav-link-text ms-1">User</span>
                 </a>
             </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'core:itinerary' %}">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
