@@ -22,9 +22,10 @@ from django.conf import settings
 import os
 from accounts.forms import SignUpForm
 from core.forms import *
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 from django.utils.decorators import method_decorator
 
+from django.db.models import Q 
 
 from django.core import files
 from django.core.files.storage import default_storage
@@ -65,7 +66,11 @@ class AddAdminView(TemplateView):
         return render(request, "core/add-admin.html",context)
     @method_decorator(login_required)
     def post(self,request):
-        form = SignUpForm(data = request.POST)
+        
+        user = request.user
+        init_data = {"type" : "ADMIN","created_by":user}
+        form = SignUpForm(data = request.POST, initial=init_data) 
+        print(init_data)
         if form.is_valid():
             form.save()
             messages.success(request, "Admin Added Successfully...")
@@ -79,14 +84,12 @@ class AddAdminView(TemplateView):
         }
         return render(request, "core/add-admin.html",context)
 
-
 class AddUserView(TemplateView):
     @method_decorator(login_required)
     def get(self,request):
         user = request.user
         init_data = {"type" : "USER","created_by":user}
         form = SignUpForm(initial=init_data)
-        print(form)
         context={
             'form': form
         }
@@ -94,8 +97,10 @@ class AddUserView(TemplateView):
 
     @method_decorator(login_required)
     def post(self,request):
-        form = SignUpForm(data = request.POST)
-        print(form)
+        user = request.user
+        init_data = {"type" : "USER","created_by":user}
+        form = SignUpForm(data = request.POST, initial=init_data)
+        print(init_data)
         if form.is_valid():
             form.save()
             # return redirect(request, "app/dashboard.html")
@@ -117,7 +122,7 @@ class ListAllAdminView(TemplateView):
         if request.user.is_superuser:
             users = User.objects.filter(type="ADMIN")
         else:
-            users = User.objects.filter(type="ADMIN").filter(created_by=request.user)
+            users = User.objects.filter(type="ADMIN")
             
         context={
             "users" : users
@@ -157,14 +162,13 @@ class ListAllAdminView(TemplateView):
         }
         return render(request, "core/list-all-admins.html",context)
 
-
 class ListAllUsersView(TemplateView):
     @method_decorator(login_required)
     def get(self,request):
         if request.user.is_superuser:
             users = User.objects.filter(type="USER")
         else:
-            users = User.objects.filter(type="USER").filter(created_by=request.user)
+            users = User.objects.filter(type="USER")
         context={
             "users" : users
         }
@@ -203,13 +207,10 @@ def ItineraryView(request):
     context = {}
     if request.method=='POST':
         
-        
         itinerary = ItineraryForms(request.POST,request.FILES)
         
         if itinerary.is_valid():
             itinerary.save()
-            
-        
             
             try: 
                 cd = itinerary.cleaned_data
@@ -361,20 +362,26 @@ def AddActivityView(request):
 @login_required(login_url='/')
 def itineraryRead(request):
     context = {}
-    itinerary = Itinerary.objects.all()
-    season = Season.objects.all()
-    country = Country.objects.all()
-    city = City.objects.all()
-    activity = Activity.objects.all()
-    age = Age.objects.all()
+    
+    if 'q' in request.GET:
+        q = request.GET['q']
+        itinerary = Itinerary.objects.filter(destination__icontains=q)
+        print(itinerary)
+    else:
+        itinerary = Itinerary.objects.all().order_by("-created_at")
+        # season = Season.objects.all()
+        # country = Country.objects.all()
+        # city = City.objects.all()
+        # activity = Activity.objects.all()
+        # age = Age.objects.all()
 
     
     context['itinerary'] = itinerary
-    context['season'] = season
-    context['country'] = country
-    context['city'] = city
-    context['activity'] = activity
-    context['age'] = age
+    # context['season'] = season
+    # context['country'] = country
+    # context['city'] = city
+    # context['activity'] = activity
+    # context['age'] = age
     
     return render(request, 'core/itinerary.html', context)
 
@@ -486,8 +493,12 @@ def ItineraryPackageView(request):
 @login_required(login_url='/')
 def PackageRead(request):
     context = {}
-    package = Package.objects.all()
-    
+    if 'q' in request.GET:
+        q = request.GET['q']
+        package = Package.objects.filter(package_name__icontains=q)
+    else:
+        package = Package.objects.all().order_by("-created_at")
+
     context['packages'] = package
     
     return render(request, 'core/package.html', context)
@@ -499,7 +510,6 @@ def PackageDetails(request, id):
         
         package_datas = Package.objects.get(pk=id)
         package_itinerary_datas= package_datas.itinerary_details.all()
-        print(package_itinerary_datas)
         
         context['package_datas'] = package_datas
         context['package_itinerary_datas'] = package_itinerary_datas
@@ -545,3 +555,19 @@ def PackageUpdate(request, id):
         context['package_datas'] = package_datas
     
     return render(request, 'core/package-update.html', context)
+
+
+@login_required(login_url='/')
+def AddCart(request,id):
+    context = {}
+    if request.method == "GET":
+        
+        package_cart_data = Package.objects.get(pk=id)
+        package_itinerary_details= package_cart_data.itinerary_details.all()
+        print(package_itinerary_details)
+        
+        context['package_cart_data'] = package_cart_data
+        context['package_itinerary_details'] = package_itinerary_details
+    
+    return render(request, 'core/add-cart.html',context)
+   

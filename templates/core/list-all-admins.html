@@ -24,7 +24,7 @@ Admin
                         {% block error_messages %}
                         {% if messages %}
                         <div class="row">
-                            <div class="col-sm-6 col-sm-offset-3">
+                            <div class="col-sm-12 col-sm-offset-3 text-center">
                                 {% for message in messages %}
                                 <div class="alert alert-{{ message.tags }}" role="alert">
                                     <p>{{ message }}</p>
@@ -35,9 +35,11 @@ Admin
                         {% endif %}
                         {% endblock error_messages %}
                         <div class="card-body">
+                            <div class="text-center">
                             <a href="{% url 'core:add-admin' %}" id="table2-new-row-button"
                                 class="btn btn-primary mb-4"> Add Admin
                             </a>
+                        </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered border text-nowrap mb-0 text-center" id="new-edit">
                                     <thead>

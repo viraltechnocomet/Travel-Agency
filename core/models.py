@@ -82,6 +82,21 @@ class Package(models.Model):
     
     def __str__(self):
         return self.package_name   
+    
+class AddCartPackage(models.Model):
+    package_details=models.ForeignKey(Package,on_delete=models.CASCADE)
+    itinerary_select=models.ManyToManyField(Itinerary, blank=True)
+    start_date=models.DateField(blank=True,null=True)
+    end_date=models.DateField(blank=True,null=True)
+    adults=models.CharField(max_length=250,blank=True,null=True)
+    children=models.CharField(max_length=250,blank=True,null=True)
+    infant=models.CharField(max_length=250,blank=True,null=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.package_details.package_name
+    
 
 class Selected_Package(models.Model):
     use_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)

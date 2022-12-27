@@ -20,7 +20,7 @@
                 </a>
             </li>
 
-            {% if request.user.is_superuser %}
+            {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'core:list-all-admin' %}">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
