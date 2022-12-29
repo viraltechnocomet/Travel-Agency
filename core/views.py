@@ -556,18 +556,33 @@ def PackageUpdate(request, id):
     
     return render(request, 'core/package-update.html', context)
 
-
 @login_required(login_url='/')
 def AddCart(request,id):
     context = {}
-    if request.method == "GET":
+    if request.method == "POST":
         
         package_cart_data = Package.objects.get(pk=id)
         package_itinerary_details= package_cart_data.itinerary_details.all()
+        cart_form = AddCartForm(request.POST)
+        if cart_form.is_valid():
+            
+            cart_form.save()
+            messages.success(request, "Package Successfully Added In Cart")
+            return redirect('core:package')
         print(package_itinerary_details)
         
+        context['cart_forms'] = cart_form
+        context['package_cart_data'] = package_cart_data
+        context['package_itinerary_details'] = package_itinerary_details
+        
+    else:
+        package_cart_data = Package.objects.get(pk=id)
+        package_itinerary_details= package_cart_data.itinerary_details.all()
+        print(package_itinerary_details)
+        cart_form = AddCartForm()
+        
+        context['cart_forms'] = cart_form
         context['package_cart_data'] = package_cart_data
         context['package_itinerary_details'] = package_itinerary_details
     
     return render(request, 'core/add-cart.html',context)
-   

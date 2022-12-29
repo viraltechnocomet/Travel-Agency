@@ -83,6 +83,9 @@ class Package(models.Model):
     def __str__(self):
         return self.package_name   
     
+class PackageCart(models.Model):
+    Package_data=models.ForeignKey(Package, on_delete=models.CASCADE)
+    
 class AddCartPackage(models.Model):
     package_details=models.ForeignKey(Package,on_delete=models.CASCADE)
     itinerary_select=models.ManyToManyField(Itinerary, blank=True)
