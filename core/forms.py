@@ -190,16 +190,16 @@ class AddCartForm(ModelForm):
     #         choices_list=list(Package.objects.filter(pk=value).values('id','itinerary_details__destination'))
     #         self.CHOICES = [(val["id"],val["itinerary_details__destination"]) for key,val in enumerate(choices_list)]
     
-
     
-    package_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Package Name', 'type':"text",})))
-    # itinerary_details=forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs = {'type':'checkbox','class':'form-control'}),choices=CHOICES)
+    
+    # package_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Package Name', 'type':"text",})))
+
     start_date=forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
     end_date=forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
     adults=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Adults', 'type':"text",})))
     children=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Children', 'type':"text",})))
     infant=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Infant', 'type':"text",})))
-    # itinerary_datas=forms.MultipleChoiceField(choices=res, widget=(forms.CheckboxSelectMultiple(attrs={'required' : True, 'type':"checkbox",})))
+    # itinerary_datas=forms.MultipleChoiceField(choices=CHOICES, widget=(forms.CheckboxSelectMultiple(attrs={'required' : True, 'type':"checkbox",})))
     
 class PackageCartForm(ModelForm):
     

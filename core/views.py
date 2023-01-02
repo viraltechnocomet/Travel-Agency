@@ -450,10 +450,8 @@ def ItineraryPackageView(request):
     context = {}
     if request.method=='POST':
         itineraries = request.POST.getlist("itinerary_details")
-        print(type(itineraries)," " ,itineraries)
-        print(request.POST)
+
         obj_itineraries = list(Itinerary.objects.filter(pk__in = itineraries))
-        print(obj_itineraries)
         
         package = ItineraryPackageForms(request.POST,request.FILES)
         
@@ -562,17 +560,33 @@ def AddCart(request,id):
     context = {}
     
     if request.method == "POST":
-        itineary_details=request.POST.get('itinerary_details')
-        
+
         package_cart_data = Package.objects.get(pk=id)
-        package_itinerary_details= package_cart_data.itinerary_details.all()
-        
-        cart_form = AddCartForm(request.POST,itineary_details=itineary_details)
-        
+        package_itinerary_details= package_cart_data.itinerary_details.all().values('id','destination')
+        cart_form = AddCartForm(request.POST)
+
         if cart_form.is_valid():
+            # cart_form.save()
             
-            cart_form.save()
-            messages.success(request, "Package Successfully Added In Cart")
+            try: 
+                cd = cart_form.cleaned_data
+                pc = AddCartPackage(
+                    
+                    itinerary_cart = cd['itinerary_cart'],
+                    start_date = cd['start_date'],
+                    end_date = cd['end_date'],
+                    adults = cd['adults'],
+                    children = cd['children'],
+                    infant = cd['infant'],
+                )
+                pc.save()
+                
+                messages.success(request, "Package Successfully Added In Cart")
+                print('Done.........')
+            except ValueError:
+                messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+                print("Oppsssssss")
+
             return redirect('core:package')
         
         context['cart_forms'] = cart_form
@@ -582,7 +596,6 @@ def AddCart(request,id):
     else:
         package_cart_data = Package.objects.get(pk=id)
         package_itinerary_details= package_cart_data.itinerary_details.all().values('id','destination')
-        print(package_itinerary_details)
         cart_form = AddCartForm()
         context['cart_forms'] = cart_form
         context['package_cart_data'] = package_cart_data
