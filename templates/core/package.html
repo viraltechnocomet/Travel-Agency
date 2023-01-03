@@ -1,0 +1,130 @@
+{% extends "./base.html" %}
+
+{% block title %}
+Package
+{% endblock title %}
+
+
+
+
+
+{% block content %}
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            
+
+            <!-- PAGE-HEADER -->
+            {% comment %} <div class="page-header">
+
+                <div>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">List Admin</li>
+                    </ol>
+                </div>
+            </div> {% endcomment %}
+            <!-- PAGE-HEADER END -->
+
+
+            <!-- Row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">All ITINERARY PACKAGES</h3>
+                            <div class="ms-md-auto pe-md-3 d-flex align-items-center pt-4 position-absolute top-0 end-0">
+                                <form class="form-inline my-2 my-lg-0 row text-center">
+                                    <div class="col-md-8 p-0">
+                                    <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search" id="search">
+                                    </div>
+                                    <div class="col-md-4 p-0">
+                                    <button class="btn btn-outline-dark my-2 my-sm-0" style="height: 39px;" type="submit"><i class="fa fa-search text-center"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {% block error_messages %}
+                        {% if messages %}
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-offset-3 text-center">
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    <p>{{ message }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endblock error_messages %}
+                        <div class="itinerary-container">
+                            {% comment %} {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
+                            <div class="gride">
+                                <a href="{% url 'core:add-itinerary-package' %}" id="table2-new-row-button"
+                                    class="btn btn-primary mb-3"> Add Package
+                                </a>
+                            </div>
+                            {% endif %} {% endcomment %}
+
+                            <!-- grid -->
+                            <div class="container">
+                                <div class="row row-cols-3">
+                                    {% for package in packages %}
+                                    <div class="col pb-4">
+                                    <figure>
+                                        <!-- <div class="itinerary-card mb-4 my-2 mx-2" style="width: 18rem;"> -->
+                                        <div class="news">
+                                            <div class="article">
+    
+                                                {% if package.package_image %}
+                                                    <img style="height: 250px; border-radius: 10%;" alt="Image not Found" src="{{ package.package_image.url }}">
+                                                {% else %}
+                                                    <img style="height: 250px; border-radius: 10%;" alt="Image not Found">
+                                                {% endif %}
+    
+                                                <figcaption>
+    
+                                                    <h3 class="mx-3" style="color: #fff; opacity: 70%;">{{ package.package_name }}
+                                                    </h3>
+                                                    <div>
+                                                    <a class="btn btn-outline-light"
+                                                        href='{% url "core:package-details" package.id %}' style="position: absolute; opacity: 60%; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-left: 65%; margin-top: 49%;">
+                                                        Read More
+                                                    </a>
+                                                </div>
+    
+                                                </figcaption>
+                                            </div>
+    
+                                        </div>
+                                        <!-- </div> -->
+                                    </figure>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Row -->
+    </div>
+
+</div>
+
+{% block extra-plugins %}   
+{% if request.user.type == 'ADMIN' or request.user.is_superuser %}
+<div class="fixed-plugin">
+    <a href="{% url 'core:add-itinerary-package' %}"  class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+        <i class="fa fa-plus py-2"> </i>
+    </a>
+</div>
+{% endif %}
+{% endblock extra-plugins %}
+
+{% endblock content %}
+

@@ -29,6 +29,9 @@ class Category(models.Model):
 class Activity(models.Model):
     activity_name = models.CharField(max_length=160, unique=True)
     
+    def __str__(self):
+        return self.activity_name
+    
 class Age(models.Model):
     age = models.CharField(max_length=160, unique=True)
     
@@ -40,32 +43,63 @@ class Season(models.Model):
     
     def __str__(self):
         return self.season
-    
-
-class Images(models.Model):
-    image_name=models.CharField(max_length=550, unique=True)
-    data_image=models.ImageField(upload_to='media')
-    
+     
 class Itinerary(models.Model):
-    image_id=models.ForeignKey(Images,on_delete=models.CASCADE)
+    data_image=models.ImageField(upload_to='media/', null=True, blank=True)
+    destination = models.CharField(max_length=255, unique=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    category_name = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+    activity_name = models.ForeignKey(Activity, on_delete=models.CASCADE, blank=True, null=True)
+    age = models.ForeignKey(Age, on_delete=models.CASCADE, blank=True, null=True)
+    season = models.ForeignKey(Season, on_delete=models.CASCADE, blank=True, null=True)
     description=models.TextField()
-    budget=models.FloatField()
     befor_you_go=models.TextField()
     nature=models.CharField(max_length=250)
     website=models.CharField(max_length = 500)
     link=models.CharField(max_length=500)
     gps_cordinate=models.CharField(max_length=500)
-    spend_time=models.DateTimeField()
+    phone_no=models.CharField(max_length=20, null=True)
+    # spend_time=models.DateTimeField()
     created_at=models.DateTimeField(auto_now_add=True)
-    update_at=models.DateTimeField(auto_now=True)
+    updated_at=models.DateTimeField(auto_now=True)
     
+    def __str__(self):
+        return self.destination
     
     
 class Package(models.Model):
+    package_image=models.ImageField(upload_to='media/', null=True, blank=True)
     package_name=models.CharField(max_length=250,unique=True)
-    country_id=models.ForeignKey(Country,on_delete=models.CASCADE)
-    itinerary_id=models.ForeignKey(Itinerary,on_delete=models.CASCADE)
-    activity_id=models.ForeignKey(Activity,on_delete=models.CASCADE)
+    itinerary_details=models.ManyToManyField(Itinerary, blank=True)
+    from_date=models.DateField(blank=True,null=True)
+    to_date=models.DateField(blank=True,null=True)
+    price=models.CharField(max_length=250, null=True)
+    days=models.CharField(max_length=250, null=True)
+    nights=models.CharField(max_length=250, null=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.package_name   
+    
+class PackageCart(models.Model):
+    Package_data=models.ForeignKey(Package, on_delete=models.CASCADE)
+    
+class AddCartPackage(models.Model):
+    # package_details=models.ForeignKey(Package,on_delete=models.CASCADE, blank=True,null=True )
+    # itinerary_select=models.ManyToManyField(Itinerary, blank=True)
+    itinerary_cart=models.CharField(max_length=250, blank=True, null=True)
+    start_date=models.DateField(blank=True,null=True)
+    end_date=models.DateField(blank=True,null=True)
+    adults=models.CharField(max_length=250,blank=True,null=True)
+    children=models.CharField(max_length=250,blank=True,null=True)
+    infant=models.CharField(max_length=250,blank=True,null=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.itinerary_cart
     
 class Selected_Package(models.Model):
     use_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)

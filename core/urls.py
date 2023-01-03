@@ -21,12 +21,16 @@ urlpatterns = [
     path('add-category/',views.AddCategoryView, name='add-category'),
     path('add-age/',views.AddAgeView, name='add-age'),
     path('add-season/',views.AddSeasonView, name='add-season'),
-    
-    
-    
-    
-    # path('add-agent/',views.ItinararyView.as_view(), name='add-agent'),
-    
-    
+    path('add-activity/',views.AddActivityView, name='add-activity'),
+    path('itinerary', views.itineraryRead, name='itinerary'),
+    path('itinerary-details/<int:id>/', views.itinerary_details, name='itinerary-details'),
+    path('itinerary-delete/<int:id>/', views.ItineraryDelete, name='itinerary-delete'),
+    path('itinerary-update/<int:id>/', views.ItineraryUpdate, name='itinerary-update'),
+    path('add-itinerary-package/', views.ItineraryPackageView, name='add-itinerary-package'),
+    path('package/', views.PackageRead, name='package'),
+    path('package-details/<int:id>', views.PackageDetails, name='package-details'),
+    path('package-delete/<int:id>/', views.PackageDelete, name='package-delete'),
+    path('package-update/<int:id>/', views.PackageUpdate, name='package-update'),
+    path('add-cart/<int:id>', views.AddCart, name='add-cart'),
     
 ]

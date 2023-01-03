@@ -1,7 +1,7 @@
 {% extends "./base.html" %}
 
 {% block title %}
-Admin Users
+Admin
 {% endblock title %}
 
 {% block content %}
@@ -11,31 +11,7 @@ Admin Users
 
         <!-- CONTAINER -->
         <div class="main-container container-fluid">
-            {% block error_messages %}
-            {% if messages %}
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
-                    {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}" role="alert">
-                        <p>{{ message }}</p>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-            {% endblock error_messages %}
 
-            <!-- PAGE-HEADER -->
-            <div class="page-header">
-                <h1 class="page-title">Admin Users</h1>
-                <div>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">List Admin</li>
-                    </ol>
-                </div>
-            </div>
-            <!-- PAGE-HEADER END -->
 
 
             <!-- Row -->
@@ -45,11 +21,27 @@ Admin Users
                         <div class="card-header">
                             <h3 class="card-title">All Admin Users</h3>
                         </div>
+                        {% block error_messages %}
+                        {% if messages %}
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-offset-3 text-center">
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    <p>{{ message }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endblock error_messages %}
                         <div class="card-body">
-                            <a href="{% url 'core:add-admin' %}" id="table2-new-row-button" class="btn btn-primary mb-4"> Add Admin
+                            <div class="text-center">
+                            <a href="{% url 'core:add-admin' %}" id="table2-new-row-button"
+                                class="btn btn-primary mb-4"> Add Admin
                             </a>
+                        </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered border text-nowrap mb-0" id="new-edit">
+                                <table class="table table-bordered border text-nowrap mb-0 text-center" id="new-edit">
                                     <thead>
                                         <tr>
                                             <th>
