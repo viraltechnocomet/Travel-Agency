@@ -6,3 +6,4 @@ requirements.txt
 db.sqlite3
 *.pyc
 travel_agency/settings.py
+accounts/migrations
