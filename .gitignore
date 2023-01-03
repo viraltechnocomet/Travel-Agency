@@ -5,5 +5,5 @@ myvenv/*
 requirements.txt
 db.sqlite3
 *.pyc
-travel_agency/settings.py
+core/migrations
 accounts/migrations
