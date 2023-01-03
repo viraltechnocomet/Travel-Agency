@@ -1,2 +1,8 @@
 travel_agency/__pycache__
 Travel-Agency/venv
+travel_agency/settings.py
+myvenv/*
+requirements.txt
+db.sqlite3
+*.pyc
+travel_agency/settings.py
