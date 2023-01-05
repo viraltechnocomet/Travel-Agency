@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.admin import widgets
 from core.models import *
 from django.db.models import Q
+from django.contrib.auth.forms import UserCreationForm
 
 
 
@@ -56,6 +57,49 @@ class CreateUserCustomForm(ModelForm):
                     'type':"text",
                 }
             ),
+        }
+        
+class UpdateUserCustomForm(ModelForm):
+    class Meta:
+        model = User
+
+        fields = ('username', 'email')
+
+        widgets = {
+            'type':forms.HiddenInput(),
+            'username':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"UserName",
+                    'type':"text",
+                }
+            ),
+            'email':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"E-Mail",
+                    'type':"text",
+                }
+            ),
+            # 'password1':forms.PasswordInput(
+            #     attrs={
+            #         'required' : True,
+            #         'class':'form-control',
+            #         'placeholder':"Password",
+            #         'type':"text",
+            #     }
+            # ),
+            
+            # 'password2':forms.PasswordInput(
+            #     attrs={
+            #         'required' : True,
+            #         'class':'form-control',
+            #         'placeholder':"Confirm Password",
+            #         'type':"text",
+            #     }
+            # ),
         }
         
 class AddCountryForm(ModelForm):
@@ -201,13 +245,4 @@ class AddCartForm(ModelForm):
     infant=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Infant', 'type':"text",})))
     # itinerary_datas=forms.MultipleChoiceField(choices=CHOICES, widget=(forms.CheckboxSelectMultiple(attrs={'required' : True, 'type':"checkbox",})))
     
-class PackageCartForm(ModelForm):
-    
-    class Meta:
-        model= PackageCart
-        fields = '__all__'
-        
-    choices_list=list(Itinerary.objects.all().values('id','destination'))
-    res = [(val["id"],val["destination"]) for key,val in enumerate(choices_list)]
-    
-    select_package=forms.MultipleChoiceField(choices=res, widget=(forms.CheckboxSelectMultiple(attrs={'required' : True, 'type':"checkbox",'name':"itinarary_choices"})))
+

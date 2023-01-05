@@ -15,6 +15,10 @@ urlpatterns = [
     path('add-user/',views.AddUserView.as_view(), name='add-user'),
     path('list-all-admin/',views.ListAllAdminView.as_view(), name='list-all-admin'),
     path('list-all-users/',views.ListAllUsersView.as_view(), name='list-all-users'),
+    path('update-admin/<int:id>/',views.UpdateAdmin, name='update-admin'),
+    path('update-user/<int:id>/',views.UpdateUser, name='update-user'),
+    
+    
     path('add-itinerary/',views.ItineraryView, name='add-itinerary'),
     path('add-country/',views.AddCountryView, name='add-country'),
     path('add-city/',views.AddCityView, name='add-city'),

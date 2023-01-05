@@ -77,10 +77,8 @@ Users
                                                             <span class="fe fe-check"> </span>
                                                         </button> {% endcomment %}
 
-                                                        <button type="submit" name="action" value="edit"
-                                                            class="btn btn-sm btn-info" title="Manage User">
-                                                            <span class="fe fe-edit">Edit</span>
-                                                        </button>
+                                                        <a class="btn btn-sm btn-info" href="/core/update-user/{{user.id}}"> 
+                                                            <span class="fe fe-edit"> Edit</span> </a>
                                                         <button type="submit" name="action" value="delete"
                                                             class="btn  btn-sm btn-danger" title="Delete User"
                                                             onclick="return confirm('Are you sure you want to delete user?');">

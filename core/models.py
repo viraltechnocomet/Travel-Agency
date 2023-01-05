@@ -3,6 +3,7 @@ from django.utils import timezone
 import datetime
 from django.contrib.auth import get_user_model
 from accounts.models import CustomUser
+from django.contrib.postgres.fields import ArrayField
 # from accounts import models
 
 User = get_user_model()
@@ -83,13 +84,12 @@ class Package(models.Model):
     def __str__(self):
         return self.package_name   
     
-class PackageCart(models.Model):
-    Package_data=models.ForeignKey(Package, on_delete=models.CASCADE)
     
 class AddCartPackage(models.Model):
     # package_details=models.ForeignKey(Package,on_delete=models.CASCADE, blank=True,null=True )
     # itinerary_select=models.ManyToManyField(Itinerary, blank=True)
-    itinerary_cart=models.CharField(max_length=250, blank=True, null=True)
+    itinerary_cart = models.ManyToManyField(Itinerary,blank=True)
+    # itinerary_cart=models.CharField(max_length=250,blank=True,null=True)
     start_date=models.DateField(blank=True,null=True)
     end_date=models.DateField(blank=True,null=True)
     adults=models.CharField(max_length=250,blank=True,null=True)
@@ -98,8 +98,6 @@ class AddCartPackage(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     
-    def __str__(self):
-        return self.itinerary_cart
     
 class Selected_Package(models.Model):
     use_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
