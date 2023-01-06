@@ -211,7 +211,6 @@ def UpdateAdmin(request,id):
         update_admin_form = UpdateUserCustomForm(request.POST, instance=Update_admin)
         if update_admin_form.is_valid():
             print("Done...")
-            
             update_admin_form.save()
             messages.success(request, "Admin SuccuessFully Updated")
             return redirect('core:list-all-admin')
@@ -221,8 +220,9 @@ def UpdateAdmin(request,id):
         context['Update_admin'] = Update_admin
     else:
         Update_admin= CustomUser.objects.get(pk=id)
-        
+        print(Update_admin)
         update_admin_form = UpdateUserCustomForm(instance=Update_admin)
+        print(update_admin_form)
         
         context['update_admin_form'] = update_admin_form
         context['Update_admin'] = Update_admin
@@ -312,7 +312,7 @@ def AddCountryView(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-country')
+            return redirect('core:add-itinerary')
         else:
             print("opps......")
     # else:

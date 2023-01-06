@@ -86,8 +86,6 @@ class Package(models.Model):
     
     
 class AddCartPackage(models.Model):
-    # package_details=models.ForeignKey(Package,on_delete=models.CASCADE, blank=True,null=True )
-    # itinerary_select=models.ManyToManyField(Itinerary, blank=True)
     itinerary_cart = models.ManyToManyField(Itinerary,blank=True)
     # itinerary_cart=models.CharField(max_length=250,blank=True,null=True)
     start_date=models.DateField(blank=True,null=True)
