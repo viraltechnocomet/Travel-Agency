@@ -331,7 +331,7 @@ def AddCityView(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-city')
+            return redirect('core:add-itinerary')
         else:
             print("opps......")
     # else:
@@ -349,7 +349,7 @@ def AddCategoryView(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-category')
+            return redirect('core:add-itinerary')
         else:
             print("opps......")
     # else:
@@ -367,7 +367,7 @@ def AddAgeView(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-age')
+            return redirect('core:add-itinerary')
         else:
             print("opps......")
     # else:
@@ -385,7 +385,7 @@ def AddSeasonView(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-season')
+            return redirect('core:add-itinerary')
         else:
             print("opps......")
     # else:
@@ -404,7 +404,7 @@ def AddActivityView(request):
             print("Done...")
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-activity')
+            return redirect('core:add-itinerary')
         else:
             form = AddActivityForm(request.POST)
             print(form.errors)
@@ -425,19 +425,8 @@ def itineraryRead(request):
         print(itinerary)
     else:
         itinerary = Itinerary.objects.all().order_by("-created_at")
-        # season = Season.objects.all()
-        # country = Country.objects.all()
-        # city = City.objects.all()
-        # activity = Activity.objects.all()
-        # age = Age.objects.all()
 
-    
     context['itinerary'] = itinerary
-    # context['season'] = season
-    # context['country'] = country
-    # context['city'] = city
-    # context['activity'] = activity
-    # context['age'] = age
     
     return render(request, 'core/itinerary.html', context)
 
