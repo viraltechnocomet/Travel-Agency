@@ -7,4 +7,4 @@ db.sqlite3
 *.pyc
 core/migrations
 accounts/migrations
-travel-agency/media
+media/media
