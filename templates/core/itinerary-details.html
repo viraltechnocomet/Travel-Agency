@@ -83,7 +83,7 @@ Itinerary Details
                                                     <strong class="text-dark">Phone No:</strong> &nbsp; {{ itinerary_data.phone_no }}
                                                 </li>
 
-                                                {% if request.user.is_superuser %}
+                                                {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
                                                 <div class="text-center position-absolute bottom-0 end-10">
                                                     <a class="btn btn-sm btn-info" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User" href="/core/itinerary-update/{{itinerary_data.id}}" type="submit" name="action">Edit
                                                         <a class="fe fe-edit" style="color: #fff;" > </a>

@@ -36,8 +36,11 @@ User = get_user_model()
 
 class LoginView(View):
     def get(self,request):
-        form = LoginForm(request.POST or None)
-        return render(request, "accounts/login.html", {"form": form })
+        if request.user.is_authenticated:
+            return redirect("core/dashboard/")
+        else:
+            form = LoginForm(request.POST or None)
+            return render(request, "accounts/login.html", {"form": form })
 
     def post(self,request):
         form = LoginForm(request.POST or None)

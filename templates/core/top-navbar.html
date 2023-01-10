@@ -13,19 +13,31 @@
             </ol>
             <h6 class="font-weight-bolder mb-0">Dashboard</h6>
         </nav>
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+        
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar"> 
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                <div class="input-group">
-                    <span class="input-group-text text-body" style="z-index: 0;"><i class="fas fa-search" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" placeholder="Type here...">
-                </div>
+
+                <!-- search function -->
+                {% comment %} <form class="form-inline my-2 my-lg-0 row text-center">
+                    <div class="col-md-8 p-0">
+                    <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search" id="search">
+                    </div>
+                    <div class="col-md-4 p-0">
+                    <button class="btn btn-outline-dark my-2 my-sm-0" style="height: 39px;" type="submit"><i class="fa fa-search text-center"></i></button>
+                    </div>
+                </form> {% endcomment %}
+                <!-- search function -->
+
             </div>
-            <ul class="navbar-nav  justify-content-end">
-                {% comment %} <li class="nav-item d-flex align-items-center">
+            
+            {% comment %} <ul class="navbar-nav  justify-content-end">
+                <li class="nav-item d-flex align-items-center">
                     <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank"
-                        href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard">Online
-                        Builder</a>
+                        href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard">Search
+                        </a>
                 </li> {% endcomment %}
+
+                
                 {% comment %} <li class="nav-item d-flex align-items-center">
                     <a href="{% url 'accounts:login' %}" class="nav-link text-body font-weight-bold px-0">
                         <i class="fa fa-user me-sm-1"></i>
@@ -66,8 +78,8 @@
                 <div class="mt-2">
                     <h5><strong>{{request.user.username}}</strong>&nbsp;<span> </span></h5>
                 </div>
-                <div class="dropdown mt-1 dropdown-center">
-                    <img class="account-image rounded-circle m-auto d-block dropdown-toggle" src="\static\assets\img\marie.jpg" width="40" height="40" data-bs-toggle="dropdown" aria-expanded="false" id="id_profile_links">
+                <div class="dropdown mt-1 dropdown-center" style="cursor: pointer;">
+                    <img class="account-image rounded-circle m-auto d-block dropdown-toggle" src="\static\assets\img\profile.jpg" width="40" height="40" data-bs-toggle="dropdown" aria-expanded="false" id="id_profile_links">
                         {% comment %} {{request.user.username}} {% endcomment %}
                     <div class="dropdown-menu" aria-labelledby="id_profile_links">
                         <li><a class="dropdown-item" href="#">Edit Profile</a></li>

@@ -22,9 +22,10 @@ from django.conf import settings
 import os
 from accounts.forms import SignUpForm
 from core.forms import *
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 from django.utils.decorators import method_decorator
 
+from django.db.models import Q 
 
 from django.core import files
 from django.core.files.storage import default_storage
@@ -65,12 +66,16 @@ class AddAdminView(TemplateView):
         return render(request, "core/add-admin.html",context)
     @method_decorator(login_required)
     def post(self,request):
-        form = SignUpForm(data = request.POST)
+        
+        user = request.user
+        init_data = {"type" : "ADMIN","created_by":user}
+        form = SignUpForm(data = request.POST, initial=init_data) 
+        print(init_data)
         if form.is_valid():
             form.save()
             messages.success(request, "Admin Added Successfully...")
             # return redirect(request, "app/dashboard.html")
-            return redirect('core:add-admin')
+            return redirect('core:list-all-admin')
         else:
             messages.error(request, form.errors)
 
@@ -78,7 +83,7 @@ class AddAdminView(TemplateView):
             'form': form
         }
         return render(request, "core/add-admin.html",context)
-
+    
 
 class AddUserView(TemplateView):
     @method_decorator(login_required)
@@ -86,7 +91,6 @@ class AddUserView(TemplateView):
         user = request.user
         init_data = {"type" : "USER","created_by":user}
         form = SignUpForm(initial=init_data)
-        print(form)
         context={
             'form': form
         }
@@ -94,13 +98,15 @@ class AddUserView(TemplateView):
 
     @method_decorator(login_required)
     def post(self,request):
-        form = SignUpForm(data = request.POST)
-        print(form)
+        user = request.user
+        init_data = {"type" : "USER","created_by":user}
+        form = SignUpForm(data = request.POST, initial=init_data)
+        print(init_data)
         if form.is_valid():
             form.save()
             # return redirect(request, "app/dashboard.html")
             messages.success(request, "User Added Successfully...")
-            return redirect('core:add-user')
+            return redirect('core:list-all-users')
         else:
             
             messages.error(request, form.errors)
@@ -117,7 +123,7 @@ class ListAllAdminView(TemplateView):
         if request.user.is_superuser:
             users = User.objects.filter(type="ADMIN")
         else:
-            users = User.objects.filter(type="ADMIN").filter(created_by=request.user)
+            users = User.objects.filter(type="ADMIN")
             
         context={
             "users" : users
@@ -157,14 +163,13 @@ class ListAllAdminView(TemplateView):
         }
         return render(request, "core/list-all-admins.html",context)
 
-
 class ListAllUsersView(TemplateView):
     @method_decorator(login_required)
     def get(self,request):
         if request.user.is_superuser:
             users = User.objects.filter(type="USER")
         else:
-            users = User.objects.filter(type="USER").filter(created_by=request.user)
+            users = User.objects.filter(type="USER")
         context={
             "users" : users
         }
@@ -195,7 +200,62 @@ class ListAllUsersView(TemplateView):
             "users" : users
         }
         return render(request, "core/list-all-users.html",context)
+ 
+@login_required(login_url='/')   
+def UpdateAdmin(request,id):
     
+    context = {}
+    
+    if request.method == 'POST':
+        Update_admin= CustomUser.objects.get(pk=id)
+        update_admin_form = UpdateUserCustomForm(request.POST, instance=Update_admin)
+        if update_admin_form.is_valid():
+            print("Done...")
+            update_admin_form.save()
+            messages.success(request, "Admin SuccuessFully Updated")
+            return redirect('core:list-all-admin')
+        else:
+            messages.error(request, update_admin_form.errors)
+        context['update_admin_form'] = update_admin_form
+        context['Update_admin'] = Update_admin
+    else:
+        Update_admin= CustomUser.objects.get(pk=id)
+        print(Update_admin)
+        update_admin_form = UpdateUserCustomForm(instance=Update_admin)
+        print(update_admin_form)
+        
+        context['update_admin_form'] = update_admin_form
+        context['Update_admin'] = Update_admin
+    
+    return render(request, 'core/update-admin.html', context)
+
+@login_required(login_url='/')   
+def UpdateUser(request,id):
+    
+    context = {}
+    
+    if request.method == 'POST':
+        Update_user= CustomUser.objects.get(pk=id)
+        update_user_form = UpdateUserCustomForm(request.POST, instance=Update_user)
+        if update_user_form.is_valid():
+            print("Done...")
+            
+            update_user_form.save()
+            messages.success(request, "User SuccuessFully Updated")
+            return redirect('core:list-all-users')
+        else:
+            messages.error(request, update_user_form.errors)
+        context['update_user_form'] = update_user_form
+        context['Update_user'] = Update_user
+    else:
+        Update_user= CustomUser.objects.get(pk=id)
+        
+        update_user_form = UpdateUserCustomForm(instance=Update_user)
+        
+        context['update_user_form'] = update_user_form
+        context['Update_user'] = Update_user
+    
+    return render(request, 'core/update-user.html', context)   
 
 @login_required(login_url='/')
 def ItineraryView(request):
@@ -203,13 +263,10 @@ def ItineraryView(request):
     context = {}
     if request.method=='POST':
         
-        
         itinerary = ItineraryForms(request.POST,request.FILES)
         
         if itinerary.is_valid():
             itinerary.save()
-            
-        
             
             try: 
                 cd = itinerary.cleaned_data
@@ -255,7 +312,7 @@ def AddCountryView(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-country')
+            return redirect('core:add-itinerary')
         else:
             print("opps......")
     # else:
@@ -274,7 +331,7 @@ def AddCityView(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-city')
+            return redirect('core:add-itinerary')
         else:
             print("opps......")
     # else:
@@ -292,7 +349,7 @@ def AddCategoryView(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-category')
+            return redirect('core:add-itinerary')
         else:
             print("opps......")
     # else:
@@ -310,7 +367,7 @@ def AddAgeView(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-age')
+            return redirect('core:add-itinerary')
         else:
             print("opps......")
     # else:
@@ -328,7 +385,7 @@ def AddSeasonView(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-season')
+            return redirect('core:add-itinerary')
         else:
             print("opps......")
     # else:
@@ -347,7 +404,7 @@ def AddActivityView(request):
             print("Done...")
             form.save()
             messages.success(request, "Your data is successfully save......")
-            return redirect('core:add-activity')
+            return redirect('core:add-itinerary')
         else:
             form = AddActivityForm(request.POST)
             print(form.errors)
@@ -361,20 +418,15 @@ def AddActivityView(request):
 @login_required(login_url='/')
 def itineraryRead(request):
     context = {}
-    itinerary = Itinerary.objects.all()
-    season = Season.objects.all()
-    country = Country.objects.all()
-    city = City.objects.all()
-    activity = Activity.objects.all()
-    age = Age.objects.all()
-
     
+    if 'q' in request.GET:
+        q = request.GET['q']
+        itinerary = Itinerary.objects.filter(destination__icontains=q)
+        print(itinerary)
+    else:
+        itinerary = Itinerary.objects.all().order_by("-created_at")
+
     context['itinerary'] = itinerary
-    context['season'] = season
-    context['country'] = country
-    context['city'] = city
-    context['activity'] = activity
-    context['age'] = age
     
     return render(request, 'core/itinerary.html', context)
 
@@ -443,10 +495,8 @@ def ItineraryPackageView(request):
     context = {}
     if request.method=='POST':
         itineraries = request.POST.getlist("itinerary_details")
-        print(type(itineraries)," " ,itineraries)
-        print(request.POST)
+
         obj_itineraries = list(Itinerary.objects.filter(pk__in = itineraries))
-        print(obj_itineraries)
         
         package = ItineraryPackageForms(request.POST,request.FILES)
         
@@ -486,8 +536,12 @@ def ItineraryPackageView(request):
 @login_required(login_url='/')
 def PackageRead(request):
     context = {}
-    package = Package.objects.all()
-    
+    if 'q' in request.GET:
+        q = request.GET['q']
+        package = Package.objects.filter(package_name__icontains=q)
+    else:
+        package = Package.objects.all().order_by("-created_at")
+
     context['packages'] = package
     
     return render(request, 'core/package.html', context)
@@ -499,7 +553,6 @@ def PackageDetails(request, id):
         
         package_datas = Package.objects.get(pk=id)
         package_itinerary_datas= package_datas.itinerary_details.all()
-        print(package_itinerary_datas)
         
         context['package_datas'] = package_datas
         context['package_itinerary_datas'] = package_itinerary_datas
@@ -545,3 +598,69 @@ def PackageUpdate(request, id):
         context['package_datas'] = package_datas
     
     return render(request, 'core/package-update.html', context)
+
+@login_required(login_url='/')
+def AddCart(request,id):
+    
+    context = {}
+    
+    if request.method == "POST":
+        itinerary_cart = request.POST.getlist("itinerary_cart[]")
+        # print(itinerary_cart)
+        # obj_cart= AddCartPackage.objects.get(pk__in=itinerary_cart)
+        # print(obj_cart)
+        # iti_cart_value=""
+        # for i in itinerary_cart:
+        #     iti_cart_value=i+','+iti_cart_value
+        #     print(iti_cart_value)
+        # obj_cart.itinerary_cart=iti_cart_value
+        # obj_cart.save()
+        obj_itineraris = Itinerary.objects.filter(pk__in=itinerary_cart)
+        print(obj_itineraris)
+
+        package_cart_data = Package.objects.get(pk=id)
+        package_itinerary_details= package_cart_data.itinerary_details.all().values('id','destination')
+        cart_form = AddCartForm(request.POST)
+        print(request.POST)
+
+        if cart_form.is_valid():
+            # cart_form.save()
+            
+            try: 
+                cd = cart_form.cleaned_data
+                pc = AddCartPackage(
+                    
+                    start_date = cd['start_date'],
+                    end_date = cd['end_date'],
+                    adults = cd['adults'],
+                    children = cd['children'],
+                    infant = cd['infant'],
+                )
+                
+                pc.save()
+                for obj in obj_itineraris:
+                    pc.itinerary_cart.add(obj)
+                pc.save()
+                # pc.itinerary_cart.save(iti_cart_value)
+                
+                messages.success(request, "Package Successfully Added In Cart")
+                print('Done.........')
+            except ValueError:
+                messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+                print("Oppsssssss")
+
+            return redirect('core:package')
+        
+        context['cart_forms'] = cart_form
+        context['package_cart_data'] = package_cart_data
+        context['package_itinerary_details'] = package_itinerary_details
+        
+    else:
+        package_cart_data = Package.objects.get(pk=id)
+        package_itinerary_details= package_cart_data.itinerary_details.all().values('id','destination')
+        cart_form = AddCartForm()
+        context['cart_forms'] = cart_form
+        context['package_cart_data'] = package_cart_data
+        context['package_itinerary_details'] = package_itinerary_details
+    
+    return render(request, 'core/add-cart.html',context)

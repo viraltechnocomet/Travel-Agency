@@ -62,8 +62,10 @@
     {% endblock main %}
 
     {% block extra-plugins %}
-    {% include "./extra-plugins.html" %}
+    {% comment %} {% include "./extra-plugins.html" %} {% endcomment %}
     {% endblock extra-plugins %}
+
+    
 
 </body>
 {% endblock body %}
