@@ -19,6 +19,12 @@ git merge main - merge data in your currenct branch
 
 git pull - pull data
 
+
+for clear git cached
+-----------------------------------
+git rm -r --cached
+
+
 For updating email and name
 -----------------------------------
 git config --global user.email ""
