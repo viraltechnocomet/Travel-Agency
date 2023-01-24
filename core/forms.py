@@ -138,6 +138,8 @@ class ItineraryForms(forms.Form):
     link=forms.CharField(max_length=500, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Link', 'type':"text",})))
     gps_cordinate=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'GPS Cordinate', 'type':"text",})))
     phone_no=forms.CharField(max_length=500, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Phone No', 'type':"text",})))
+    budget=forms.CharField(max_length=500, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Amount', 'type':"text",})))
+
     
     def save(self, commit=True):
         ...
@@ -163,6 +165,7 @@ class ItineraryUpdateForms(ModelForm):
     link=forms.CharField(max_length=500, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Link', 'type':"text",})))
     gps_cordinate=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'GPS Cordinate', 'type':"text",})))
     phone_no=forms.CharField(max_length=500, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Phone No', 'type':"text",})))
+    budget=forms.CharField(max_length=500, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Amount', 'type':"text",})))
 
         
 
@@ -186,7 +189,7 @@ class ItineraryPackageForms(forms.Form):
 class PackageUpadateForms(ModelForm):
     
     class Meta:
-        model= Package
+        model= Destinations
         fields = '__all__'
 
     choices_list=list(Itinerary.objects.all().values('id','destination'))

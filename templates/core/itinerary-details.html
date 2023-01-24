@@ -82,6 +82,9 @@ Itinerary Details
                                                 <li class="list-group-item border-0 ps-0 text-sm">
                                                     <strong class="text-dark">Phone No:</strong> &nbsp; {{ itinerary_data.phone_no }}
                                                 </li>
+                                                <li class="list-group-item border-0 ps-0 text-sm">
+                                                    <strong class="text-dark">Budget:</strong> &nbsp; $ {{ itinerary_data.budget }}
+                                                </li>
 
                                                 {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
                                                 <div class="text-center position-absolute bottom-0 end-10">

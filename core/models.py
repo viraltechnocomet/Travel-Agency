@@ -61,6 +61,7 @@ class Itinerary(models.Model):
     link = models.CharField(max_length=500)
     gps_cordinate = models.CharField(max_length=500)
     phone_no = models.CharField(max_length=20, null=True)
+    budget = models.CharField(max_length=10, blank=True, null=True)
     # spend_time=models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -68,8 +69,7 @@ class Itinerary(models.Model):
     def __str__(self):
         return self.destination
     
-    
-class Package(models.Model):
+class Destinations(models.Model):
     package_image = models.ImageField(upload_to='media/', null=True, blank=True)
     package_name = models.CharField(max_length=250,unique=True)
     itinerary_details = models.ManyToManyField(Itinerary, blank=True)
@@ -99,7 +99,7 @@ class AddCartPackage(models.Model):
     
 class Selected_Package(models.Model):
     use_id = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    package_id = models.ForeignKey(Package,on_delete=models.CASCADE)
+    package_id = models.ForeignKey(Destinations,on_delete=models.CASCADE)
     person = models.IntegerField()
     costing = models.FloatField(max_length=100)
     arriaval_time = models.DateTimeField()

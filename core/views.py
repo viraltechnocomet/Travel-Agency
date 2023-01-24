@@ -286,7 +286,8 @@ def ItineraryView(request):
                     website = cd['website'],
                     link = cd['link'],
                     gps_cordinate = cd['gps_cordinate'],
-                    phone_no = cd['phone_no']
+                    phone_no = cd['phone_no'],
+                    budget = cd['budget'],
                 )
                 
                 pc.save()
@@ -506,7 +507,7 @@ def ItineraryPackageView(request):
             try: 
                 cd = package.cleaned_data
             
-                pc = Package(
+                pc = Destinations(
                     
                     package_image = request.FILES['package_image'],
                     package_name = cd['package_name'],
@@ -538,9 +539,9 @@ def PackageRead(request):
     context = {}
     if 'q' in request.GET:
         q = request.GET['q']
-        package = Package.objects.filter(package_name__icontains=q)
+        package = Destinations.objects.filter(package_name__icontains=q)
     else:
-        package = Package.objects.all().order_by("-created_at")
+        package = Destinations.objects.all().order_by("-created_at")
 
     context['packages'] = package
     
@@ -551,7 +552,7 @@ def PackageDetails(request, id):
     if request.method == "GET":
         context = {}
         
-        package_datas = Package.objects.get(pk=id)
+        package_datas = Destinations.objects.get(pk=id)
         package_itinerary_datas= package_datas.itinerary_details.all()
         
         context['package_datas'] = package_datas
@@ -563,7 +564,7 @@ def PackageDetails(request, id):
 
 @login_required(login_url='/')
 def PackageDelete(request, id):
-    package_datas = Package.objects.get(pk=id)
+    package_datas = Destinations.objects.get(pk=id)
     if package_datas.delete():
         messages.success(request, 'Package SuccessFully Delete')
         return redirect('core:package')
@@ -578,7 +579,7 @@ def PackageUpdate(request, id):
     context = {}
     
     if request.method == 'POST':
-        package_datas = Package.objects.get(pk=id)
+        package_datas = Destinations.objects.get(pk=id)
         form = PackageUpadateForms(request.POST, request.FILES, instance=package_datas)
         if form.is_valid():
             
@@ -590,7 +591,7 @@ def PackageUpdate(request, id):
         context['forms'] = form
         context['package_datas'] = package_datas
     else:
-        package_datas = Package.objects.get(pk=id)
+        package_datas = Destinations.objects.get(pk=id)
         
         form = PackageUpadateForms(instance=package_datas)
         
@@ -618,7 +619,7 @@ def AddCart(request,id):
         obj_itineraris = Itinerary.objects.filter(pk__in=itinerary_cart)
         print(obj_itineraris)
 
-        package_cart_data = Package.objects.get(pk=id)
+        package_cart_data = Destinations.objects.get(pk=id)
         package_itinerary_details= package_cart_data.itinerary_details.all().values('id','destination')
         cart_form = AddCartForm(request.POST)
         print(request.POST)
@@ -656,7 +657,7 @@ def AddCart(request,id):
         context['package_itinerary_details'] = package_itinerary_details
         
     else:
-        package_cart_data = Package.objects.get(pk=id)
+        package_cart_data = Destinations.objects.get(pk=id)
         package_itinerary_details= package_cart_data.itinerary_details.all().values('id','destination')
         cart_form = AddCartForm()
         context['cart_forms'] = cart_form

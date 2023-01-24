@@ -83,11 +83,13 @@ Itinerary
     
                                                 <figcaption>
     
-                                                    <h3 class="mx-3" style="color: #fff; opacity: 70%;">{{ i.destination }}
+                                                    <h3 class="mx-3" style="color: #fff; opacity: 80%; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">{{ i.destination }}
                                                     </h3>
+                                                    <h4 class="mx-4  position-absolute bottom-0 start-0" style="color: #fff; opacity: 80%; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"> $ {{ i.budget }}
+                                                    </h4>
                                                     <div>
                                                     <a class="btn btn-outline-light"
-                                                        href='{% url "core:itinerary-details" i.id %}' style="position: absolute; opacity: 60%; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-left: 65%; margin-top: 49%;">
+                                                        href='{% url "core:itinerary-details" i.id %}' style="position: absolute; opacity: 60%; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-left: 65%; margin-top: 48%;">
                                                         Read More
                                                     </a>
                                                 </div>

@@ -12,23 +12,24 @@ SignUp
 <body class="">
   <main class="main-content  mt-0">
     <section class="min-vh-100 mb-8">
-      <div class="page-header align-items-start min-vh-75 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('/static/assets/img/curved-images/curved14.jpg');">
+      <div class="page-header align-items-start min-vh-75 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('/static/assets/img/curved-images/register.jpg');">
         <span class="mask bg-gradient-dark opacity-6"></span>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-5 text-center mx-auto">
-              <h1 class="text-white mb-2 mt-5">Welcome!</h1>
-              <p class="text-lead text-white">Please register with following details</p>
+              {% comment %} <h1 class="text-white mb-2 ">Welcome!</h1> {% endcomment %}
+              {% comment %} <p class="text-lead text-white">Please register with following details</p> {% endcomment %}
             </div>
           </div>
         </div>
       </div>
-      <div class="container">
+      <div class="container" style="opacity: 85%;">
         <div class="row mt-lg-n50 mt-md-n12 mt-n50">
           <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
             <div class="card z-index-0">
               <div class="card-header text-center pt-4">
                 <h5>Register with</h5>
+                <p class="text-lead">Please register with following details</p>
               </div>
               {% comment %} <div class="row px-xl-5 px-sm-4 px-3">
                 <div class="col-3 ms-auto px-1">
@@ -95,7 +96,7 @@ SignUp
                   {% endblock error_messages %}
                 {% endif %}
               </div>
-              <div class="card-body">
+              <div class="card-body" style="padding-top: 0px;">
                  <form role="form text-left" action="{% url 'accounts:register' %}" method="post">
                  {% csrf_token %}
                   <label>User Name</label>
