@@ -291,9 +291,10 @@ def ItineraryView(request):
                 )
                 
                 pc.save()
-            
+                
                 messages.success(request, "Your data is successfully save......")
                 print('Done.........')
+                return redirect('core:itinerary')
             except ValueError:
                 messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
                 print("Oppsssssss")
@@ -429,7 +430,7 @@ def itineraryRead(request):
 
     context['itinerary'] = itinerary
     
-    return render(request, 'core/itinerary.html', context)
+    return render(request, 'core/itinerary.html', context)    
 
 @login_required(login_url='/')
 def itinerary_details(request, id):
@@ -495,7 +496,7 @@ def ItineraryPackageView(request):
     
     context = {}
     if request.method=='POST':
-        itineraries = request.POST.getlist("itinerary_details")
+        itineraries = request.POST.getlist("details")
 
         obj_itineraries = list(Itinerary.objects.filter(pk__in = itineraries))
         
@@ -509,20 +510,21 @@ def ItineraryPackageView(request):
             
                 pc = Destinations(
                     
-                    package_image = request.FILES['package_image'],
-                    package_name = cd['package_name'],
-                    from_date = cd['from_date'],
-                    to_date = cd['to_date'],
-                    days = cd['days'],
-                    nights = cd['nights'],
-                    price = cd['price'],
+                    image = request.FILES['image'],
+                    name = cd['name'],
+                    # from_date = cd['from_date'],
+                    # to_date = cd['to_date'],
+                    # days = cd['days'],
+                    # nights = cd['nights'],
+                    # price = cd['price'],
                 )
                 pc.save()
-                pc.itinerary_details.set(obj_itineraries)
+                pc.details.set(obj_itineraries)
                 # print(pc.pk)
                 
                 messages.success(request, "Your data is successfully save......")
                 print('Done.........')
+                return redirect('core:package')
             except ValueError:
                 
                 messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
@@ -539,7 +541,7 @@ def PackageRead(request):
     context = {}
     if 'q' in request.GET:
         q = request.GET['q']
-        package = Destinations.objects.filter(package_name__icontains=q)
+        package = Destinations.objects.filter(name__icontains=q)
     else:
         package = Destinations.objects.all().order_by("-created_at")
 
@@ -553,7 +555,7 @@ def PackageDetails(request, id):
         context = {}
         
         package_datas = Destinations.objects.get(pk=id)
-        package_itinerary_datas= package_datas.itinerary_details.all()
+        package_itinerary_datas= package_datas.details.all()
         
         context['package_datas'] = package_datas
         context['package_itinerary_datas'] = package_itinerary_datas
@@ -620,7 +622,7 @@ def AddCart(request,id):
         print(obj_itineraris)
 
         package_cart_data = Destinations.objects.get(pk=id)
-        package_itinerary_details= package_cart_data.itinerary_details.all().values('id','destination')
+        package_itinerary_details= package_cart_data.details.all().values('id','destination')
         cart_form = AddCartForm(request.POST)
         print(request.POST)
 
@@ -658,10 +660,43 @@ def AddCart(request,id):
         
     else:
         package_cart_data = Destinations.objects.get(pk=id)
-        package_itinerary_details= package_cart_data.itinerary_details.all().values('id','destination')
+        package_itinerary_details= package_cart_data.details.all().values('id','destination')
         cart_form = AddCartForm()
         context['cart_forms'] = cart_form
         context['package_cart_data'] = package_cart_data
         context['package_itinerary_details'] = package_itinerary_details
     
     return render(request, 'core/add-cart.html',context)
+
+
+def CartDetails(request):
+    context = {}
+    # c_user= request.user.id
+    # print(c_user)
+    # c_data=CustomUser.objects.filter(pk=c_user)
+    # print(c_data)
+    # cart_detail=
+    # cart_data=AddCartPackage.objects.get(id=38)
+    # print(cart_data)
+    # context['cart_data'] = cart_data
+            
+    return render(request, 'core/cart.html',context)
+
+def RatePackage(request,id):
+    context = {}
+    destination_id=Destinations.objects.get(pk=id)
+    user=request.user
+    if request.method == 'POST':
+        rate_form=RateForm(request.POST)
+        print(rate_form)
+        if rate_form.is_valid():
+            rate=rate_form.save(commit=False)
+            rate.user_id=user.id
+            rate.destination_id=destination_id
+            rate.save()
+            messages.success(request, "Rating Are Successfully Given To " + destination_id.name)
+            print('Done.........')
+            return redirect('core:package')
+    context['rate_form'] = RateForm
+    context['des'] = destination_id
+    return render(request, 'core/rate-package.html',context)

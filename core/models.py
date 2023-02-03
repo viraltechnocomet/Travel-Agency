@@ -62,6 +62,7 @@ class Itinerary(models.Model):
     gps_cordinate = models.CharField(max_length=500)
     phone_no = models.CharField(max_length=20, null=True)
     budget = models.CharField(max_length=10, blank=True, null=True)
+    
     # spend_time=models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -70,24 +71,23 @@ class Itinerary(models.Model):
         return self.destination
     
 class Destinations(models.Model):
-    package_image = models.ImageField(upload_to='media/', null=True, blank=True)
-    package_name = models.CharField(max_length=250,unique=True)
-    itinerary_details = models.ManyToManyField(Itinerary, blank=True)
-    from_date = models.DateField(blank=True,null=True)
-    to_date = models.DateField(blank=True,null=True)
-    price = models.CharField(max_length=250, null=True)
-    days = models.CharField(max_length=250, null=True)
-    nights = models.CharField(max_length=250, null=True)
+    image = models.ImageField(upload_to='media/', null=True, blank=True)
+    name = models.CharField(max_length=250,unique=True)
+    details = models.ManyToManyField(Itinerary, blank=True)
+    # from_date = models.DateField(blank=True,null=True)
+    # to_date = models.DateField(blank=True,null=True)
+    # price = models.CharField(max_length=250, null=True)
+    # days = models.CharField(max_length=250, null=True)
+    # nights = models.CharField(max_length=250, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.package_name   
-    
+        return self.name   
     
 class AddCartPackage(models.Model):
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
     itinerary_cart = models.ManyToManyField(Itinerary,blank=True)
-    # itinerary_cart=models.CharField(max_length=250,blank=True,null=True)
     start_date = models.DateField(blank=True,null=True)
     end_date = models.DateField(blank=True,null=True)
     adults = models.CharField(max_length=250,blank=True,null=True)
@@ -95,13 +95,37 @@ class AddCartPackage(models.Model):
     infant = models.CharField(max_length=250,blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
-    
-class Selected_Package(models.Model):
+
+class Confirmed_Package(models.Model):
     use_id = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     package_id = models.ForeignKey(Destinations,on_delete=models.CASCADE)
     person = models.IntegerField()
     costing = models.FloatField(max_length=100)
-    arriaval_time = models.DateTimeField()
+    
+class Accomodation(models.Model):
+    ac_name = models.CharField(max_length=225, blank=True, null=True)
+    start_ac_date = models.DateField(blank=True, null=True)
+    end_ac_date = models.DateField(blank=True, null=True)
+    confirmed_package_id = models.ForeignKey(Confirmed_Package,on_delete=models.CASCADE, blank=True, null=True)
+    country_id = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)
+    city_id = models.ForeignKey(City,on_delete=models.CASCADE, blank=True, null=True)
+    
+RATE_CHOICES = [
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5'),
+]     
+      
+class Rating(models.Model):
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    destination_id = models.ForeignKey(Destinations,on_delete=models.CASCADE)
+    rate = models.PositiveSmallIntegerField(choices=RATE_CHOICES, blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.user.username + " " + self.destination_id.name
     
     
+# selected packages -> all the selected todo list will be appeared to admin and they can assign the loyalty point to that selected todo list in place of money.

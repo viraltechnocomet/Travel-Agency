@@ -1,0 +1,153 @@
+{% extends "./base.html" %}
+
+{% block title %}
+Itinerary Details
+{% endblock title %}
+
+
+
+{% block content %}
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+    
+            <!-- Row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header m-l-5">
+                            <h2 class="card-title">ITINERARY</h2>
+                        </div>
+                        {% block error_messages %}
+                        {% if messages %}
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    <p>{{ message }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endblock error_messages %}
+
+                        {% comment %} demo card {% endcomment %}
+                        <div class="container text-center pb-3">
+                            <div class="card h-100">
+                                <div class="card-body p-3">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-xl-4 mt-md-0 mt-4">
+                                            <img class="rounded-3 position-relative z-index-0"
+                                                style="height: 225px; width: 350px;" src="{{ itinerary_data.data_image.url }}"
+                                                alt="Image Not Found">
+                                        </div>
+                                        
+                                        <div class="col-12 col-md-6 col-xl-3 mt-md-0 mt-4 text-left">
+                                            <ul class="list-group">
+                                                <li class="list-group-item border-0 ps-0 pt-0 pb-3" style="font-size: 135%; font-weight: 600; line-height: 1;">
+                                                    <strong class="text-dark">Name:</strong> &nbsp; {{itinerary_data.destination}}
+                                                </li>
+                                                <li class="list-group-item border-0 ps-0 text-sm">
+                                                    <strong class="text-dark">Country:</strong> &nbsp; {{ itinerary_data.country }}
+                                                </li>
+                                                <li class="list-group-item border-0 ps-0 text-sm">
+                                                    <strong class="text-dark">City:</strong> &nbsp; {{ itinerary_data.city }}
+                                                </li>
+                                                <li class="list-group-item border-0 ps-0 text-sm">
+                                                    <strong class="text-dark">Category:</strong> &nbsp; {{ itinerary_data.category_name }}
+                                                </li>
+                                                <li class="list-group-item border-0 ps-0 text-sm">
+                                                    <strong class="text-dark">Activity:</strong> &nbsp; {{ itinerary_data.activity_name }}
+                                                </li>
+                                                <li class="list-group-item border-0 ps-0 text-sm">
+                                                    <strong class="text-dark">Nature:</strong> &nbsp; {{ itinerary_data.nature }}
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 col-xl-5 mt-md-0 mt-4 text-left">
+                                            <ul class="list-group">
+                                                <li class="list-group-item border-0 ps-0 pt-0 text-sm">
+                                                    <strong class="text-dark">Dscription:</strong> &nbsp; {{ itinerary_data.description }}
+                                                </li>
+                                                <li class="list-group-item border-0 ps-0 text-sm">
+                                                    <strong class="text-dark">Before You Go:</strong> &nbsp; {{ itinerary_data.befor_you_go }}
+                                                </li>
+                                                <li class="list-group-item border-0 ps-0 text-sm">
+                                                    <strong class="text-dark">Website:</strong> &nbsp; {{ itinerary_data.website }}
+                                                </li>
+                                                <li class="list-group-item border-0 ps-0 text-sm">
+                                                    <strong class="text-dark">Phone No:</strong> &nbsp; {{ itinerary_data.phone_no }}
+                                                </li>
+                                                <li class="list-group-item border-0 ps-0 text-sm">
+                                                    <strong class="text-dark">Budget:</strong> &nbsp; $ {{ itinerary_data.budget }}
+                                                </li>
+
+                                                {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
+                                                <div class="text-center position-absolute bottom-0 end-10">
+                                                    <a class="btn btn-sm btn-info" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User" href="/core/itinerary-update/{{itinerary_data.id}}" type="submit" name="action">Edit
+                                                        <a class="fe fe-edit" style="color: #fff;" > </a>
+                                                </a>
+                                                    <button class="btn  btn-sm btn-danger" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Delete User"
+                                                        type="submit" name="action" onclick="return confirm('Are you sure you want to delete user?');">
+                                                        <a class="fe fe-trash-2" style="color: #fff" href="{% url 'core:itinerary-delete' itinerary_data.id %}" >Delete </a>
+                                                    </button>
+                                                </div>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {% comment %} main {% endcomment %}
+                        {% comment %} <div class="container pb-3">
+                            <div class="row">
+                              <div class="col-4">
+                                <img class="rounded-3 position-relative z-index-2" style="height: 280px; width: 360px;" src="{{ itinerary_data.data_image.url }}" alt="rocket">
+                              </div>
+                              <div class="col-3">
+                                <div class="d-flex flex-column h-100">
+                                    <span class="" style="font-size: 300%; font-weight: 900; line-height: 0.5; color: #344767;">{{itinerary_data.destination}}</span>
+                                    <span class="text-bold pt-4" style="font-size: 125%; font-weight: 900; color: #46494d;">Country: &nbsp;{{itinerary_data.country}}</span>
+                                    <span class="text-bold pt-2" style="font-size: 125%; font-weight: 900; color: #46494d;">City: &nbsp;{{itinerary_data.city}}</span>
+                                    <span class="text-bold pt-2" style="font-size: 125%; font-weight: 900; color: #46494d;">Category: &nbsp;{{itinerary_data.category_name}}</span>
+                                    <span class="text-bold pt-2" style="font-size: 125%; font-weight: 900; color: #46494d;">Activity: &nbsp;{{itinerary_data.activity_name}}</span>
+                                    <span class="text-bold pt-2" style="font-size: 125%; font-weight: 900; color: #46494d;">Nature: &nbsp;{{itinerary_data.nature}}</span>
+                                </div>
+                              </div>
+                              <div class="col-5">
+                                <div class="d-flex flex-column h-100">
+                                    <span class="text-bold">Discription: &nbsp;{{itinerary_data.description}}</span>
+                                    <span class="text-bold pt-2">Befor You Go: &nbsp;{{itinerary_data.befor_you_go}}</span>
+                                    <span class="text-bold pt-2">Phone no: &nbsp;{{itinerary_data.phone_no}}</span>
+                                    
+                                    <div class="text-center position-absolute bottom-0 end-10">
+                                        <a class="btn btn-sm btn-info" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User" href="/core/itinerary-update/{{itinerary_data.id}}" type="submit" name="action">Edit
+                                            <a class="fe fe-edit" style="color: #fff;" > </a>
+                                    </a>
+
+                                        <button class="btn  btn-sm btn-danger" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Delete User"
+                                            type="submit" name="action" onclick="return confirm('Are you sure you want to delete user?');">
+                                            <a class="fe fe-trash-2" style="color: #fff" href="{% url 'core:itinerary-delete' itinerary_data.id %}" >Delete </a>
+                                        </button>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div> {% endcomment %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Row -->
+    </div>
+
+</div>
+{% endblock content %}

@@ -7,7 +7,6 @@ Package
 
 
 
-
 {% block content %}
 <!--app-content open-->
 <div class="main-content app-content mt-0">
@@ -79,15 +78,15 @@ Package
                                         <div class="news">
                                             <div class="article">
     
-                                                {% if package.package_image %}
-                                                    <img style="height: 250px; border-radius: 10%;" alt="Image not Found" src="{{ package.package_image.url }}">
+                                                {% if package.image %}
+                                                    <img style="height: 250px; border-radius: 10%;" alt="Image not Found" src="{{ package.image.url }}">
                                                 {% else %}
                                                     <img style="height: 250px; border-radius: 10%;" alt="Image not Found">
                                                 {% endif %}
     
                                                 <figcaption>
     
-                                                    <h3 class="mx-3" style="color: #fff; opacity: 70%;">{{ package.package_name }}
+                                                    <h3 class="mx-3" style="color: #fff; opacity: 80%; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">{{ package.name }}
                                                     </h3>
                                                     <div>
                                                     <a class="btn btn-outline-light"
@@ -102,7 +101,48 @@ Package
                                         </div>
                                         <!-- </div> -->
                                     </figure>
+                                    <a class="btn" href='{% url "core:rate-package" package.id %}' style="background-color: #4cd422; border: none; color: white; opacity: 90%; transition: 0.4s; padding-bottom: 10; margin-bottom: 0; margin-left: 20px; --bs-btn-padding-y: .35rem; --bs-btn-padding-x: 1.5rem;"><i class='fas fa-star'></i> &nbsp; Rate Now</a>
+                                    
+
+                                    <!-- Button trigger modal -->
+                                    <!-- <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal-{{forloop.counter}}" style="background-color: #4cd422; border: none; color: white; opacity: 90%; transition: 0.4s; padding-bottom: 10; margin-bottom: 0; margin-left: 20px; --bs-btn-padding-y: .35rem; --bs-btn-padding-x: 1.5rem;">
+                                        <i class='fas fa-star'></i> &nbsp; Rate Now
+                                    </button> -->
+                                    
+                                    <!-- Modal -->
+                                    <!-- <div class="modal fade" id="exampleModal-{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Rating For {{ package.name }}</h5>
+                                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                {{ rate_form.as_p}}
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputname">Package Name</label>
+                                                            {{ rate_form.rate }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn bg-gradient-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div> -->
+
                                     </div>
+                                    
                                     {% endfor %}
                                 </div>
                               </div>
@@ -113,8 +153,10 @@ Package
         </div>
         <!-- End Row -->
     </div>
-
 </div>
+
+
+
 
 {% block extra-plugins %}   
 {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
