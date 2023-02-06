@@ -86,7 +86,7 @@ class Destinations(models.Model):
         return self.name   
     
 class AddCartPackage(models.Model):
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
     itinerary_cart = models.ManyToManyField(Itinerary,blank=True)
     start_date = models.DateField(blank=True,null=True)
     end_date = models.DateField(blank=True,null=True)
@@ -96,19 +96,24 @@ class AddCartPackage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class Confirmed_Package(models.Model):
-    use_id = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    package_id = models.ForeignKey(Destinations,on_delete=models.CASCADE)
-    person = models.IntegerField()
-    costing = models.FloatField(max_length=100)
     
 class Accomodation(models.Model):
     ac_name = models.CharField(max_length=225, blank=True, null=True)
+    destination=models.ForeignKey(Destinations,on_delete=models.CASCADE,blank=True, null=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)
+    city = models.ForeignKey(City,on_delete=models.CASCADE, blank=True, null=True)
+    
+    def __str__(self):
+        return self.ac_name 
+    
+class Confirmed_Package(models.Model):
+    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    package_id = models.ForeignKey(Destinations,on_delete=models.CASCADE)
+    accomodation_id = models.ForeignKey(Accomodation,on_delete=models.CASCADE, blank=True, null=True)
+    client_number = models.CharField(max_length=500, blank=True, null=True)
     start_ac_date = models.DateField(blank=True, null=True)
     end_ac_date = models.DateField(blank=True, null=True)
-    confirmed_package_id = models.ForeignKey(Confirmed_Package,on_delete=models.CASCADE, blank=True, null=True)
-    country_id = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)
-    city_id = models.ForeignKey(City,on_delete=models.CASCADE, blank=True, null=True)
+    
     
 RATE_CHOICES = [
     (1, '1'),
@@ -126,6 +131,10 @@ class Rating(models.Model):
     
     def __str__(self):
         return self.user.username + " " + self.destination_id.name
+    
+    
+# class TravelDocument(models.Model):
+#     flight_itinerary = models.CharField()
     
     
 # selected packages -> all the selected todo list will be appeared to admin and they can assign the loyalty point to that selected todo list in place of money.

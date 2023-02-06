@@ -700,3 +700,40 @@ def RatePackage(request,id):
     context['rate_form'] = RateForm
     context['des'] = destination_id
     return render(request, 'core/rate-package.html',context)
+
+@login_required(login_url='/')
+def AccommodationView(request):
+    
+    context = {}
+    if request.method=='POST':
+        
+        accommodation = AccommodationForm(request.POST)
+        
+        if accommodation.is_valid():
+            
+            try: 
+                cd = accommodation.cleaned_data
+            
+                pc = Accomodation(
+                   
+                    ac_name = cd['ac_name'],
+                    destination = cd['destination'],
+                    country = cd['country'],
+                    city = cd['city'],
+                    
+                )
+                
+                pc.save()
+                
+                messages.success(request, "Your data is successfully save......")
+                print('Done.........')
+                return redirect('core:add-accommodation')
+            except ValueError:
+                messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+                print("Oppsssssss")
+        else:
+            print(accommodation.errors)
+
+    context['accommodation'] = AccommodationForm
+    
+    return render(request,'core/add-accommodation.html', context)

@@ -11,4 +11,10 @@ admin.site.register(Age)
 admin.site.register(Season)
 admin.site.register(Destinations)
 admin.site.register(AddCartPackage)
-admin.site.register(Rating)
+admin.site.register(Accomodation)
+
+class RateAdmin(admin.ModelAdmin):
+    list_display = ["user", "destination_id", "rate"]
+admin.site.register(Rating, RateAdmin)
+
+
