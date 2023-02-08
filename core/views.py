@@ -737,3 +737,7 @@ def AccommodationView(request):
     context['accommodation'] = AccommodationForm
     
     return render(request,'core/add-accommodation.html', context)
+
+@login_required(login_url='/')
+def AccommodationRead(request):
+    return render(request, 'core/accommodation.html')

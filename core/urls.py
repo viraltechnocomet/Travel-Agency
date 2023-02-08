@@ -39,6 +39,7 @@ urlpatterns = [
     path('cart/',views.CartDetails, name='cart'),
     path('rate-package/<int:id>',views.RatePackage, name='rate-package'),
     path('add-accommodation/', views.AccommodationView, name='add-accommodation'),
+    path('accommodation/',views.AccommodationRead, name='accommodation'),
     
     
 ]

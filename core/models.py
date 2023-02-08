@@ -132,9 +132,14 @@ class Rating(models.Model):
     def __str__(self):
         return self.user.username + " " + self.destination_id.name
     
-    
-# class TravelDocument(models.Model):
-#     flight_itinerary = models.CharField()
-    
+# class Loyalty(models.Model):
+#     l_value = models.CharField(max_length=225, blank=True, null=True)
+       
+class TravelDocument(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True)
+    ticket_image = models.ImageField(upload_to='media/', null=True, blank=True)
+    ticket_info = models.CharField(max_length=500, blank=True, null=True)
+    reseration_proof_image = models.ImageField(upload_to='media/', null=True, blank=True)
+    reservation_info = models.CharField(max_length=500, blank=True, null=True)
     
 # selected packages -> all the selected todo list will be appeared to admin and they can assign the loyalty point to that selected todo list in place of money.
