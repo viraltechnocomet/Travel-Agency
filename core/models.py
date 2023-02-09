@@ -98,6 +98,7 @@ class AddCartPackage(models.Model):
 
     
 class Accomodation(models.Model):
+    ac_image = models.ImageField(upload_to='media/', null=True, blank=True)
     ac_name = models.CharField(max_length=225, blank=True, null=True)
     destination=models.ForeignKey(Destinations,on_delete=models.CASCADE,blank=True, null=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)

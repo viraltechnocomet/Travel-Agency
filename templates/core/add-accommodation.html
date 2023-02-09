@@ -28,7 +28,7 @@ Add-Accommodation
                                 {% if form.errors %}
                                 {% for field in form %}
                                 {% for error in field.errors %}
-                                <div class="alert alert-danger" role="alert">
+                                <div class="alert text-center alert-danger" role="alert">
                                     <strong>{{ error|escape }}</strong>
                                 </div>
                                 {% endfor %}
@@ -37,7 +37,7 @@ Add-Accommodation
                                 {% block error_messages %}
                                 {% if messages %}
                                 {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                <div class="alert text-center alert-{{ message.tags }}" role="alert">
                                     <p>{{ message }}</p>
                                 </div>
                                 {% endfor %}
@@ -49,7 +49,7 @@ Add-Accommodation
                                         {% comment %} <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname">Image</label>
-                                                {{ itinerary.data_image }}
+                                                {{ accommodation.ac_image }}
                                             </div>
                                         </div> {% endcomment %}
                                         <div>
@@ -58,7 +58,14 @@ Add-Accommodation
                                                     class="rounded-circle" alt="example placeholder"
                                                     style="width: 220px;" />
                                             </div>
-                                            
+                                            <div class="d-flex justify-content-center">
+                                                <div class="btn btn-primary btn-rounded"
+                                                    style="background-color: black;">
+
+                                                    {{ accommodation.ac_image }}
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 

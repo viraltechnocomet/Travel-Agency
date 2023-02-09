@@ -707,25 +707,25 @@ def AccommodationView(request):
     context = {}
     if request.method=='POST':
         
-        accommodation = AccommodationForm(request.POST)
+        accommodation = AccommodationForm(request.POST,request.FILES)
         
         if accommodation.is_valid():
-            
+            # accommodation.save()
             try: 
                 cd = accommodation.cleaned_data
             
                 pc = Accomodation(
                    
+                    ac_image = request.FILES['ac_image'],
                     ac_name = cd['ac_name'],
                     destination = cd['destination'],
                     country = cd['country'],
                     city = cd['city'],
                     
                 )
-                
                 pc.save()
                 
-                messages.success(request, "Your data is successfully save......")
+                messages.success(request, "Your Accommodation is successfully save......")
                 print('Done.........')
                 return redirect('core:add-accommodation')
             except ValueError:
