@@ -740,4 +740,13 @@ def AccommodationView(request):
 
 @login_required(login_url='/')
 def AccommodationRead(request):
-    return render(request, 'core/accommodation.html')
+    context = {}
+    if 'q' in request.GET:
+        q = request.GET['q']
+        acc = Accomodation.objects.filter(ac_name__icontains=q)
+    else:
+        acc = Accomodation.objects.all().order_by("-created_at")
+
+    context['acc'] = acc
+    
+    return render(request, 'core/accommodation.html', context)

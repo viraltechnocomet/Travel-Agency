@@ -103,6 +103,8 @@ class Accomodation(models.Model):
     destination=models.ForeignKey(Destinations,on_delete=models.CASCADE,blank=True, null=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)
     city = models.ForeignKey(City,on_delete=models.CASCADE, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.ac_name 
