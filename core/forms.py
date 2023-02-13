@@ -235,3 +235,15 @@ class AccommodationForm(forms.Form):
     destination = forms.ModelChoiceField(queryset=Destinations.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
     country = forms.ModelChoiceField(queryset=Country.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
     city = forms.ModelChoiceField(queryset=City.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    
+class AccommodationUpdateForm(ModelForm):
+    class Meta:
+        model= Accomodation
+        fields = '__all__'
+        
+    ac_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
+    ac_name = forms.CharField(max_length = 250, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Hotel Name', 'type':"text",})))
+    destination = forms.ModelChoiceField(queryset=Destinations.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    country = forms.ModelChoiceField(queryset=Country.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    city = forms.ModelChoiceField(queryset=City.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+        

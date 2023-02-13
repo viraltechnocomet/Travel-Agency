@@ -121,25 +121,22 @@ Package-Details
 
                         {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
                         <div class="text-center">
-                            <a class="btn btn-sm btn-info mx-3" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User" href="/core/package-update/{{package_datas.id}}" type="submit" name="action">Edit
-                                <a class="fe fe-edit" style="color: #fff;" > </a>
-                        </a>
-                            <button class="btn btn-sm btn-danger" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Delete User"
-                                type="submit" name="action" onclick="return confirm('Are you sure you want to delete user?');" >
-                                <a class="fe fe-trash-2" style="color: #fff" href="{% url 'core:package-delete' package_datas.id %}" >Delete </a>
-                            </button>
+                            <a class="btn btn-sm btn-info mx-1" style="width: 110px;" data-bs-placement="bottom" href="/core/package-update/{{package_datas.id}}" type="submit" name="action">Edit</a>
+
+                            <a class="btn btn-sm btn-danger mx-1" style="color: #fff; width: 110px;" 
+                            onclick="return confirm('Are you sure you want to delete Itinerary ?');"
+                            href="{% url 'core:package-delete' package_datas.id %}">Delete </a>
                         </div>
                         {% endif %}
 
-                        {% if request.user.type == 'USER' %}
-                        {% comment %} {% for package in packages %} {% endcomment %}
+                        {% comment %} {% if request.user.type == 'USER' %} {% endcomment %}
+                        
                         <div class="text-center">
-                            <a class="btn btn-sm btn-dark mx-3" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User" href="{% url 'core:add-cart' package_datas.id %}" type="submit" name="action">Book Now
-                                <a class="fe fe-edit" style="color: #fff;" > </a>
-                        </a>
+                            <a class="btn btn-sm btn-dark mx-3" style="width: 233px;" data-bs-placement="bottom" 
+                            href="{% url 'core:add-cart' package_datas.id %}" type="submit">Book Now</a>
                         </div>
-                        {% comment %} {% endfor %} {% endcomment %}
-                        {% endif %}
+                       
+                        {% comment %} {% endif %} {% endcomment %}
 
                     </div>
                 </div>

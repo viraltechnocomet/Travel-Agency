@@ -571,7 +571,7 @@ def PackageDelete(request, id):
         messages.success(request, 'Package SuccessFully Delete')
         return redirect('core:package')
     else:
-        messages.error(request, "Something wen't to delete Itinerary" )
+        messages.error(request, "Something wen't to delete Package" )
     
     return render(request, 'core/package.html', {'package_datas': package_datas})
 
@@ -727,7 +727,7 @@ def AccommodationView(request):
                 
                 messages.success(request, "Your Accommodation is successfully save......")
                 print('Done.........')
-                return redirect('core:add-accommodation')
+                return redirect('core:accommodation')
             except ValueError:
                 messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
                 print("Oppsssssss")
@@ -741,12 +741,50 @@ def AccommodationView(request):
 @login_required(login_url='/')
 def AccommodationRead(request):
     context = {}
+    acc = Accomodation.objects.all().values_list('id')
+    print(acc)
     if 'q' in request.GET:
         q = request.GET['q']
         acc = Accomodation.objects.filter(ac_name__icontains=q)
     else:
-        acc = Accomodation.objects.all().order_by("-created_at")
+        acc = Accomodation.objects.all().order_by("id")
 
     context['acc'] = acc
     
     return render(request, 'core/accommodation.html', context)
+
+@login_required(login_url='/')
+def AccommodationDelete(request, id):
+    accomodation_data = Accomodation.objects.get(id=id)
+    if accomodation_data.delete():
+        messages.success(request, 'Accommodation SuccessFully Delete')
+        return redirect("core:accommodation")
+    else:
+        messages.error(request, "Something wen't wrong" )
+        
+    return render(request, 'core/accommodation.html', {'accomondation_data': accomodation_data})
+
+@login_required(login_url='/')
+def AccommodationUpdate(request, id):
+    
+    context = {}
+    
+    if request.method == 'POST':
+        itinerary_datas = Itinerary.objects.get(pk=id)
+        form = ItineraryUpdateForms(request.POST, request.FILES, instance=itinerary_datas)
+        if form.is_valid():
+            print("Done...")
+            form.save()
+            messages.success(request, "Itinerary SuccuessFully Updated")
+            return redirect('core:itinerary')
+        context['forms_data'] = form
+        context['itinerary_datas'] = itinerary_datas
+    else:
+        itinerary_datas = Itinerary.objects.get(pk=id)
+        
+        form = ItineraryUpdateForms(instance=itinerary_datas)
+        
+        context['forms_data'] = form
+        context['itinerary_datas'] = itinerary_datas
+    
+    return render(request, 'core/itinerary-update.html', context)

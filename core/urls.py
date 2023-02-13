@@ -36,10 +36,10 @@ urlpatterns = [
     path('package-delete/<int:id>/', views.PackageDelete, name='package-delete'),
     path('package-update/<int:id>/', views.PackageUpdate, name='package-update'),
     path('add-cart/<int:id>', views.AddCart, name='add-cart'),
-    path('cart/',views.CartDetails, name='cart'),
-    path('rate-package/<int:id>',views.RatePackage, name='rate-package'),
+    path('cart/', views.CartDetails, name='cart'),
+    path('rate-package/<int:id>', views.RatePackage, name='rate-package'),
     path('add-accommodation/', views.AccommodationView, name='add-accommodation'),
-    path('accommodation/',views.AccommodationRead, name='accommodation'),
-    
+    path('accommodation/', views.AccommodationRead, name='accommodation'),
+    path('accommodation-delete/<int:id>', views.AccommodationDelete, name='accommodation-delete'),
     
 ]

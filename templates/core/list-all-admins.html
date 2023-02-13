@@ -102,13 +102,11 @@ Admin
                                                             </button> {% endcomment %}
 
                                                         
-                                                                <a class="btn btn-sm btn-info" href="/core/update-admin/{{user.id}}"> 
-                                                                <span class="fe fe-edit"> Edit</span> </a>
-                                                            
+                                                            <a class="btn btn-sm btn-info" style="width: 100px;" href="/core/update-admin/{{user.id}}"> 
+                                                            <span class="fe fe-edit"> Edit</span> </a>
 
-                                                            <button class="btn  btn-sm btn-danger"
-                                                                data-bs-placement="bottom" data-bs-toggle="tooltip"
-                                                                title="Delete User" type="submit" name="action"
+                                                            <button class="btn  btn-sm btn-danger" style="width: 100px;"
+                                                                data-bs-placement="bottom" type="submit" name="action"
                                                                 value="delete"
                                                                 onclick="return confirm('Are you sure you want to delete user?');">
                                                                 <span class="fe fe-trash-2">Delete </span>

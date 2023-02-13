@@ -88,13 +88,13 @@ Itinerary Details
 
                                                 {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
                                                 <div class="text-center position-absolute bottom-0 end-10">
-                                                    <a class="btn btn-sm btn-info" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Manage User" href="/core/itinerary-update/{{itinerary_data.id}}" type="submit" name="action">Edit
-                                                        <a class="fe fe-edit" style="color: #fff;" > </a>
-                                                </a>
-                                                    <button class="btn  btn-sm btn-danger" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Delete User"
-                                                        type="submit" name="action" onclick="return confirm('Are you sure you want to delete user?');">
-                                                        <a class="fe fe-trash-2" style="color: #fff" href="{% url 'core:itinerary-delete' itinerary_data.id %}" >Delete </a>
-                                                    </button>
+                                                    <a class="btn btn-sm btn-info mx-1" style="width: 110px;" data-bs-placement="bottom" 
+                                                    href="/core/itinerary-update/{{itinerary_data.id}}" type="submit">Edit</a>
+                                                        
+                                                    <a class="btn btn-sm btn-danger mx-1" style="color: #fff; width: 110px;" 
+                                                    onclick="return confirm('Are yousure you want to delete Destination ?');"
+                                                    href="{% url 'core:itinerary-delete' itinerary_data.id %}" >Delete</a>
+                                                    
                                                 </div>
                                                 {% endif %}
                                             </ul>
