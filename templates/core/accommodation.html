@@ -27,7 +27,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">ITINERARY PACKAGES</h3>
+                            <h3 class="card-title">ACCOMMODATIONS</h3>
                             <div
                                 class="ms-md-auto pe-md-3 d-flex align-items-center pt-4 position-absolute top-0 end-0">
                                 <form class="form-inline my-2 my-lg-0 row text-center">
@@ -91,7 +91,7 @@
                                             <div class="text-center mt-3" >
                                                 <div class="text-right">
                                                     <a class="btn btn-sm btn-info" style="width: 110px;" data-bs-placement="bottom" 
-                                                    href="" type="submit">Edit</a>  
+                                                    href="{% url 'core:accommodation-update' ac.id %}" type="submit">Edit</a>  
                                                 </div>
                                                 <div class="text-right">  
                                                     <a class="btn btn-sm btn-danger" style="color: #fff; width: 110px;" 

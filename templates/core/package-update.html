@@ -27,7 +27,7 @@ Package-Update
                         <div class="offset-2 col-xl-8">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">ITINERARY PACKAGES</h3>
+                                    <h3 class="card-title">UPDATE ITINERARY</h3>
                                 </div>
                                 {% if form.errors %}
                                 {% for field in form %}
@@ -59,12 +59,12 @@ Package-Update
                                         </div> {% endcomment %}
                                         <div>
                                             <div class="d-flex justify-content-center mb-2">
-                                                <img class="rounded-3 justify-content-center position-relative z-index-2" style="height: 200px; width: 300px;" src="{{ package_datas.package_image.url }}" alt="rocket">
+                                                <img class="rounded-3 justify-content-center position-relative z-index-2" style="height: 200px; width: 300px;" src="{{ package_datas.image.url }}" alt="rocket">
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <div class="btn btn-primary btn-rounded"
                                                     style="background-color: black;">
-                                                    {{ forms.package_image }}
+                                                    {{ forms.image }}
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +74,7 @@ Package-Update
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputname">Package Name</label>
-                                                {{ forms.package_name }}
+                                                {{ forms.name }}
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@ Package-Update
                                     <div class="row">
                                         <div class="col-lg-11 col-md-12">
                                             <label for="exampleInputname2">Itineraries</label>
-                                            {{ forms.itinerary_details }}
+                                            {{ forms.details }}
                                         </div>
                                         <div class="col-lg-1 pt-4 col-md-12">
                                             <div class="form-group">
@@ -92,57 +92,6 @@ Package-Update
                                                         class="input-group-text btn shadow-none border border-dark mt-1"
                                                         style="height: 40px;"><i class="fa fa-plus"></i></a>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label for="exampleInputname2">From Date</label>
-                                                <div class="input-group mb-3">
-                                                    {{ forms.from_date }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label for="exampleInputname2">To Date</label>
-                                                <div class="input-group mb-3">
-                                                    {{ forms.to_date }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label for="exampleInputname2">Days</label>
-                                                <div class="input-group mb-3">
-                                                    {{ forms.days }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label for="exampleInputname2">Nights</label>
-                                                <div class="input-group mb-3">
-                                                    {{ forms.nights }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="form-group">
-                                                <label for="exampleInputname">Price</label>
-                                                {{ forms.price }}
                                             </div>
                                         </div>
                                     </div>

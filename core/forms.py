@@ -247,3 +247,7 @@ class AccommodationUpdateForm(ModelForm):
     country = forms.ModelChoiceField(queryset=Country.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
     city = forms.ModelChoiceField(queryset=City.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
         
+        
+class TrvelDocumentForm(forms.Form):
+    ticket_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
+    ticket_info = forms.CharField()

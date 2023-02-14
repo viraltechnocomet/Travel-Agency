@@ -41,5 +41,5 @@ urlpatterns = [
     path('add-accommodation/', views.AccommodationView, name='add-accommodation'),
     path('accommodation/', views.AccommodationRead, name='accommodation'),
     path('accommodation-delete/<int:id>', views.AccommodationDelete, name='accommodation-delete'),
-    
+    path('accommodation-update/<int:id>/', views.AccommodationUpdate, name='accommodation-update'),
 ]

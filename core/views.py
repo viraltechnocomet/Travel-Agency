@@ -292,7 +292,7 @@ def ItineraryView(request):
                 
                 pc.save()
                 
-                messages.success(request, "Your data is successfully save......")
+                messages.success(request, "Destination is created successfully......")
                 print('Done.........')
                 return redirect('core:itinerary')
             except ValueError:
@@ -313,7 +313,7 @@ def AddCountryView(request):
         form = AddCountryForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your data is successfully save......")
+            messages.success(request, "Country is created successfully......")
             return redirect('core:add-itinerary')
         else:
             print("opps......")
@@ -332,7 +332,7 @@ def AddCityView(request):
         form = AddCityForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your data is successfully save......")
+            messages.success(request, "City is created successfully......")
             return redirect('core:add-itinerary')
         else:
             print("opps......")
@@ -350,7 +350,7 @@ def AddCategoryView(request):
         form = AddCategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your data is successfully save......")
+            messages.success(request, "Category is created successfully......")
             return redirect('core:add-itinerary')
         else:
             print("opps......")
@@ -368,7 +368,7 @@ def AddAgeView(request):
         form = AddAgeForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your data is successfully save......")
+            messages.success(request, "Age is created successfully......")
             return redirect('core:add-itinerary')
         else:
             print("opps......")
@@ -386,7 +386,7 @@ def AddSeasonView(request):
         form = AddSeasonForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your data is successfully save......")
+            messages.success(request, "Season is created successfully......")
             return redirect('core:add-itinerary')
         else:
             print("opps......")
@@ -405,7 +405,7 @@ def AddActivityView(request):
         if form.is_valid():
             print("Done...")
             form.save()
-            messages.success(request, "Your data is successfully save......")
+            messages.success(request, "Activity is created successfully......")
             return redirect('core:add-itinerary')
         else:
             form = AddActivityForm(request.POST)
@@ -458,7 +458,7 @@ def itinerary_details(request, id):
 def ItineraryDelete(request, id):
     itinerary_data = Itinerary.objects.get(pk=id)
     if itinerary_data.delete():
-        messages.success(request, 'Itineray SuccessFully Delete')
+        messages.success(request, 'Destination is SuccessFully Deleted....')
         return redirect('core:itinerary')
     else:
         messages.error(request, "Something wen't to delete Itinerary" )
@@ -476,7 +476,7 @@ def ItineraryUpdate(request, id):
         if form.is_valid():
             print("Done...")
             form.save()
-            messages.success(request, "Itinerary SuccuessFully Updated")
+            messages.success(request, "Destination is SuccuessFully Updated....")
             return redirect('core:itinerary')
         context['forms_data'] = form
         context['itinerary_datas'] = itinerary_datas
@@ -522,11 +522,10 @@ def ItineraryPackageView(request):
                 pc.details.set(obj_itineraries)
                 # print(pc.pk)
                 
-                messages.success(request, "Your data is successfully save......")
+                messages.success(request, "Itinerary is created successfully......")
                 print('Done.........')
                 return redirect('core:package')
             except ValueError:
-                
                 messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
                 print("Oppsssssss")
         else:
@@ -568,7 +567,7 @@ def PackageDetails(request, id):
 def PackageDelete(request, id):
     package_datas = Destinations.objects.get(pk=id)
     if package_datas.delete():
-        messages.success(request, 'Package SuccessFully Delete')
+        messages.success(request, 'Itinerary is SuccessFully Deleted....')
         return redirect('core:package')
     else:
         messages.error(request, "Something wen't to delete Package" )
@@ -588,7 +587,7 @@ def PackageUpdate(request, id):
             # if Package.package_image!=None and Package.package_image!='':
             #     package_datas.package_image=Package.package_image
             form.save()
-            messages.success(request, "Package SuccuessFully Updated")
+            messages.success(request, "Itinerary is SuccuessFully Updated....")
             return redirect('core:package')
         context['forms'] = form
         context['package_datas'] = package_datas
@@ -725,7 +724,7 @@ def AccommodationView(request):
                 )
                 pc.save()
                 
-                messages.success(request, "Your Accommodation is successfully save......")
+                messages.success(request, "Your Accommodation is created successfully......")
                 print('Done.........')
                 return redirect('core:accommodation')
             except ValueError:
@@ -757,7 +756,7 @@ def AccommodationRead(request):
 def AccommodationDelete(request, id):
     accomodation_data = Accomodation.objects.get(id=id)
     if accomodation_data.delete():
-        messages.success(request, 'Accommodation SuccessFully Delete')
+        messages.success(request, 'Accommodation is SuccessFully Deleted....')
         return redirect("core:accommodation")
     else:
         messages.error(request, "Something wen't wrong" )
@@ -770,21 +769,22 @@ def AccommodationUpdate(request, id):
     context = {}
     
     if request.method == 'POST':
-        itinerary_datas = Itinerary.objects.get(pk=id)
-        form = ItineraryUpdateForms(request.POST, request.FILES, instance=itinerary_datas)
-        if form.is_valid():
+        accommodation_datas = Accomodation.objects.get(pk=id)
+        ac_form = AccommodationUpdateForm(request.POST, request.FILES, instance=accommodation_datas)
+        if ac_form.is_valid():
             print("Done...")
-            form.save()
-            messages.success(request, "Itinerary SuccuessFully Updated")
-            return redirect('core:itinerary')
-        context['forms_data'] = form
-        context['itinerary_datas'] = itinerary_datas
+            ac_form.save()
+            messages.success(request, "Accommodation is SuccuessFully Updated....")
+            return redirect('core:accommodation')
+        context['ac_form'] = ac_form
+        context['accommodation_datas'] = accommodation_datas
     else:
-        itinerary_datas = Itinerary.objects.get(pk=id)
+        accommodation_datas = Accomodation.objects.get(pk=id)
         
-        form = ItineraryUpdateForms(instance=itinerary_datas)
+        ac_form = AccommodationUpdateForm(instance=accommodation_datas)
         
-        context['forms_data'] = form
-        context['itinerary_datas'] = itinerary_datas
+        context['ac_form'] = ac_form
+        context['accommodation_datas'] = accommodation_datas
     
-    return render(request, 'core/itinerary-update.html', context)
+    return render(request, 'core/accommodation-update.html', context)
+
