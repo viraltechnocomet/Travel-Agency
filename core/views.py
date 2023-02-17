@@ -788,3 +788,44 @@ def AccommodationUpdate(request, id):
     
     return render(request, 'core/accommodation-update.html', context)
 
+@login_required(login_url='/')
+def TravelDocumentView(request):
+    
+    context = {}
+    if request.method=='POST':
+        
+        traveldocument = TravelDocumentForm(request.POST,request.FILES)
+        user=request.user
+        
+        if traveldocument.is_valid():
+            
+            try: 
+                cd = traveldocument.cleaned_data    
+            
+                pc = TravelDocument(
+                   
+                    ticket_image = request.FILES['ticket_image'],
+                    ticket_info = cd['ticket_info'],
+                    reservation_image = request.FILES['reservation_image'],
+                    reservation_info = cd['reservation_info'],
+                    
+                )
+                pc.user_id=user.id
+                pc.save()
+
+                messages.success(request, "Your Document is Upload successfully......")
+                print('Done.........')
+                return redirect('core:add-travel-document')
+            except ValueError:
+                messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+                print("Oppsssssss")
+        else:
+            print(traveldocument.errors)
+
+    context['traveldocument'] = TravelDocumentForm
+    
+    return render(request,'core/add-travel-document.html', context)
+
+@login_required(login_url='/')
+def TravelDocumentRead(request):
+    return render(request, 'core/travel-document.html')

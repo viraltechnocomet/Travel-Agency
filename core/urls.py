@@ -42,4 +42,6 @@ urlpatterns = [
     path('accommodation/', views.AccommodationRead, name='accommodation'),
     path('accommodation-delete/<int:id>', views.AccommodationDelete, name='accommodation-delete'),
     path('accommodation-update/<int:id>/', views.AccommodationUpdate, name='accommodation-update'),
+    path('add-travel-document/', views.TravelDocumentView, name='add-travel-document'),
+    path('travel-document/', views.TravelDocumentRead, name='travel-document'),
 ]

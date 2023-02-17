@@ -248,6 +248,8 @@ class AccommodationUpdateForm(ModelForm):
     city = forms.ModelChoiceField(queryset=City.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
         
         
-class TrvelDocumentForm(forms.Form):
+class TravelDocumentForm(forms.Form):
     ticket_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
-    ticket_info = forms.CharField()
+    ticket_info = forms.CharField(widget=forms.Textarea(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Ticket Info', 'type':"text", 'rows': 3, 'cols': 2}))
+    reservation_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
+    reservation_info = forms.CharField(widget=forms.Textarea(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Reservation Info', 'type':"text", 'rows': 3, 'cols': 2}))

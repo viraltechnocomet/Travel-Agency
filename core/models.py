@@ -142,7 +142,10 @@ class TravelDocument(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True)
     ticket_image = models.ImageField(upload_to='media/', null=True, blank=True)
     ticket_info = models.CharField(max_length=500, blank=True, null=True)
-    reseration_proof_image = models.ImageField(upload_to='media/', null=True, blank=True)
+    reservation_image = models.ImageField(upload_to='media/', null=True, blank=True)
     reservation_info = models.CharField(max_length=500, blank=True, null=True)
+    
+    def __str__(self):
+        return self.user.username
     
 # selected packages -> all the selected todo list will be appeared to admin and they can assign the loyalty point to that selected todo list in place of money.
