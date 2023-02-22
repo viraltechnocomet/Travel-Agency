@@ -828,4 +828,11 @@ def TravelDocumentView(request):
 
 @login_required(login_url='/')
 def TravelDocumentRead(request):
-    return render(request, 'core/travel-document.html')
+    context={}
+    users=request.user
+    
+    travel_document_history=TravelDocument.objects.filter(user=users).values()
+    print(travel_document_history)
+        
+    context['travel_document_history'] = travel_document_history
+    return render(request, 'core/travel-document.html', context)

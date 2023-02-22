@@ -60,30 +60,52 @@
                         <div class="itinerary-container">
                            
                             <!-- grid -->
-                            <div class="container">
+                            <div class="container mb-3">
                                 
                                 <div class="text-center">
-                                    <a class="btn btn-sm bg-gradient-success mb-0" href="{% url 'core:add-travel-document' %}">
-                                        <i class='fas fa-upload' style='font-size:20px'></i>
+                                    <a class="btn btn-sm bg-gradient-success mb-0" style="width: 25%;" href="{% url 'core:add-travel-document' %}">
+                                        <i class='fas fa-upload' style='font-size:25px'></i>
                                     </a>
                                 </div>
 
-                                <div class="card" style="width: 18rem;">
-                                    <img class="card-img-top" src="..." alt="Card image cap">
-                                    <div class="card-body">
-                                      <h5 class="card-title">Card title</h5>
-                                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                {% for tdh in travel_document_history %}
+
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header mx-4 p-3 text-center">
+                                                <img src="/media/{{ tdh.ticket_image }}" style="width: 390px; height: 300px; border-radius: 2%;">
+                                            </div>
+                                            <div class="card-body pt-0 p-3 text-center">
+                                                <h6 class="text-center mb-0">Ticket Info</h6>
+                                                <span class="text-xs">{{ tdh.ticket_info }}</span>
+                                                <hr class="horizontal dark my-3">
+                                                <div class="text-center">
+                                                    <a class="btn btn-sm btn-info mx-1" style="width: 110px;" data-bs-placement="bottom" 
+                                                    href="" type="submit">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <ul class="list-group list-group-flush">
-                                      <li class="list-group-item">Cras justo odio</li>
-                                      <li class="list-group-item">Dapibus ac facilisis in</li>
-                                      <li class="list-group-item">Vestibulum at eros</li>
-                                    </ul>
-                                    <div class="card-body">
-                                      <a href="#" class="card-link">Card link</a>
-                                      <a href="#" class="card-link">Another link</a>
+                                    <div class="col-md-6 mt-md-0 mt-4">
+                                        <div class="card">
+                                            <div class="card-header mx-4 p-3 text-center">
+                                                <img src="/media/{{ tdh.reservation_image }}" style="width: 390px; height: 300px; border-radius: 2%;">
+                                            </div>
+                                            <div class="card-body pt-0 p-3 text-center">
+                                                <h6 class="text-center mb-0">Reservation Proof Info</h6>
+                                                <span class="text-xs">{{ tdh.reservation_info }}</span>
+                                                <hr class="horizontal dark my-3">
+                                                <div class="text-center">
+                                                    <a class="btn btn-sm btn-info mx-1" style="width: 110px;" data-bs-placement="bottom" 
+                                                    href="" type="submit">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                {% endfor %}
 
                             </div>
                         </div>
@@ -95,12 +117,13 @@
     </div>
 </div>
 
-{% block extra-plugins %}
+{% comment %} {% block extra-plugins %}
 {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
 <div class="fixed-plugin">
     <a href="{% url 'core:add-accommodation' %}" class="fixed-plugin-button text-dark position-fixed px-3 py-2">
         <i class="fa fa-plus py-2"> </i>
     </a>
 </div>
-{% endif %} {% endblock extra-plugins %} 
+{% endif %} 
+{% endblock extra-plugins %}  {% endcomment %}
 {% endblock content %}
