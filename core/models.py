@@ -96,7 +96,6 @@ class AddCartPackage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    
 class Accomodation(models.Model):
     ac_image = models.ImageField(upload_to='media/', null=True, blank=True)
     ac_name = models.CharField(max_length=225, blank=True, null=True)
@@ -116,8 +115,7 @@ class Confirmed_Package(models.Model):
     client_number = models.CharField(max_length=500, blank=True, null=True)
     start_ac_date = models.DateField(blank=True, null=True)
     end_ac_date = models.DateField(blank=True, null=True)
-    
-    
+       
 RATE_CHOICES = [
     (1, '1'),
     (2, '2'),
@@ -126,7 +124,7 @@ RATE_CHOICES = [
     (5, '5'),
 ]     
       
-class Rating(models.Model):
+class RatingDestination(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     destination_id = models.ForeignKey(Destinations,on_delete=models.CASCADE)
     rate = models.PositiveSmallIntegerField(choices=RATE_CHOICES, blank=True, null=True)
@@ -135,9 +133,6 @@ class Rating(models.Model):
     def __str__(self):
         return self.user.username + " " + self.destination_id.name
     
-# class Loyalty(models.Model):
-#     l_value = models.CharField(max_length=225, blank=True, null=True)
-       
 class TravelDocument(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True)
     ticket_image = models.ImageField(upload_to='media/', null=True, blank=True)
@@ -148,4 +143,7 @@ class TravelDocument(models.Model):
     def __str__(self):
         return self.user.username
     
+# class Loyalty(models.Model):
+#     l_value = models.CharField(max_length=225, blank=True, null=True)
+       
 # selected packages -> all the selected todo list will be appeared to admin and they can assign the loyalty point to that selected todo list in place of money.

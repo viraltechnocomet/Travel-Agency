@@ -741,7 +741,6 @@ def AccommodationView(request):
 def AccommodationRead(request):
     context = {}
     acc = Accomodation.objects.all().values_list('id')
-    print(acc)
     if 'q' in request.GET:
         q = request.GET['q']
         acc = Accomodation.objects.filter(ac_name__icontains=q)
@@ -749,7 +748,6 @@ def AccommodationRead(request):
         acc = Accomodation.objects.all().order_by("id")
 
     context['acc'] = acc
-    
     return render(request, 'core/accommodation.html', context)
 
 @login_required(login_url='/')
@@ -808,14 +806,13 @@ def TravelDocumentView(request):
                     ticket_info = cd['ticket_info'],
                     reservation_image = request.FILES['reservation_image'],
                     reservation_info = cd['reservation_info'],
-                    
                 )
                 pc.user_id=user.id
                 pc.save()
 
                 messages.success(request, "Your Document is Upload successfully......")
                 print('Done.........')
-                return redirect('core:add-travel-document')
+                return redirect('core:travel-document')
             except ValueError:
                 messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
                 print("Oppsssssss")
@@ -836,3 +833,64 @@ def TravelDocumentRead(request):
         
     context['travel_document_history'] = travel_document_history
     return render(request, 'core/travel-document.html', context)
+
+@login_required(login_url='/')
+def TravelDocumentDelete(request, id):
+    travel_history = TravelDocument.objects.get(pk=id)
+    if travel_history.delete():
+        messages.success(request, 'Documents are SuccessFully Deleted....')
+        return redirect('core:travel-document')
+    else:
+        messages.error(request, "Something wen't to delete Package" )
+    
+    return render(request, 'core/travel-document.html', {'travel_history': travel_history})
+
+@login_required(login_url='/')
+def TravelTicketUpdate(request, id):
+    
+    context = {}
+    
+    if request.method == 'POST':
+        travel_ticket = TravelDocument.objects.get(pk=id)
+        tt_form = TravelTicketUpdateForm(request.POST, request.FILES, instance=travel_ticket)
+        if tt_form.is_valid():
+            print("Done...")
+            tt_form.save()
+            messages.success(request, "Ticket Documents are SuccuessFully Updated....")
+            return redirect('core:travel-document')
+        context['tt_form'] = tt_form
+        context['travel_ticket'] = travel_ticket
+    else:
+        travel_ticket = TravelDocument.objects.get(pk=id)
+        
+        tt_form = TravelTicketUpdateForm(instance=travel_ticket)
+        
+        context['tt_form'] = tt_form
+        context['travel_ticket'] = travel_ticket
+    
+    return render(request, 'core/travel-ticket-update.html', context)
+
+@login_required(login_url='/')
+def TravelReservationUpdate(request, id):
+    
+    context = {}
+    
+    if request.method == 'POST':
+        travel_reservation = TravelDocument.objects.get(pk=id)
+        tr_form = TravelReservationUpdateForm(request.POST, request.FILES, instance=travel_reservation)
+        if tr_form.is_valid():
+            print("Done...")
+            tr_form.save()
+            messages.success(request, "Reservaion Documents are SuccuessFully Updated....")
+            return redirect('core:travel-document')
+        context['tr_form'] = tr_form
+        context['travel_reservation'] = travel_reservation
+    else:
+        travel_reservation = TravelDocument.objects.get(pk=id)
+        
+        tr_form = TravelReservationUpdateForm(instance=travel_reservation)
+        
+        context['tr_form'] = tr_form
+        context['travel_reservation'] = travel_reservation
+    
+    return render(request, 'core/travel-reservation-update.html', context)

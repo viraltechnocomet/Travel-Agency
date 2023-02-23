@@ -226,7 +226,7 @@ class RateForm(forms.ModelForm):
     rate=forms.ChoiceField(choices=RATE_CHOICES,widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select"})))
 
     class Meta:
-        model = Rating
+        model = RatingDestination
         fields = ('rate',)
         
 class AccommodationForm(forms.Form):
@@ -251,5 +251,21 @@ class AccommodationUpdateForm(ModelForm):
 class TravelDocumentForm(forms.Form):
     ticket_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
     ticket_info = forms.CharField(widget=forms.Textarea(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Ticket Info', 'type':"text", 'rows': 3, 'cols': 2}))
+    reservation_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
+    reservation_info = forms.CharField(widget=forms.Textarea(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Reservation Info', 'type':"text", 'rows': 3, 'cols': 2}))
+    
+class TravelTicketUpdateForm(ModelForm):
+    class Meta:
+        model = TravelDocument
+        fields = ('ticket_image', 'ticket_info')
+        
+    ticket_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
+    ticket_info = forms.CharField(widget=forms.Textarea(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Ticket Info', 'type':"text", 'rows': 3, 'cols': 2}))
+    
+class TravelReservationUpdateForm(ModelForm):
+    class Meta:
+        model = TravelDocument
+        fields = ('reservation_image', 'reservation_info')
+        
     reservation_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
     reservation_info = forms.CharField(widget=forms.Textarea(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Reservation Info', 'type':"text", 'rows': 3, 'cols': 2}))

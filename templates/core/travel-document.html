@@ -1,4 +1,7 @@
-{% extends "./base.html" %} {% block title %} Accommodation {% endblock title %}
+{% extends "./base.html" %} 
+{% block title %} 
+Accommodation 
+{% endblock title %}
 {% block content %}
 <!--app-content open-->
 <div class="main-content app-content mt-0">
@@ -28,7 +31,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">TRAVEL DOCUMENT</h3>
-                            <div
+                            <!-- <div
                                 class="ms-md-auto pe-md-3 d-flex align-items-center pt-4 position-absolute top-0 end-0">
                                 <form class="form-inline my-2 my-lg-0 row text-center">
                                     <div class="col-md-8 p-0">
@@ -42,7 +45,7 @@
                                         </button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> -->
                         </div>
                         {% block error_messages %} 
                         {% if messages %}
@@ -69,7 +72,7 @@
                                 </div>
 
                                 {% for tdh in travel_document_history %}
-
+                                <div class="card">
                                 <div class="row mt-3">
                                     <div class="col-md-6">
                                         <div class="card">
@@ -82,7 +85,7 @@
                                                 <hr class="horizontal dark my-3">
                                                 <div class="text-center">
                                                     <a class="btn btn-sm btn-info mx-1" style="width: 110px;" data-bs-placement="bottom" 
-                                                    href="" type="submit">Edit</a>
+                                                    href="{% url 'core:travel-ticket-update' tdh.id %}" type="submit">Edit</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,18 +96,24 @@
                                                 <img src="/media/{{ tdh.reservation_image }}" style="width: 390px; height: 300px; border-radius: 2%;">
                                             </div>
                                             <div class="card-body pt-0 p-3 text-center">
-                                                <h6 class="text-center mb-0">Reservation Proof Info</h6>
+                                                <h6 class="text-center mb-0">Reservation Info</h6>
                                                 <span class="text-xs">{{ tdh.reservation_info }}</span>
                                                 <hr class="horizontal dark my-3">
                                                 <div class="text-center">
                                                     <a class="btn btn-sm btn-info mx-1" style="width: 110px;" data-bs-placement="bottom" 
-                                                    href="" type="submit">Edit</a>
+                                                    href="{% url 'core:travel-reservation-update' tdh.id %}" type="submit">Edit</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+                                <div class="text-center">
+                                    <a class="btn btn-sm btn-danger mt-3" style="color: #fff; width: 110px;" 
+                                    onclick="return confirm('Are yousure you want to delete Documents ?');"
+                                    href="{% url 'core:travel-document-delete' tdh.id %}" >Delete</a>
+                                </div>
+                                </div>
                                 {% endfor %}
 
                             </div>

@@ -88,18 +88,22 @@
 
                                         <div class="col-2 mt-md-0 mt-4 text-center">
                                             {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
-                                            <div class="text-center mt-3" >
+                                            <div class="text-center mt-2" >
                                                 <div class="text-right">
-                                                    <a class="btn btn-sm btn-info" style="width: 110px;" data-bs-placement="bottom" 
+                                                    <a class="btn btn-sm btn-info" style="width: 130px;" data-bs-placement="bottom" 
                                                     href="{% url 'core:accommodation-update' ac.id %}" type="submit">Edit</a>  
                                                 </div>
                                                 <div class="text-right">  
-                                                    <a class="btn btn-sm btn-danger" style="color: #fff; width: 110px;" 
+                                                    <a class="btn btn-sm btn-danger" style="color: #fff; width: 130px;" 
                                                     onclick="return confirm('Are you sure you want to delete Accommodation ?');" 
                                                     href="{% url 'core:accommodation-delete' ac.id %}">Delete</a>
                                                 </div>
                                             </div>
                                             {% endif %}
+                                            <div class="text-right">  
+                                                <a class="btn" style="color: #fff; background-color: #4cd422; width: 130px;" 
+                                                href=""><i class='fas fa-star'></i> &nbsp; Rate Now</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

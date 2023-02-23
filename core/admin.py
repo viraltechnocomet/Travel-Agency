@@ -19,6 +19,6 @@ admin.site.register(TravelDocument, TravelAdmin)
 
 class RateAdmin(admin.ModelAdmin):
     list_display = ["user", "destination_id", "rate"]
-admin.site.register(Rating, RateAdmin)
+admin.site.register(RatingDestination, RateAdmin)
 
 
