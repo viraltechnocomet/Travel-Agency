@@ -686,7 +686,7 @@ def RatePackage(request,id):
     destination_id=Destinations.objects.get(pk=id)
     user=request.user
     if request.method == 'POST':
-        rate_form=RateForm(request.POST)
+        rate_form=RatePackageForm(request.POST)
         print(rate_form)
         if rate_form.is_valid():
             rate=rate_form.save(commit=False)
@@ -696,9 +696,28 @@ def RatePackage(request,id):
             messages.success(request, "Rating Are Successfully Given To " + destination_id.name)
             print('Done.........')
             return redirect('core:package')
-    context['rate_form'] = RateForm
+    context['rate_form'] = RatePackageForm
     context['des'] = destination_id
     return render(request, 'core/rate-package.html',context)
+
+def RateAccommodation(request,id):
+    context = {}
+    accommodation_id=Accommodation.objects.get(pk=id)
+    user=request.user
+    if request.method == 'POST':
+        acr_form=RateAccommodationForm(request.POST)
+        print(acr_form)
+        if acr_form.is_valid():
+            rate=acr_form.save(commit=False)
+            rate.user_id=user.id
+            rate.accommodation_id=accommodation_id
+            rate.save()
+            messages.success(request, "Rating Are Successfully Given To " + accommodation_id.ac_name)
+            print('Done.........')
+            return redirect('core:accommodation')
+    context['acr_form'] = RateAccommodationForm
+    context['accr'] = accommodation_id
+    return render(request, 'core/rate-accommodation.html',context)
 
 @login_required(login_url='/')
 def AccommodationView(request):
@@ -713,7 +732,7 @@ def AccommodationView(request):
             try: 
                 cd = accommodation.cleaned_data
             
-                pc = Accomodation(
+                pc = Accommodation(
                    
                     ac_image = request.FILES['ac_image'],
                     ac_name = cd['ac_name'],
@@ -740,19 +759,19 @@ def AccommodationView(request):
 @login_required(login_url='/')
 def AccommodationRead(request):
     context = {}
-    acc = Accomodation.objects.all().values_list('id')
+    acc = Accommodation.objects.all().values_list('id')
     if 'q' in request.GET:
         q = request.GET['q']
-        acc = Accomodation.objects.filter(ac_name__icontains=q)
+        acc = Accommodation.objects.filter(ac_name__icontains=q)
     else:
-        acc = Accomodation.objects.all().order_by("id")
+        acc = Accommodation.objects.all().order_by("id")
 
     context['acc'] = acc
     return render(request, 'core/accommodation.html', context)
 
 @login_required(login_url='/')
 def AccommodationDelete(request, id):
-    accomodation_data = Accomodation.objects.get(id=id)
+    accomodation_data = Accommodation.objects.get(id=id)
     if accomodation_data.delete():
         messages.success(request, 'Accommodation is SuccessFully Deleted....')
         return redirect("core:accommodation")
@@ -767,7 +786,7 @@ def AccommodationUpdate(request, id):
     context = {}
     
     if request.method == 'POST':
-        accommodation_datas = Accomodation.objects.get(pk=id)
+        accommodation_datas = Accommodation.objects.get(pk=id)
         ac_form = AccommodationUpdateForm(request.POST, request.FILES, instance=accommodation_datas)
         if ac_form.is_valid():
             print("Done...")
@@ -777,7 +796,7 @@ def AccommodationUpdate(request, id):
         context['ac_form'] = ac_form
         context['accommodation_datas'] = accommodation_datas
     else:
-        accommodation_datas = Accomodation.objects.get(pk=id)
+        accommodation_datas = Accommodation.objects.get(pk=id)
         
         ac_form = AccommodationUpdateForm(instance=accommodation_datas)
         

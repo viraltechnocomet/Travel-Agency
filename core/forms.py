@@ -221,13 +221,22 @@ class AddCartForm(ModelForm):
     infant=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Infant', 'type':"text",})))
     # itinerary_datas=forms.MultipleChoiceField(choices=CHOICES, widget=(forms.CheckboxSelectMultiple(attrs={'required' : True, 'type':"checkbox",})))
     
-class RateForm(forms.ModelForm):
+class RatePackageForm(forms.ModelForm):
     
-    rate=forms.ChoiceField(choices=RATE_CHOICES,widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select"})))
-
     class Meta:
         model = RatingDestination
         fields = ('rate',)
+        
+    rate=forms.ChoiceField(choices=RATE_CHOICES,widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select"})))
+    
+    
+class RateAccommodationForm(forms.ModelForm):
+    class Meta:
+        model = RatingAccommodation
+        fields = ('rate_ac',)
+        
+    rate_ac=forms.ChoiceField(choices=RATE_CHOICES,widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select"})))
+    
         
 class AccommodationForm(forms.Form):
     ac_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
@@ -238,7 +247,7 @@ class AccommodationForm(forms.Form):
     
 class AccommodationUpdateForm(ModelForm):
     class Meta:
-        model= Accomodation
+        model= Accommodation
         fields = '__all__'
         
     ac_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))

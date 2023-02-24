@@ -11,14 +11,18 @@ admin.site.register(Age)
 admin.site.register(Season)
 admin.site.register(Destinations)
 admin.site.register(AddCartPackage)
-admin.site.register(Accomodation)
+admin.site.register(Accommodation)
 
 class TravelAdmin(admin.ModelAdmin):
     list_display = ["user"]
 admin.site.register(TravelDocument, TravelAdmin)
 
-class RateAdmin(admin.ModelAdmin):
+class RatePackageAdmin(admin.ModelAdmin):
     list_display = ["user", "destination_id", "rate"]
-admin.site.register(RatingDestination, RateAdmin)
+admin.site.register(RatingDestination, RatePackageAdmin)
+
+class RateAccommodationAdmin(admin.ModelAdmin):
+    list_display = ["user", "accommodation_id", "rate_ac"]
+admin.site.register(RatingAccommodation, RateAccommodationAdmin)
 
 
