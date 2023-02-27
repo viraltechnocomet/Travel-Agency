@@ -108,13 +108,18 @@ class Accommodation(models.Model):
     def __str__(self):
         return self.ac_name 
     
-class Confirmed_Package(models.Model):
-    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    package_id = models.ForeignKey(Destinations,on_delete=models.CASCADE)
-    accomodation_id = models.ForeignKey(Accommodation,on_delete=models.CASCADE, blank=True, null=True)
+class Bucket(models.Model):
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    destination_id = models.ForeignKey(Destinations,on_delete=models.CASCADE)
+    accommodation_id = models.ForeignKey(Accommodation,on_delete=models.CASCADE, blank=True, null=True)
     client_number = models.CharField(max_length=500, blank=True, null=True)
-    start_ac_date = models.DateField(blank=True, null=True)
-    end_ac_date = models.DateField(blank=True, null=True)
+    start_journey_date = models.DateField(blank=True, null=True)
+    end_journey_date = models.DateField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.user.username + " " + self.destination_id.name
        
 RATE_CHOICES = [
     (1, '1'),

@@ -82,7 +82,7 @@
                     <img class="account-image rounded-circle m-auto d-block dropdown-toggle" src="\static\assets\img\profile.jpg" width="40" height="40" data-bs-toggle="dropdown" aria-expanded="false" id="id_profile_links">
                         {% comment %} {{request.user.username}} {% endcomment %}
                     <div class="dropdown-menu" aria-labelledby="id_profile_links">
-                        <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                        {% comment %} <li><a class="dropdown-item" href="#">Edit Profile</a></li> {% endcomment %}
                         <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
                     </div>
                 </div>

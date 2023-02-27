@@ -278,3 +278,13 @@ class TravelReservationUpdateForm(ModelForm):
         
     reservation_image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
     reservation_info = forms.CharField(widget=forms.Textarea(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Reservation Info', 'type':"text", 'rows': 3, 'cols': 2}))
+    
+class AddBucketForm(ModelForm):
+    class Meta:
+        model = Bucket
+        fields = ('accommodation_id', 'client_number', 'start_journey_date', 'end_journey_date')
+
+    accommodation_id = forms.ModelChoiceField(queryset=Accommodation.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    client_number = forms.CharField(max_length = 250, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Client Number', 'type':"text",})))
+    start_journey_date = forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
+    end_journey_date = forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))

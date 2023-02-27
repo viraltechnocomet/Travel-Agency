@@ -48,4 +48,9 @@ urlpatterns = [
     path('travel-document-delete/<int:id>/', views.TravelDocumentDelete, name='travel-document-delete'),
     path('travel-ticket-update/<int:id>/', views.TravelTicketUpdate, name='travel-ticket-update'),
     path('travel-reservation-update/<int:id>/', views.TravelReservationUpdate, name='travel-reservation-update'),
+    path('add-bucket/<int:id>', views.AddBucketView, name='add-bucket'),
+    path('bucket/', views.BucketView, name='bucket'),
+    path('bucket-delete/<int:id>/', views.BucketDelete, name='bucket-delete'),
+    path('bucket-update/<int:id>/', views.BucketUpdate, name='bucket-update'),
+    
 ]

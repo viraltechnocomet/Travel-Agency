@@ -681,6 +681,7 @@ def CartDetails(request):
             
     return render(request, 'core/cart.html',context)
 
+@login_required(login_url='/')
 def RatePackage(request,id):
     context = {}
     destination_id=Destinations.objects.get(pk=id)
@@ -700,6 +701,7 @@ def RatePackage(request,id):
     context['des'] = destination_id
     return render(request, 'core/rate-package.html',context)
 
+@login_required(login_url='/')
 def RateAccommodation(request,id):
     context = {}
     accommodation_id=Accommodation.objects.get(pk=id)
@@ -913,3 +915,76 @@ def TravelReservationUpdate(request, id):
         context['travel_reservation'] = travel_reservation
     
     return render(request, 'core/travel-reservation-update.html', context)
+
+@login_required(login_url='/')
+def AddBucketView(request,id):
+    context = {}
+    destination_id=Destinations.objects.get(pk=id)
+    user=request.user
+    if request.method == 'POST':
+        bucket_form=AddBucketForm(request.POST)
+        print(bucket_form)
+        if bucket_form.is_valid():
+            bucket=bucket_form.save(commit=False)
+            bucket.user_id=user.id
+            bucket.destination_id=destination_id
+            bucket.save()
+            messages.success(request, "Your Destination Is Successfully Added In Bucket....")
+            print('Done.........')
+            return redirect('core:bucket')
+    context['bucket_form'] = AddBucketForm
+    context['dest'] = destination_id
+    return render(request, 'core/add-bucket.html',context)
+
+@login_required(login_url='/')
+def BucketView(request):
+    context = {}
+    # users=CustomUser.objects.filter(pk=request.user.id)
+    # print(users)
+    
+    user=request.user
+    print(user)
+    bucket_history=Bucket.objects.filter(user=user)
+    print(bucket_history)
+        
+    context['bucket_history'] = bucket_history
+
+        # context={
+        #     'student_leave_history':student_leave_history,
+        # }
+    return render(request, 'core/bucket.html',context)
+
+@login_required(login_url='/')
+def BucketDelete(request, id):
+    bucket_data_history = Bucket.objects.get(pk=id)
+    if bucket_data_history.delete():
+        messages.success(request, 'Destination Is SuccessFully Remove....')
+        return redirect('core:bucket')
+    else:
+        messages.error(request, "Something wen't to delete Package" )
+    
+    return render(request, 'core/bucket.html', {'bucket_data_history': bucket_data_history})
+
+@login_required(login_url='/')
+def BucketUpdate(request, id):
+    
+    context = {}
+    
+    if request.method == 'POST':
+        bucket_data = Bucket.objects.get(pk=id)
+        bd_form = AddBucketForm(request.POST, instance=bucket_data)
+        if bd_form.is_valid():
+            print("Done...")
+            bd_form.save()
+            messages.success(request, "Bucket Is SuccuessFully Updated....")
+            return redirect('core:bucket')
+        context['tt_form'] = bd_form
+        context['bucket_data'] = bucket_data
+    else:
+        bucket_data = Bucket.objects.get(pk=id)
+        bd_form = AddBucketForm(instance=bucket_data)
+        
+        context['bd_form'] = bd_form
+        context['bucket_data'] = bucket_data
+    
+    return render(request, 'core/bucket-update.html', context)

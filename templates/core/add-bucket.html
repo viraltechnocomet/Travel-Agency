@@ -1,0 +1,131 @@
+{% extends "./base.html" %}
+
+{% block title %}
+Admin Users
+{% endblock title %}
+
+
+
+
+
+{% block content %}
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            
+
+            <!-- Row -->
+            <div class="row">
+                <form class="login100-form validate-form"  method="post">
+                    {% csrf_token %}
+                    {{ form.type }}
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header m-l-5 pb-0">
+                                <h2 class="card-title">ADD BUCKET</h2>
+                            </div>
+                            {% block error_messages %}
+                            {% if messages %}
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3">
+                                    {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}" role="alert">
+                                        <p>{{ message }}</p>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endblock error_messages %}
+
+                            <div class="container text-center">
+                                <div class="row">
+                                    <div class="col-md-12 pb-2"><span class="" style="font-size: 300%; font-weight: 900; line-height: 0.5; color: #344767;">{{dest.name}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row pb-2">
+                                    <div class="col-md-12"> <img class="rounded-3 position-relative z-index-2"
+                                            style="height: 230px; width: 470px;" src="{{ dest.image.url }}"
+                                            alt="Image Not Found"></div>
+                                </div>
+
+                                
+                                
+                                <div class="card-body">
+                                    {% comment %} {{cart_forms.as_p}} {% endcomment %}
+                                    <div class="row text-left">
+                                    {% comment %} <label for="exampleInputname2">Itineraries</label>
+                                    {% for cartforms in package_itinerary_details %}
+                                    <div class="form-check mx-3 col-lg-4 col-md-4">
+                                        <input class="form-check-input" name="itinerary_cart[]" type="checkbox" value="{{ cartforms.id }}" 
+                                        id="{{ cartforms.id }}">
+                                        <label class="form-check-label"  for="flexCheckDefault">
+                                            {{ cartforms.destination }}
+                                        </label>
+                                      </div>
+                                      {% endfor %} 
+                                    </div> {% endcomment %}
+
+                                    <div class="row text-left">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname">Accommodation</label>
+                                                {{ bucket_form.accommodation_id }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row text-left">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname">Client Number</label>
+                                                {{ bucket_form.client_number }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row text-left">
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">Start Date</label>
+                                                <div class="input-group mb-3">
+                                                    {{ bucket_form.start_journey_date }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputname2">End Date</label>
+                                                <div class="input-group mb-3">
+                                                    {{ bucket_form.end_journey_date }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+
+                                    <div class="card-footer text-end">
+                                        <div class="text-center">
+                                            <input type="submit" class="btn bg-gradient-info w-20 mt-4 mb-0"
+                                                value="Add Bucket" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- End Row -->
+        </div>
+
+    </div>
+    {% endblock content %}

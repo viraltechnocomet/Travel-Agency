@@ -25,4 +25,8 @@ class RateAccommodationAdmin(admin.ModelAdmin):
     list_display = ["user", "accommodation_id", "rate_ac"]
 admin.site.register(RatingAccommodation, RateAccommodationAdmin)
 
+class ConformPackageAdmin(admin.ModelAdmin):
+    list_display = ["user", "destination_id", "accommodation_id"]
+admin.site.register(Bucket, ConformPackageAdmin)
+
 
