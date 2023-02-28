@@ -52,5 +52,7 @@ urlpatterns = [
     path('bucket/', views.BucketView, name='bucket'),
     path('bucket-delete/<int:id>/', views.BucketDelete, name='bucket-delete'),
     path('bucket-update/<int:id>/', views.BucketUpdate, name='bucket-update'),
+    path('add-loyalty/', views.LoyaltyView, name='add-loyalty'),
+    path('loyalty-delete/<int:id>/', views.LoyaltyDelete, name='loyalty-delete'),
     
 ]

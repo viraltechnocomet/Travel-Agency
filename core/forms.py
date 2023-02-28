@@ -288,3 +288,11 @@ class AddBucketForm(ModelForm):
     client_number = forms.CharField(max_length = 250, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Client Number', 'type':"text",})))
     start_journey_date = forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
     end_journey_date = forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
+    
+class LoyaltForm(ModelForm):
+    class Meta:
+        model = Loyalty
+        fields = ('loyalty_value',)
+       
+    user = forms.ModelChoiceField(queryset=CustomUser.objects.all(),to_field_name="id", widget=(forms.Select(attrs={'required' : True, 'class':'form-control', 'type':"select",})))
+    loyalty_value = forms.CharField(max_length = 250, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Enter Loyalty Value', 'type':"text",})))

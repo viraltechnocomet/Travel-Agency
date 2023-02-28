@@ -939,19 +939,17 @@ def AddBucketView(request,id):
 @login_required(login_url='/')
 def BucketView(request):
     context = {}
-    # users=CustomUser.objects.filter(pk=request.user.id)
-    # print(users)
     
     user=request.user
-    print(user)
     bucket_history=Bucket.objects.filter(user=user)
-    print(bucket_history)
+    
+    loyalty_history=Loyalty.objects.filter(user=user).values()
+    print(loyalty_history)
+    
+    
         
     context['bucket_history'] = bucket_history
-
-        # context={
-        #     'student_leave_history':student_leave_history,
-        # }
+    context['loyalty_history'] = loyalty_history
     return render(request, 'core/bucket.html',context)
 
 @login_required(login_url='/')
@@ -988,3 +986,45 @@ def BucketUpdate(request, id):
         context['bucket_data'] = bucket_data
     
     return render(request, 'core/bucket-update.html', context)
+
+@login_required(login_url='/')
+def LoyaltyView(request):
+    context = {}
+    if request.method=='POST':
+        
+        loyalty_form = LoyaltForm(request.POST)
+        
+        if loyalty_form.is_valid():
+            
+            try: 
+                cd = loyalty_form.cleaned_data    
+            
+                pc = Loyalty(
+                   
+                    loyalty_value = cd['loyalty_value'],
+                    user = cd['user'],
+                )
+                pc.save()
+
+                messages.success(request, "Loyalty Point Is Added successfully......")
+                print('Done.........')
+                return redirect('core:bucket')
+            except ValueError:
+                messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
+                print("Oppsssssss")
+        else:
+            print(loyalty_form.errors)
+
+    context['loyalty_form'] = LoyaltForm
+    return render(request, 'core/add-loyalty.html',context)
+
+@login_required(login_url='/')
+def LoyaltyDelete(request, id):
+    loyalty_data = Loyalty.objects.get(pk=id)
+    if loyalty_data.delete():
+        messages.success(request, 'Loyalty Points Is SuccessFully Deleted....')
+        return redirect('core:bucket')
+    else:
+        messages.error(request, "Something wen't to delete Package" )
+    
+    return render(request, 'core/bucket.html', {'loyalty_data': loyalty_data})

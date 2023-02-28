@@ -29,4 +29,8 @@ class ConformPackageAdmin(admin.ModelAdmin):
     list_display = ["user", "destination_id", "accommodation_id"]
 admin.site.register(Bucket, ConformPackageAdmin)
 
+class LoyaltyAdmin(admin.ModelAdmin):
+    list_display = ["user", "loyalty_value"]
+admin.site.register(Loyalty, LoyaltyAdmin)
+
 
