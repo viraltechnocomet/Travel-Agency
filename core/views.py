@@ -1008,7 +1008,7 @@ def LoyaltyView(request):
 
                 messages.success(request, "Loyalty Point Is Added successfully......")
                 print('Done.........')
-                return redirect('core:bucket')
+                return redirect('core:loyalty')
             except ValueError:
                 messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
                 print("Oppsssssss")
@@ -1019,12 +1019,52 @@ def LoyaltyView(request):
     return render(request, 'core/add-loyalty.html',context)
 
 @login_required(login_url='/')
+def LoyaltyRead(request):
+    context = {}
+    
+    if 'q' in request.GET:
+        q = request.GET['q']
+        loyalty = Loyalty.objects.filter(user__icontains=q)
+        print(loyalty)
+    else:
+        loyalty = Loyalty.objects.all().order_by("-created_at")
+        print(loyalty)
+
+    context['loyalty'] = loyalty
+    
+    return render(request, 'core/loyalty.html', context)
+
+@login_required(login_url='/')
 def LoyaltyDelete(request, id):
     loyalty_data = Loyalty.objects.get(pk=id)
     if loyalty_data.delete():
         messages.success(request, 'Loyalty Points Is SuccessFully Deleted....')
-        return redirect('core:bucket')
+        return redirect('core:loyalty')
     else:
         messages.error(request, "Something wen't to delete Package" )
     
     return render(request, 'core/bucket.html', {'loyalty_data': loyalty_data})
+
+@login_required(login_url='/')
+def LoyaltyUpdate(request, id):
+    
+    context = {}
+    
+    if request.method == 'POST':
+        loyalty_value = Loyalty.objects.get(pk=id)
+        lp_form = LoyaltForm(request.POST, instance=loyalty_value)
+        if lp_form.is_valid():
+            print("Done...")
+            lp_form.save()
+            messages.success(request, "Loyalty Points are SuccuessFully Updated....")
+            return redirect('core:loyalty')
+        context['lp_form'] = lp_form
+        context['loyalty_value'] = loyalty_value
+    else:
+        loyalty_value = Loyalty.objects.get(pk=id)
+        lp_form = LoyaltForm(instance=loyalty_value)
+        
+        context['lp_form'] = lp_form
+        context['loyalty_value'] = loyalty_value
+    
+    return render(request, 'core/loyalty-update.html', context)

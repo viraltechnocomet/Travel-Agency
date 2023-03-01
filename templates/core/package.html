@@ -84,18 +84,18 @@ Package
                                                     <img style="height: 250px; border-radius: 10%;" alt="Image not Found">
                                                 {% endif %}
     
+                                                
+                                                <h3 class="mx-3 position-absolute top-0 start-0" style="color: #fff; opacity: 90%; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">{{ package.name }}
+                                                </h3>
+                                                <div>
                                                 <figcaption>
-    
-                                                    <h3 class="mx-3" style="color: #fff; opacity: 80%; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">{{ package.name }}
-                                                    </h3>
-                                                    <div>
                                                     <a class="btn btn-outline-light"
-                                                        href='{% url "core:package-details" package.id %}' style="position: absolute; opacity: 60%; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-left: 53%; margin-top: 49%;">
+                                                        href='{% url "core:package-details" package.id %}' style="position: absolute; opacity: 70%; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-left: 56%; margin-top: 70%;">
                                                         Read More
                                                     </a>
+                                                </figcaption>
                                                 </div>
     
-                                                </figcaption>
                                             </div>
     
                                         </div>

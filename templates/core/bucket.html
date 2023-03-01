@@ -152,7 +152,7 @@ Bucket
                         {% for lh in loyalty_history %}
                         <div class="ribbon">
                             <span>{{ lh.loyalty_value }}&nbsp; &nbsp;
-                                {% comment %} <a onclick="return confirm('Are you sure you want to delete Loyalty Points ?');" class=""href="{% url   'core:loyalty-delete' lh.id %}"><i class='fas fa-trash'></i></a> {% endcomment %}
+                                {% comment %} <a onclick="return confirm('Are you sure you want to delete Loyalty Points ?');" class=""href="{% url 'core:loyalty-delete' lh.id %}"><i class='fas fa-trash'></i></a> {% endcomment %}
                             </span>
                         </div>
                         {% endfor %}

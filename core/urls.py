@@ -53,6 +53,8 @@ urlpatterns = [
     path('bucket-delete/<int:id>/', views.BucketDelete, name='bucket-delete'),
     path('bucket-update/<int:id>/', views.BucketUpdate, name='bucket-update'),
     path('add-loyalty/', views.LoyaltyView, name='add-loyalty'),
+    path('loyalty/', views.LoyaltyRead, name='loyalty'),
     path('loyalty-delete/<int:id>/', views.LoyaltyDelete, name='loyalty-delete'),
+    path('loyalty-update/<int:id>/', views.LoyaltyUpdate, name='loyalty-update'),
     
 ]
