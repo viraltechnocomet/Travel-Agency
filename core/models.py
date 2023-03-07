@@ -74,28 +74,24 @@ class Destinations(models.Model):
     image = models.ImageField(upload_to='media/', null=True, blank=True)
     name = models.CharField(max_length=250,unique=True)
     details = models.ManyToManyField(Itinerary, blank=True)
-    # from_date = models.DateField(blank=True,null=True)
-    # to_date = models.DateField(blank=True,null=True)
-    # price = models.CharField(max_length=250, null=True)
-    # days = models.CharField(max_length=250, null=True)
-    # nights = models.CharField(max_length=250, null=True)
+    is_add = models.BooleanField(null=True,default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.name   
-    
-class AddCartPackage(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
-    itinerary_cart = models.ManyToManyField(Itinerary,blank=True)
-    start_date = models.DateField(blank=True,null=True)
-    end_date = models.DateField(blank=True,null=True)
-    adults = models.CharField(max_length=250,blank=True,null=True)
-    children = models.CharField(max_length=250,blank=True,null=True)
-    infant = models.CharField(max_length=250,blank=True,null=True)
+        return self.name    
+
+class SelectDestinations(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, null=True)
+    image = models.ImageField(upload_to='media/', null=True, blank=True)
+    name = models.CharField(max_length=250,unique=True)
+    details = models.ManyToManyField(Itinerary, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    
+    def __str__(self):
+        return self.name 
+    
 class Accommodation(models.Model):
     ac_image = models.ImageField(upload_to='media/', null=True, blank=True)
     ac_name = models.CharField(max_length=225, blank=True, null=True)
@@ -156,6 +152,7 @@ class TravelDocument(models.Model):
     
 class Loyalty(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True, related_name='user_loyalty')
+    # itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE, blank=True, null=True)
     loyalty_value = models.CharField(max_length=225, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

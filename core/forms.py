@@ -171,17 +171,12 @@ class ItineraryUpdateForms(ModelForm):
 
 class ItineraryPackageForms(forms.Form):
 
-    choices_list=list(Itinerary.objects.all().values('id','destination'))
-    res = [(val["id"],val["destination"]) for key,val in enumerate(choices_list)]
-    
+    # choices_list=list(Itinerary.objects.all().values('id','destination','data_image'))
+    # print(choices_list)
+    # res = [(val["id"],val["destination"]) for key,val in enumerate(choices_list)]
     image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
     name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Package Name', 'type':"text",})))
-    # days = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Days', 'type':"text",})))
-    # nights = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Nights', 'type':"text",})))
-    details=forms.MultipleChoiceField(choices=res, widget=(forms.SelectMultiple(attrs={'required' : True, 'class':'form-control', 'type':"select",'name':"itinarary_choices"})))
-    # from_date=forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
-    # to_date=forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
-    # price=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Price', 'type':"text",})))
+    # details=forms.MultipleChoiceField(choices=res, widget=(forms.CheckboxSelectMultiple(attrs={'type':"checkbox",})))
     
     def save(self, commit=True):
         ...
@@ -190,36 +185,16 @@ class PackageUpadateForms(ModelForm):
     
     class Meta:
         model= Destinations
-        fields = '__all__'
+        fields = ('image', 'name')
 
-    choices_list=list(Itinerary.objects.all().values('id','destination'))
-    res = [(val["id"],val["destination"]) for key,val in enumerate(choices_list)]
+    # choices_list=list(Itinerary.objects.all().values('id','destination'))
+    # res = [(val["id"],val["destination"]) for key,val in enumerate(choices_list)]
     
     image = forms.ImageField(widget=(forms.FileInput(attrs={'class': 'd-done', 'type': 'file',})))
     name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Package Name', 'type':"text",})))
-    # days = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Days', 'type':"text",})))
-    # nights = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Nights', 'type':"text",})))
-    details=forms.MultipleChoiceField(choices=res, widget=(forms.SelectMultiple(attrs={'required' : True, 'class':'form-control', 'type':"select",'name':"itinarary_choices"})))
-    # from_date=forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
-    # to_date=forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
-    # price=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Price', 'type':"text",})))
+    # details=forms.MultipleChoiceField(choices=res, widget=(forms.CheckboxSelectMultiple(attrs={'type':"checkbox",})))
 
-
-class AddCartForm(ModelForm):
-
-    CHOICES = {}
-    class Meta:
-        model= AddCartPackage
-        fields = '__all__'
-         
-    # package_name = forms.CharField(max_length = 150, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Package Name', 'type':"text",})))
-
-    start_date=forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
-    end_date=forms.DateField(widget=(forms.DateInput(attrs={'required' : True, 'class':'form-control', 'type':"date",})))
-    adults=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Adults', 'type':"text",})))
-    children=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Children', 'type':"text",})))
-    infant=forms.CharField(max_length=550, widget=(forms.TextInput(attrs={'required' : True, 'class':'form-control', 'placeholder': 'Infant', 'type':"text",})))
-    # itinerary_datas=forms.MultipleChoiceField(choices=CHOICES, widget=(forms.CheckboxSelectMultiple(attrs={'required' : True, 'type':"checkbox",})))
+   
     
 class RatePackageForm(forms.ModelForm):
     

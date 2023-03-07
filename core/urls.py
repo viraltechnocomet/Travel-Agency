@@ -35,8 +35,9 @@ urlpatterns = [
     path('package-details/<int:id>', views.PackageDetails, name='package-details'),
     path('package-delete/<int:id>/', views.PackageDelete, name='package-delete'),
     path('package-update/<int:id>/', views.PackageUpdate, name='package-update'),
-    path('add-cart/<int:id>', views.AddCart, name='add-cart'),
-    path('cart/', views.CartDetails, name='cart'),
+    path('select-itinerary/<int:id>/', views.SelectItinerary, name='select-itinerary'),
+    path('add-itineraries/', views.AddItinerary, name='add-itineraries'),
+    
     path('rate-package/<int:id>', views.RatePackage, name='rate-package'),
     path('rate-accommodation/<int:id>', views.RateAccommodation, name='rate-accommodation'),
     path('add-accommodation/', views.AccommodationView, name='add-accommodation'),

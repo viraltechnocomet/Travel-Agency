@@ -10,7 +10,6 @@ admin.site.register(Category)
 admin.site.register(Age)
 admin.site.register(Season)
 admin.site.register(Destinations)
-admin.site.register(AddCartPackage)
 admin.site.register(Accommodation)
 
 class TravelAdmin(admin.ModelAdmin):

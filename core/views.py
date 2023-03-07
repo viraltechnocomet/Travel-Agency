@@ -35,6 +35,8 @@ from templates import *
 from django.contrib import messages
 from accounts.models import USER_TYPES
 
+from django.shortcuts import get_object_or_404
+
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -495,10 +497,13 @@ def ItineraryUpdate(request, id):
 def ItineraryPackageView(request):
     
     context = {}
+    iti = Itinerary.objects.all()
     if request.method=='POST':
         itineraries = request.POST.getlist("details")
+        print(itineraries)
 
         obj_itineraries = list(Itinerary.objects.filter(pk__in = itineraries))
+        print(obj_itineraries)
         
         package = ItineraryPackageForms(request.POST,request.FILES)
         
@@ -512,11 +517,6 @@ def ItineraryPackageView(request):
                     
                     image = request.FILES['image'],
                     name = cd['name'],
-                    # from_date = cd['from_date'],
-                    # to_date = cd['to_date'],
-                    # days = cd['days'],
-                    # nights = cd['nights'],
-                    # price = cd['price'],
                 )
                 pc.save()
                 pc.details.set(obj_itineraries)
@@ -532,6 +532,7 @@ def ItineraryPackageView(request):
             print(package.errors)
 
     context['package'] = ItineraryPackageForms
+    context['iti'] = iti
     
     return render(request,'core/add-itinerary-package.html', context)
 
@@ -583,9 +584,6 @@ def PackageUpdate(request, id):
         package_datas = Destinations.objects.get(pk=id)
         form = PackageUpadateForms(request.POST, request.FILES, instance=package_datas)
         if form.is_valid():
-            
-            # if Package.package_image!=None and Package.package_image!='':
-            #     package_datas.package_image=Package.package_image
             form.save()
             messages.success(request, "Itinerary is SuccuessFully Updated....")
             return redirect('core:package')
@@ -602,84 +600,35 @@ def PackageUpdate(request, id):
     return render(request, 'core/package-update.html', context)
 
 @login_required(login_url='/')
-def AddCart(request,id):
-    
+def SelectItinerary(request, id):
     context = {}
-    
-    if request.method == "POST":
-        itinerary_cart = request.POST.getlist("itinerary_cart[]")
-        # print(itinerary_cart)
-        # obj_cart= AddCartPackage.objects.get(pk__in=itinerary_cart)
-        # print(obj_cart)
-        # iti_cart_value=""
-        # for i in itinerary_cart:
-        #     iti_cart_value=i+','+iti_cart_value
-        #     print(iti_cart_value)
-        # obj_cart.itinerary_cart=iti_cart_value
-        # obj_cart.save()
-        obj_itineraris = Itinerary.objects.filter(pk__in=itinerary_cart)
-        print(obj_itineraris)
-
-        package_cart_data = Destinations.objects.get(pk=id)
-        package_itinerary_details= package_cart_data.details.all().values('id','destination')
-        cart_form = AddCartForm(request.POST)
-        print(request.POST)
-
-        if cart_form.is_valid():
-            # cart_form.save()
-            
-            try: 
-                cd = cart_form.cleaned_data
-                pc = AddCartPackage(
-                    
-                    start_date = cd['start_date'],
-                    end_date = cd['end_date'],
-                    adults = cd['adults'],
-                    children = cd['children'],
-                    infant = cd['infant'],
-                )
-                
-                pc.save()
-                for obj in obj_itineraris:
-                    pc.itinerary_cart.add(obj)
-                pc.save()
-                # pc.itinerary_cart.save(iti_cart_value)
-                
-                messages.success(request, "Package Successfully Added In Cart")
-                print('Done.........')
-            except ValueError:
-                messages.error(request, "OPPS.... SORRY YOUR DATA ARE NOT SAVE......")
-                print("Oppsssssss")
-
-            return redirect('core:package')
+    package_datas = Destinations.objects.get(pk=id)
+    package_itinerary_datas= package_datas.details.all()
+    itinerary_data = Itinerary.objects.all()
+   
         
-        context['cart_forms'] = cart_form
-        context['package_cart_data'] = package_cart_data
-        context['package_itinerary_details'] = package_itinerary_details
+    context['itinerary_data'] = itinerary_data
+    context['package_datas'] = package_datas
+    context['package_itinerary_datas'] = package_itinerary_datas
+    return render(request, 'core/select-itinerary.html', context)
+
+@login_required(login_url='/')
+def AddItinerary(request):
+    context={}
+    if request.method=='POST':
+        destination_id=request.POST.get('pkg_id')
+        details=request.POST.get('iti_id')
         
-    else:
-        package_cart_data = Destinations.objects.get(pk=id)
-        package_itinerary_details= package_cart_data.details.all().values('id','destination')
-        cart_form = AddCartForm()
-        context['cart_forms'] = cart_form
-        context['package_cart_data'] = package_cart_data
-        context['package_itinerary_details'] = package_itinerary_details
-    
-    return render(request, 'core/add-cart.html',context)
+        it_details = Itinerary.objects.filter(pk__in=details)
+        destination=Destinations.objects.get(id=destination_id)
 
+        destination.details.set(it_details)
+        destination.save()
+        
+        messages.success(request,'Itinerary Is Added Successfully....')
+        return redirect('core:select-itinerary')
+    return render(request, 'core/select-itinerary.html', context)
 
-def CartDetails(request):
-    context = {}
-    # c_user= request.user.id
-    # print(c_user)
-    # c_data=CustomUser.objects.filter(pk=c_user)
-    # print(c_data)
-    # cart_detail=
-    # cart_data=AddCartPackage.objects.get(id=38)
-    # print(cart_data)
-    # context['cart_data'] = cart_data
-            
-    return render(request, 'core/cart.html',context)
 
 @login_required(login_url='/')
 def RatePackage(request,id):
