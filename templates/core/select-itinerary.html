@@ -30,7 +30,7 @@ Select-Itinerary
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header pb-0">
-                            <h3 class="card-title">SELECT ITINERARY</h3>
+                            <h3 class="card-title">Select Itinerary For {{package_datas.name}}</h3>
                             <div
                                 class="ms-md-auto pe-md-3 d-flex align-items-center pt-4 position-absolute top-0 end-0">
                                 <form class="form-inline my-2 my-lg-0 row text-center">
@@ -110,6 +110,8 @@ Select-Itinerary
                                             </div>
                                             {% endif %}
                                             {% endcomment %}
+
+                                            {% if iti_data not in package_itinerary_datas %} 
                                             <form action="{% url 'core:add-itineraries' %}" method="post">
                                                 {% csrf_token %}
                                             <div class="text-right mt-6">
@@ -117,13 +119,25 @@ Select-Itinerary
                                                 value="{{package_datas.id}}" hidden>
                                                 <input type="text" class="form-control" id="exampleInputEmail1" name="iti_id"
                                                 value="{{iti_data.id}}" hidden>
-                                                
-                                                <input type="submit" class="btn" 
-                                                style="color: #fff; background-color: #4cd422;"
-                                                value="+" />
-                                                
+                                                <input type="submit"
+                                                    class="btn btn-success" style="width: 95px;"
+                                                    value="Add"/>  
                                             </div>
-                                            </form> 
+                                            </form>
+                                            {% else %}
+                                            <form action="{% url 'core:remove-itineraries' %}" method="post">
+                                                {% csrf_token %}
+                                            <div class="text-right mt-6">
+                                                <input type="text" class="form-control" id="exampleInputEmail1" name="pkg_id"
+                                                value="{{package_datas.id}}" hidden>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" name="iti_id"
+                                                value="{{iti_data.id}}" hidden>
+                                                <input type="submit"
+                                                    class="btn btn-danger" style="width: 95px;" 
+                                                    value="Remove"/> 
+                                            </div>
+                                            </form>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -139,5 +153,14 @@ Select-Itinerary
     </div>
 </div>
 
+{% block extra-plugins %}   
+{% if request.user.type == 'ADMIN' or request.user.is_superuser %}
+<div class="fixed-plugin">
+    <a href="{% url "core:package-details" package_datas.id %}"  class="fixed-plugin-button text-dark position-fixed px-3 py-2" style="font-weight: 900; border-radius: 5%; font-size: small;">
+    <i class='fas fa-angle-double-right'></i> &nbsp; SUBMIT
+    </a>
+</div>
+{% endif %}
+{% endblock extra-plugins %}
 
 {% endblock content %}

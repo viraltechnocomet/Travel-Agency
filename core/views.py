@@ -39,6 +39,8 @@ from django.shortcuts import get_object_or_404
 
 from django.contrib.auth import get_user_model
 
+import pdb
+
 User = get_user_model()
 
 TEMP_PROFILE_IMAGE_NAME = "temp_profile_image.png"
@@ -602,13 +604,20 @@ def PackageUpdate(request, id):
 @login_required(login_url='/')
 def SelectItinerary(request, id):
     context = {}
-    package_datas = Destinations.objects.get(pk=id)
-    package_itinerary_datas= package_datas.details.all()
-    itinerary_data = Itinerary.objects.all()
+    if 'q' in request.GET:
+        q = request.GET['q']
+        package_datas = Destinations.objects.get(pk=id)
+        package_itinerary_datas= package_datas.details.all()
+        itinerary_data = Itinerary.objects.filter(destination__icontains=q)
+        print(itinerary_data)
+    else:
+        package_datas = Destinations.objects.get(pk=id)
+        package_itinerary_datas= package_datas.details.all()
+        itinerary_data = Itinerary.objects.all()
+        print(itinerary_data)
    
-        
+    context['package_datas'] = package_datas    
     context['itinerary_data'] = itinerary_data
-    context['package_datas'] = package_datas
     context['package_itinerary_datas'] = package_itinerary_datas
     return render(request, 'core/select-itinerary.html', context)
 
@@ -616,19 +625,44 @@ def SelectItinerary(request, id):
 def AddItinerary(request):
     context={}
     if request.method=='POST':
+        # pdb.set_trace()
         destination_id=request.POST.get('pkg_id')
         details=request.POST.get('iti_id')
         
         it_details = Itinerary.objects.filter(pk__in=details)
+        print(it_details)
         destination=Destinations.objects.get(id=destination_id)
+        print(destination)
 
-        destination.details.set(it_details)
+        for it in it_details:
+            destination.details.add(it)
         destination.save()
         
-        messages.success(request,'Itinerary Is Added Successfully....')
-        return redirect('core:select-itinerary')
+        messages.success(request,'Itinerary Is Successfully Add....')
+        return redirect('core:select-itinerary', id=destination_id)
     return render(request, 'core/select-itinerary.html', context)
 
+
+@login_required(login_url='/')
+def RemoveItinerary(request):
+    context={}
+    if request.method=='POST':
+        # pdb.set_trace()
+        destination_id=request.POST.get('pkg_id')
+        details=request.POST.get('iti_id')
+        
+        it_details = Itinerary.objects.filter(pk__in=details)
+        print(it_details)
+        destination=Destinations.objects.get(id=destination_id)
+        print(destination)
+
+        for it in it_details:
+            destination.details.remove(it)
+        destination.save()
+        
+        messages.success(request,'Itinerary Is Successfully Remove....')
+        return redirect('core:select-itinerary', id=destination_id)
+    return render(request, 'core/select-itinerary.html', context)
 
 @login_required(login_url='/')
 def RatePackage(request,id):

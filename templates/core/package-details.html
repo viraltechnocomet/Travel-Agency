@@ -109,10 +109,10 @@ Package-Details
 
                         </div>
 
-                        <div class="text-center">
+                        {% comment %} <div class="text-center">
                             <a class="btn btn-sm btn-light mx-3" style="width: 233px;" data-bs-placement="bottom" 
-                            href="{% url 'core:select-itinerary' package_datas.id %}" type="submit">Select  Itineraries</a>
-                        </div>
+                            href="{% url 'core:select-itinerary' package_datas.id %}" type="submit">Edit  Itineraries</a>
+                        </div> {% endcomment %}
 
                         {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
                         <div class="text-center">
@@ -126,10 +126,10 @@ Package-Details
 
                         {% comment %} {% if request.user.type == 'USER' %} {% endcomment %}
                         
-                        <div class="text-center">
+                        {% comment %} <div class="text-center">
                             <a class="btn btn-sm btn-dark mx-3" style="width: 233px;" data-bs-placement="bottom" 
                             href="{% url 'core:add-bucket' package_datas.id %}" type="submit">Book Now</a>
-                        </div>
+                        </div> {% endcomment %}
                        
                         {% comment %} {% endif %} {% endcomment %}
 
@@ -140,5 +140,18 @@ Package-Details
         </div>
     </div>
 
-    
+    {% block extra-plugins %}   
+    {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
+    <div class="fixed-plugin">
+        <a href="{% url 'core:select-itinerary' package_datas.id %}"  class="fixed-plugin-button position-fixed px-3 py-2" style="font-weight: 900; border-radius: 5%; font-size: small; bottom: 80px; background-color: #ddae07; color: #fff;">
+        <i class='fas fa-edit'></i> &nbsp; ADD ITINERARY
+        </a>
+    </div>
+    <div class="fixed-plugin">
+        <a href="{% url 'core:add-bucket' package_datas.id %}"  class="fixed-plugin-button position-fixed px-3 py-2" style="font-weight: 900; border-radius: 5%; font-size: small; bottom: 35px; width: 150px; background-color: #344767; color: #fff;">
+        <i class='fas fa-cart-plus'></i> &nbsp; BOOK NOW
+        </a>
+    </div>
+    {% endif %}
+    {% endblock extra-plugins %}
     {% endblock content %}
