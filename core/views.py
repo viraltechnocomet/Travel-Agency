@@ -558,6 +558,7 @@ def PackageDetails(request, id):
         
         package_datas = Destinations.objects.get(pk=id)
         package_itinerary_datas= package_datas.details.all()
+        print(package_itinerary_datas)
         
         context['package_datas'] = package_datas
         context['package_itinerary_datas'] = package_itinerary_datas
@@ -662,6 +663,102 @@ def RemoveItinerary(request):
         
         messages.success(request,'Itinerary Is Successfully Remove....')
         return redirect('core:select-itinerary', id=destination_id)
+    return render(request, 'core/select-itinerary.html', context)
+
+
+@login_required(login_url='/')
+def SelectItineraryForUser(request, id):
+    context = {}
+    if 'q' in request.GET:
+        q = request.GET['q']
+        package_datas = Destinations.objects.get(pk=id)
+        package_itinerary_datas= package_datas.details.all()
+        itinerary_data = Itinerary.objects.filter(destination__icontains=q)
+
+    else:
+        package_datas = SelectDestinations.objects.get(pk=id)
+        print(package_datas)
+        package_itinerary_datas= package_datas.details.all()
+        itinerary_data = Itinerary.objects.all()
+   
+    context['package_datas'] = package_datas    
+    context['itinerary_data'] = itinerary_data
+    context['package_itinerary_datas'] = package_itinerary_datas
+    return render(request, 'core/select-itinerary-user.html', context)
+
+
+@login_required(login_url='/')
+def AddSelectDestinationForUser(request):
+    context={}
+
+    if request.method=='POST':
+        user=request.POST.get('user_id')
+        image=request.POST.get('image')
+        name=request.POST.get('name')
+        destination_id=request.POST.get('packag_id')   
+        details=request.POST.getlist('itinerary_id')
+        
+        if SelectDestinations.objects.filter(destination_id=destination_id).exists():
+            return redirect('core:add-bucket', id=destination_id)
+        else:
+            user = CustomUser.objects.get(id=user)
+            destination=SelectDestinations(
+                destination_id=destination_id,
+                user=user,
+                image=image,
+                name=name,
+            )
+            destination.save()
+            # destination.details.set(details)
+            for it in details:
+                print(it)
+                destination.details.add(it)
+            
+            messages.success(request,'Success....')
+            return redirect('core:add-bucket', id=destination_id)
+
+    return render(request, 'core/select-itinerary.html', context)
+
+@login_required(login_url='/')
+def AddItineraryForUser(request):
+    context={}
+    if request.method=='POST':
+
+        destination_id=request.POST.get('pkg_id')
+        details=request.POST.get('iti_id')
+        
+        it_details = Itinerary.objects.filter(pk__in=details)
+        print(it_details)
+        destination=SelectDestinations.objects.get(id=destination_id)
+        print(destination)
+
+        for it in it_details:
+            destination.details.add(it)
+        destination.save()
+        
+        messages.success(request,'Itinerary Is Successfully Add....')
+        return redirect('core:select-itinerary-user', id=destination_id)
+    return render(request, 'core/select-itinerary.html', context)
+
+@login_required(login_url='/')
+def RemoveItineraryForUser(request):
+    context={}
+    if request.method=='POST':
+
+        destination_id=request.POST.get('pkg_id')
+        details=request.POST.get('iti_id')
+        
+        it_details = Itinerary.objects.filter(pk__in=details)
+        print(it_details)
+        destination=SelectDestinations.objects.get(id=destination_id)
+        print(destination)
+
+        for it in it_details:
+            destination.details.remove(it)
+        destination.save()
+        
+        messages.success(request,'Itinerary Is Successfully Remove....')
+        return redirect('core:select-itinerary-user', id=destination_id)
     return render(request, 'core/select-itinerary.html', context)
 
 @login_required(login_url='/')
@@ -927,13 +1024,27 @@ def BucketView(request):
     bucket_history=Bucket.objects.filter(user=user)
     
     loyalty_history=Loyalty.objects.filter(user=user).values()
-    print(loyalty_history)
-    
-    
-        
+     
     context['bucket_history'] = bucket_history
     context['loyalty_history'] = loyalty_history
     return render(request, 'core/bucket.html',context)
+
+@login_required(login_url='/')
+def BucketDetails(request, id):
+    context = {}
+    if request.method == "GET":
+        
+        bucket_details = Bucket.objects.get(pk=id)
+        bucket_itinerary_data = bucket_details.destination_id.details.all()
+        print(bucket_itinerary_data)
+        print(bucket_details)
+        
+        context['bucket_details'] = bucket_details
+        context['bucket_itinerary_data'] = bucket_itinerary_data
+    
+        return render(request, 'core/bucket-details.html', context)
+    else:
+        return HttpResponse("Page not supported")
 
 @login_required(login_url='/')
 def BucketDelete(request, id):

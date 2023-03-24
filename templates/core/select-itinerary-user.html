@@ -98,9 +98,9 @@ Select-Itinerary
                                         <div class="col-2 mt-md-0 mt-4 text-center">
 
                                             {% comment %} for admin ad superuser {% endcomment %}
-                                            {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
+                                            {% comment %} {% if request.user.type == 'ADMIN' or request.user.is_superuser %} {% endcomment %}
                                             {% if iti_data not in package_itinerary_datas %} 
-                                            <form action="{% url 'core:add-itineraries' %}" method="post">
+                                            <form action="{% url 'core:add-itineraries-for-user' %}" method="post">
                                                 {% csrf_token %}
                                             <div class="text-right mt-6">
                                                 <input type="text" class="form-control" id="exampleInputEmail1" name="pkg_id"
@@ -113,7 +113,7 @@ Select-Itinerary
                                             </div>
                                             </form>
                                             {% else %}
-                                            <form action="{% url 'core:remove-itineraries' %}" method="post">
+                                            <form action="{% url 'core:remove-itineraries-for-user' %}" method="post">
                                                 {% csrf_token %}
                                             <div class="text-right mt-6">
                                                 <input type="text" class="form-control" id="exampleInputEmail1" name="pkg_id"
@@ -126,11 +126,11 @@ Select-Itinerary
                                             </div>
                                             </form>
                                             {% endif %}
-                                            {% endif %}
+                                            {% comment %} {% endif %} {% endcomment %}
 
                                             
                                             {% comment %} for user and client {% endcomment %}
-                                            {% if request.user.type == 'USER' %}                                                        
+                                            {% comment %} {% if request.user.type == 'USER' %}                                                        
                                             {% if iti_data not in package_itinerary_datas %} 
                                             <form action="{% url 'core:add-itineraries-user' %}" method="post">
                                                 {% csrf_token %}
@@ -164,7 +164,7 @@ Select-Itinerary
                                             </div>
                                             </form>
                                             {% endif %}
-                                            {% endif %}
+                                            {% endif %} {% endcomment %}
 
 
                                         </div>
@@ -185,7 +185,7 @@ Select-Itinerary
 {% block extra-plugins %}   
 {% if request.user.type == 'ADMIN' or request.user.is_superuser %}
 <div class="fixed-plugin">
-    <a href="{% url "core:package-details" package_datas.id %}"  class="fixed-plugin-button text-dark position-fixed px-3 py-2" style="font-weight: 900; border-radius: 5%; font-size: small;">
+    <a href="{% url "core:bucket" %}"  class="fixed-plugin-button text-dark position-fixed px-3 py-2" style="font-weight: 900; border-radius: 5%; font-size: small;">
     <i class='fas fa-angle-double-right'></i> &nbsp; SUBMIT
     </a>
 </div>
